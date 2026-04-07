@@ -10,6 +10,18 @@ CP = 3   # 角色像素格
 
 SAVE_FILE = os.path.expanduser('~/.nbw_pet_save.json')
 
+# 可选角色列表
+CHARACTERS = {
+    'human':      {'name': '👤 红衣小人', 'right': 'walk_right.gif', 'left': 'walk_left.gif'},
+    'cat_orange': {'name': '🐱 橘猫',     'right': 'cat_orange_walk_right.gif', 'left': 'cat_orange_walk_left.gif'},
+    'cat_gray':   {'name': '🐱 灰猫',     'right': 'cat_gray_walk_right.gif',   'left': 'cat_gray_walk_left.gif'},
+    'fox':        {'name': '🦊 狐狸',     'right': 'fox_walk_right.gif',         'left': 'fox_walk_left.gif'},
+    'raccoon':    {'name': '🦝 浣熊',     'right': 'raccoon_walk_right.gif',     'left': 'raccoon_walk_left.gif'},
+    'bird_blue':  {'name': '🐦 蓝鸟',     'right': 'bird_blue_walk_right.gif',   'left': 'bird_blue_walk_left.gif'},
+    'bird_white': {'name': '🐦 白鸟',     'right': 'bird_white_walk_right.gif',  'left': 'bird_white_walk_left.gif'},
+}
+DEFAULT_CHAR = 'human'
+
 T = {
     'sky_hi':'#c8e8ff','sky_md':'#a8d4f0','sky_lo':'#88c0e8',
     'night_hi':'#0a1628','night_md':'#0e1e38','night_lo':'#122448',
@@ -240,7 +252,8 @@ class HomeWorld:
         self.smokes=[]; self.smoke_on=0
 
         # 天气粒子
-        self.weather_mode='clear'  # clear/rain/snow
+        self.weather_mode='clear'
+        self.char_id=DEFAULT_CHAR  # clear/rain/snow
         self.particles=[]
 
         self.bflies=[{
@@ -322,7 +335,17 @@ class HomeWorld:
             self.cleanliness=float(d.get('cleanliness',80))
             self.health=float(d.get('health',100))
             self.sick=bool(d.get('sick',False))
+            self.char_id=d.get('char_id', DEFAULT_CHAR)
         except: pass
+
+    def set_character(self, char_id):
+        """切换角色并持久化（一次性选择）"""
+        if char_id in CHARACTERS:
+            self.char_id = char_id
+            # 清除迷你模式缓存，下次绘制时重新加载
+            if hasattr(self, '_mini_img_refs'):
+                delattr(self, '_mini_img_refs')
+            self._save()
 
     def _save(self):
         try:
@@ -331,7 +354,8 @@ class HomeWorld:
                     'score':self.score,'achievements':self.achievements,
                     'hunger':self.hunger,'mood':self.mood,
                     'cleanliness':self.cleanliness,'health':self.health,
-                    'sick':self.sick
+                    'sick':self.sick,
+                    'char_id':self.char_id
                 },f)
         except: pass
 
@@ -668,10 +692,11 @@ class HomeWorld:
             from PIL import Image as _PI, ImageTk as _IT, ImageSequence as _IS
             _adir = _os2.path.join(_os2.path.dirname(_os2.path.abspath(__file__)), 'assets')
             try:
-                gif_r = _PI.open(_os2.path.join(_adir, 'walk_right.gif'))
+                _char = CHARACTERS.get(self.char_id, CHARACTERS[DEFAULT_CHAR])
+                gif_r = _PI.open(_os2.path.join(_adir, _char['right']))
                 _frames_r = [_IT.PhotoImage(fr.convert('RGBA').resize((128,128),_PI.NEAREST))
                               for fr in _IS.Iterator(gif_r)]
-                gif_l = _PI.open(_os2.path.join(_adir, 'walk_left.gif'))
+                gif_l = _PI.open(_os2.path.join(_adir, _char['left']))
                 _frames_l = [_IT.PhotoImage(fr.convert('RGBA').resize((128,128),_PI.NEAREST))
                               for fr in _IS.Iterator(gif_l)]
                 self._mini_frames_r = _frames_r
@@ -962,8 +987,9 @@ class HomeWorld:
         up_day      = ImageTk.PhotoImage(upstairs_img_pil)
         up_night    = ImageTk.PhotoImage(make_night(upstairs_img_pil))
 
-        frames_right = load_frames(os.path.join(ASSET_DIR2, 'walk_right.gif'))
-        frames_left  = load_frames(os.path.join(ASSET_DIR2, 'walk_left.gif'))
+        _char = CHARACTERS.get(self.char_id, CHARACTERS[DEFAULT_CHAR])
+        frames_right = load_frames(os.path.join(ASSET_DIR2, _char['right']))
+        frames_left  = load_frames(os.path.join(ASSET_DIR2, _char['left']))
         stand_img    = frames_right[0]
 
         # 所有图片引用挂在 win 上防止GC
