@@ -6,7 +6,7 @@
 
 ## ✨ 功能
 
-- 🖥️ **迷你模式** — 透明悬浮小人常驻桌面角落
+- 🖥️ **迷你模式** — 透明悬浮小人常驻桌面角落，双击进入家园
 - 🏡 **家园模式** — 850×560 大窗口，四个场景自由探索
   - 🏠 室内一楼（温馨小屋）
   - 🪜 二楼（暖色调镜像布局）
@@ -17,26 +17,38 @@
 - 📊 **养成系统** — 饥饿/心情/清洁/健康四维属性
 - 🍔 **照料互动** — 右键菜单喂食、洗澡、玩耍、喂药
 - 🌙 **昼夜变化** — 21点后自动切换夜间模式
+- 🌧️ **天气效果** — 自动获取实时天气，户外/森林可见雨雪粒子
 
 ## 🚀 快速开始
 
-### 安装依赖
+### 环境要求
+
+- Python 3.11+（自带 Tkinter）
+- macOS（目前主要支持，其他平台可能需微调透明窗口代码）
+
+### 安装
 
 ```bash
-pip install Pillow
-```
-
-### 运行
-
-```bash
+# 1. 克隆项目
 git clone https://github.com/whitezhiiii/desktop-pet.git
 cd desktop-pet
+
+# 2. 安装依赖（只需要 Pillow）
+pip install Pillow
+
+# 3. 运行！
 python3 desktop_pet.py
 ```
 
-macOS 用户建议加上：
+macOS 用户建议加上环境变量以屏蔽 Tk 警告：
 ```bash
 TK_SILENCE_DEPRECATION=1 python3 desktop_pet.py
+```
+
+### 一键运行（macOS）
+
+```bash
+git clone https://github.com/whitezhiiii/desktop-pet.git && cd desktop-pet && pip install Pillow && TK_SILENCE_DEPRECATION=1 python3 desktop_pet.py
 ```
 
 ## 🎮 操作说明
@@ -45,9 +57,9 @@ TK_SILENCE_DEPRECATION=1 python3 desktop_pet.py
 |------|------|
 | 移动 | ← → ↑ ↓ / WASD |
 | 场景切换 | E（在门口/楼梯/地毯附近） |
+| 进入家园 | 双击小人 / 右键 → 🏡 进入家园 |
+| 照料宠物 | 右键菜单（喂食🍔/洗澡🛁/玩耍🎮/喂药💊） |
 | 调试模式 | T（显示碰撞框+坐标） |
-| 右键菜单 | 鼠标右键 |
-| 进入家园 | 右键 → 🏡 进入家园 |
 
 ## 🗺️ 场景路线
 
@@ -61,14 +73,14 @@ TK_SILENCE_DEPRECATION=1 python3 desktop_pet.py
 
 ```
 desktop-pet/
-├── desktop_pet.py          # 主程序
+├── desktop_pet.py          # 主程序（单文件，约1500行）
 ├── assets/
-│   ├── room_bg.png         # 室内背景
-│   ├── upstairs_bg.png     # 二楼背景
+│   ├── room_bg.png         # 室内背景（850×526）
+│   ├── upstairs_bg.png     # 二楼背景（镜像+暖色调）
 │   ├── exterior_bg.png     # 户外背景
 │   ├── forest_bg.png       # 森林背景
-│   ├── walk_right.gif      # 角色右走动画（8帧）
-│   └── walk_left.gif       # 角色左走动画（8帧）
+│   ├── walk_right.gif      # 角色右走动画（8帧 32×32）
+│   └── walk_left.gif       # 角色左走动画（8帧 32×32）
 └── README.md
 ```
 
@@ -83,6 +95,7 @@ desktop-pet/
 - **换角色**：替换 GIF 文件（32×32 每帧，8帧动画）
 - **调衰减速度**：搜索 `frame%600` 修改（数字越大掉得越慢）
 - **调碰撞区**：编辑代码中的 `_INDOOR_WALLS` 等数组
+- **改天气城市**：搜索 `WEATHER_CITY` 修改
 
 ## License
 
