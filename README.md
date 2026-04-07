@@ -4,6 +4,20 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green)
 
+## 🤖 OpenClaw Skill
+
+如果你是 [OpenClaw](https://github.com/openclaw/openclaw) 用户，可以直接安装 skill：
+
+```bash
+# 下载 skill 文件
+curl -LO https://github.com/whitezhiiii/desktop-pet/raw/main/desktop-pet.skill
+
+# 安装到 OpenClaw
+openclaw skill install desktop-pet.skill
+```
+
+安装后 AI 会自动知道如何帮你部署和运行桌面宠物 🐾
+
 ## ✨ 功能
 
 - 🖥️ **迷你模式** — 透明悬浮小人常驻桌面角落，双击进入家园
@@ -96,20 +110,6 @@ desktop-pet/
 - **调衰减速度**：搜索 `frame%600` 修改（数字越大掉得越慢）
 - **调碰撞区**：编辑代码中的 `_INDOOR_WALLS` 等数组
 - **改天气城市**：搜索 `WEATHER_CITY` 修改
-
-## 🤖 OpenClaw Skill
-
-如果你是 [OpenClaw](https://github.com/openclaw/openclaw) 用户，可以直接安装 skill：
-
-```bash
-# 下载 skill 文件
-curl -LO https://github.com/whitezhiiii/desktop-pet/raw/main/desktop-pet.skill
-
-# 安装到 OpenClaw
-openclaw skill install desktop-pet.skill
-```
-
-安装后 AI 会自动知道如何帮你部署和运行桌面宠物 🐾
 
 ## License
 
