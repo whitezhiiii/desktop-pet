@@ -97,6 +97,20 @@ desktop-pet/
 - **调碰撞区**：编辑代码中的 `_INDOOR_WALLS` 等数组
 - **改天气城市**：搜索 `WEATHER_CITY` 修改
 
+## 🤖 OpenClaw Skill
+
+如果你是 [OpenClaw](https://github.com/openclaw/openclaw) 用户，可以直接安装 skill：
+
+```bash
+# 下载 skill 文件
+curl -LO https://github.com/whitezhiiii/desktop-pet/raw/main/desktop-pet.skill
+
+# 安装到 OpenClaw
+openclaw skill install desktop-pet.skill
+```
+
+安装后 AI 会自动知道如何帮你部署和运行桌面宠物 🐾
+
 ## License
 
 MIT
