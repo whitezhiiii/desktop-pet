@@ -293,6 +293,7 @@ class HomeWorld:
         self._load()
 
         self.cv.bind('<Button-1>',self.onclick)
+        self.cv.bind('<Double-Button-1>', lambda e: self.open_garden())
         self.cv.bind('<B1-Motion>',self.ondrag)
         self.cv.bind('<ButtonRelease-1>',self.onrel)
         self.cv.bind('<Button-3>',self.onright)
@@ -705,13 +706,15 @@ class HomeWorld:
 
     def _px_bubble_mini(self, cx, gnd):
         cv = self.cv; text = self.bubble
-        bw = min(max(len(text)*7+12, 40), 200)
-        bh = 20
-        bx = max(2, cx - bw//2)
-        sprite_h = len(STAND)*CP
-        by = gnd - sprite_h - bh - 8
-        cv.create_rectangle(bx, by, bx+bw, by+bh, fill='#fffef0', outline='#7744cc', width=1)
-        cv.create_text(bx+bw//2, by+bh//2, text=text, font=('PingFang SC', 8), fill='#1e0a3c')
+        W_M = getattr(self, 'mini_w', 140)
+        bw = min(max(len(text)*11+16, 60), W_M-10)
+        bh = 28
+        bx = max(4, cx - bw//2)
+        by = gnd - 140  # 角色上方
+        cv.create_rectangle(bx, by, bx+bw, by+bh, fill='#fffef0', outline='#7744cc', width=2)
+        # 小三角指向角色
+        cv.create_polygon(cx-4, by+bh, cx, by+bh+6, cx+4, by+bh, fill='#fffef0', outline='#7744cc')
+        cv.create_text(bx+bw//2, by+bh//2, text=text, font=('PingFang SC', 13), fill='#1e0a3c')
 
     def _draw_window(self, cv, x, y, w, h, night):
         """室内窗户"""
@@ -920,7 +923,7 @@ class HomeWorld:
         win.attributes('-topmost', True)
         win.configure(bg='systemTransparent')
         self.garden_win = win
-        cv_g = tk.Canvas(win, width=W_G, height=H_G, bg='systemTransparent', highlightthickness=0)
+        cv_g = tk.Canvas(win, width=W_G, height=H_G, bg='#100825', highlightthickness=0)
         cv_g.pack()
         g = {'cx': 550, 'cy': 360, 'flip': False, 'sprite': 'stand', 'moving': None, 'frame': 0, 'scene': 'indoor'}
 
@@ -1051,7 +1054,8 @@ class HomeWorld:
                 _last_scene = scene
 
             # ── 场景标签 ──
-            scene_label = {'outdoor':'🌿 户外','forest':'🌳 森林','upstairs':'🪜 二楼'}.get(scene, '🏠 室内')
+            wx_icon = {'rain':' 🌧️','snow':' ❄️'}.get(self.weather_mode, '')
+            scene_label = {'outdoor':'🌿 户外','forest':'🌳 森林','upstairs':'🪜 二楼'}.get(scene, '🏠 室内') + wx_icon
             cv_g.create_text(14, 14, text=scene_label, anchor='nw',
                              font=('PingFang SC', 10, 'bold'),
                              fill='#ffffff', tags='dynamic')
@@ -1102,6 +1106,54 @@ class HomeWorld:
                                           outline='#88eeff', width=2, dash=(6,3), tags='dynamic')
                     cv_g.create_text(W_G//2, 58, text='🪜 按 E 下楼',
                                      font=('PingFang SC', 12, 'bold'), fill='#88eeff', tags='dynamic')
+
+            # ── 天气粒子（户外/森林场景可见）──
+            if scene in ('outdoor', 'forest') and self.weather_mode != 'clear':
+                # 生成粒子
+                if f % 2 == 0:
+                    import random as _rnd
+                    for _ in range(3):
+                        px = _rnd.randint(30, W_G-30)
+                        if self.weather_mode == 'rain':
+                            g.setdefault('wx_particles', []).append({
+                                'x': px, 'y': 0,
+                                'vx': _rnd.uniform(-0.5, 0.5), 'vy': _rnd.uniform(6, 10),
+                                'type': 'rain', 'life': 80
+                            })
+                        elif self.weather_mode == 'snow':
+                            g.setdefault('wx_particles', []).append({
+                                'x': px, 'y': 0,
+                                'vx': _rnd.uniform(-1, 1), 'vy': _rnd.uniform(1, 3),
+                                'type': 'snow', 'life': 160
+                            })
+                # 更新+绘制
+                alive = []
+                for p in g.get('wx_particles', []):
+                    p['x'] += p['vx']; p['y'] += p['vy']; p['life'] -= 1
+                    if p['life'] > 0 and p['y'] < H_G - 40:
+                        alive.append(p)
+                        px2, py2 = int(p['x']), int(p['y'])
+                        if p['type'] == 'rain':
+                            cv_g.create_line(px2, py2, px2, py2+8, fill='#88bbdd', width=1, tags='dynamic')
+                        else:
+                            cv_g.create_oval(px2-2, py2-2, px2+2, py2+2, fill='#eef4ff', outline='', tags='dynamic')
+                g['wx_particles'] = alive
+            elif scene in ('indoor', 'upstairs'):
+                # 室内清粒子，但窗外能看到天气效果（简化版）
+                g['wx_particles'] = []
+                if self.weather_mode == 'rain':
+                    # 窗户上画雨滴效果
+                    import random as _rnd
+                    for _ in range(5):
+                        rx = _rnd.randint(50, W_G-50)
+                        ry = _rnd.randint(40, 200)
+                        cv_g.create_line(rx, ry, rx-1, ry+6, fill='#6699bb', width=1, tags='dynamic')
+                elif self.weather_mode == 'snow':
+                    import random as _rnd
+                    for _ in range(4):
+                        sx = _rnd.randint(50, W_G-50)
+                        sy = _rnd.randint(40, 200)
+                        cv_g.create_oval(sx-1, sy-1, sx+1, sy+1, fill='#ddeeff', outline='', tags='dynamic')
 
             # ── 角色阴影 ──
             gcx = g['cx']; gcy = g['cy']
@@ -1324,14 +1376,9 @@ class HomeWorld:
         m.add_command(label='🛁 洗澡',command=self.bathe)
         m.add_command(label='🎮 玩耍',command=self.play_with)
         m.add_command(label='💊 喂药',command=self.give_medicine)
-        m.add_separator()
-        m.add_command(label='🌱 浇菜',command=lambda:self.do('water'))
-        m.add_command(label='🍳 做饭',command=lambda:self.do('cook'))
-        m.add_command(label='🎣 钓鱼',command=lambda:self.do('fish'))
-        m.add_command(label='🚶 散步',command=lambda:self.do('walk'))
+
         m.add_command(label='😴 睡觉',command=lambda:self.do('sleep'))
-        if self.veg_harvest:
-            m.add_command(label='🥕 收菜！',command=self.harvest)
+
         m.add_separator()
         m.add_command(label='🌧️ 下雨效果',command=lambda:self._set_weather('rain'))
         m.add_command(label='❄️ 下雪效果',command=lambda:self._set_weather('snow'))
