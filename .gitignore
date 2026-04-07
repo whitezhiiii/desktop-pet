@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.DS_Store
+~/.nbw_pet_save.json
