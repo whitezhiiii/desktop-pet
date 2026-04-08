@@ -1,6 +1,6 @@
-# 🐾 南波万の小家园 — Desktop Pet
+# 🏡 龙虾的小家园 — Desktop Pet
 
-一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍，还能探索四个不同场景！小屋名称会自动读取你的 AI 名字，独一无二属于你的小家园。
+一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍，还能探索四个不同场景！小屋名称会自动读取你的龙虾名字，独一无二属于你的小家园。
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green)
 
