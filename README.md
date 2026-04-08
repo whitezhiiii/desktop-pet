@@ -1,6 +1,6 @@
 # 🐾 南波万の小家园 — Desktop Pet
 
-一个像素风桌面宠物，用 Python + Tkinter 打造。小人住在你的桌面上，可以喂食、洗澡、玩耍，还能探索四个不同场景！
+一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍，还能探索四个不同场景！小屋名称会自动读取你的 AI 名字，独一无二属于你的小家园。
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green)
 
@@ -30,8 +30,10 @@ openclaw skill install desktop-pet.skill
 - 🚪 **场景切换** — 走到门口/楼梯/地毯按 E 键
 - 📊 **养成系统** — 饥饿/心情/清洁/健康四维属性
 - 🍔 **照料互动** — 右键菜单喂食、洗澡、玩耍、喂药
-- 🌙 **昼夜变化** — 21点后自动切换夜间模式
-- 🌧️ **天气效果** — 自动获取实时天气，户外/森林可见雨雪粒子
+- 🌙 **四时段光影** — 早晨/正午/傍晚/夜晚不同色调，户外显示太阳位置
+- 🌧️ **天气实时联动** — 自动获取当地天气，户外/森林可见雨雪粒子；家园右上角可手动切换
+- 🏡 **个性化小屋** — 自动读取 `IDENTITY.md` 作为小屋名称，读取 `USER.md` 作为宠物对你的称呼
+- 🌙 **昼夜变化** — 22点后自动切换夜间模式，7点下班提醒
 
 ## 🚀 快速开始
 
@@ -54,9 +56,11 @@ pip install Pillow
 python3 desktop_pet.py
 ```
 
-macOS 用户建议加上环境变量以屏蔽 Tk 警告：
 ```bash
-TK_SILENCE_DEPRECATION=1 python3 desktop_pet.py
+# 注意：macOS 系统自带的 python3 (3.9) 使用 Tk 8.5，透明窗口有兼容问题
+# 推荐使用 Homebrew 安装的 Python 3.11+
+brew install python@3.11
+/opt/homebrew/bin/python3.11 desktop_pet.py
 ```
 
 ### 一键运行（macOS）
@@ -90,11 +94,13 @@ desktop-pet/
 ├── desktop_pet.py          # 主程序（单文件，约1500行）
 ├── assets/
 │   ├── room_bg.png         # 室内背景（850×526）
-│   ├── upstairs_bg.png     # 二楼背景（镜像+暖色调）
+│   ├── upstairs_bg.png     # 二楼背景
 │   ├── exterior_bg.png     # 户外背景
 │   ├── forest_bg.png       # 森林背景
-│   ├── walk_right.gif      # 角色右走动画（8帧 32×32）
-│   └── walk_left.gif       # 角色左走动画（8帧 32×32）
+│   ├── sun.png             # 太阳图片（透明背景）
+│   ├── fox_stand.png       # 各角色站立图（64×64）
+│   ├── walk_right.gif      # 角色走路动画（8帧 32×32）
+│   └── walk_left.gif       # 角色走路动画
 └── README.md
 ```
 
@@ -107,7 +113,7 @@ desktop-pet/
 
 - **换背景**：替换 `assets/` 里的 PNG 文件（推荐 850×526px）
 - **换角色**：替换 GIF 文件（32×32 每帧，8帧动画）
-- **调衰减速度**：搜索 `frame%600` 修改（数字越大掉得越慢）
+- **调衰减速度**：搜索 `frame%1200` 修改（数字越大掉得越慢）
 - **调碰撞区**：编辑代码中的 `_INDOOR_WALLS` 等数组
 - **改天气城市**：搜索 `WEATHER_CITY` 修改
 
