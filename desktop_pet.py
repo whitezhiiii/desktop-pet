@@ -5,6 +5,8 @@ import random, math, time, threading, urllib.request, json, os, http.client, ssl
 
 W, H = 480, 332
 WEATHER_CITY = 'Beijing'
+PET_OWNER = '主人'  # 改成你的名字，小屋标题会显示「{名字}の小家园」
+PET_HOME_TITLE = f'🏡 {PET_OWNER}の小家园'
 BP = 4   # 背景像素格
 CP = 3   # 角色像素格
 
@@ -12,7 +14,7 @@ SAVE_FILE = os.path.expanduser('~/.nbw_pet_save.json')
 
 # 可选角色列表
 CHARACTERS = {
-    'human':      {'name': '👤 红衣小人', 'right': 'walk_right.gif', 'left': 'walk_left.gif'},
+    'human':      {'name': '👤 红衣小人', 'right': 'walk_left.gif', 'left': 'walk_right.gif'},
     'cat_orange': {'name': '🐱 橘猫',     'right': 'cat_orange_walk_right.gif', 'left': 'cat_orange_walk_left.gif'},
     'cat_gray':   {'name': '🐱 灰猫',     'right': 'cat_gray_walk_right.gif',   'left': 'cat_gray_walk_left.gif'},
     'fox':        {'name': '🦊 狐狸',     'right': 'fox_walk_right.gif',         'left': 'fox_walk_left.gif'},
@@ -20,7 +22,7 @@ CHARACTERS = {
     'bird_blue':  {'name': '🐦 蓝鸟',     'right': 'bird_blue_walk_right.gif',   'left': 'bird_blue_walk_left.gif'},
     'bird_white': {'name': '🐦 白鸟',     'right': 'bird_white_walk_right.gif',  'left': 'bird_white_walk_left.gif'},
 }
-DEFAULT_CHAR = 'human'
+DEFAULT_CHAR = 'fox'
 
 T = {
     'sky_hi':'#c8e8ff','sky_md':'#a8d4f0','sky_lo':'#88c0e8',
@@ -196,8 +198,8 @@ QUOTES_HOUR=[
     '七点，吃早饭了吗？','八点，上班加油💪','九点，开始工作~',
     '十点了，喝杯茶休息下~☕','十一点，快中午了！🍱','十二点，午饭时间！',
     '下午一点，犯困的时间到了😪','两点，摸鱼正当时~🐟','三点，下午茶！☕',
-    '四点，再坚持一下！','五点，快下班了🎉','六点，下班！吃饭！',
-    '七点，晚上好~','八点，放松一下吧🎮','九点，今天辛苦了',
+    '四点，再坚持一下！','五点，快下班了🎉','六点，还没到点，再撑一下！',
+    '七点，下班啦！🎉 辛苦了！','八点，放松一下吧🎮','九点，今天辛苦了',
     '十点了，该休息了😴','十一点，熬夜伤身体哦','零点，跨过今天了！✨',
 ]
 
@@ -304,7 +306,39 @@ class HomeWorld:
         self.stat_warn_cd=0    # 属性警告冷却
 
         self._load()
+        self._read_owner_from_config()
+        self._finish_setup()
 
+    def _home_title(self):
+        name = getattr(self, 'owner_name', '') or PET_OWNER
+        return f'🏡 {name}の小家园'
+
+    def _read_owner_from_config(self):
+        import re as _re
+        base = os.path.dirname(os.path.abspath(__file__))
+        pet_name = ''
+        for p in [base, os.path.join(base,'..'), os.path.join(base,'..','..')]:
+            fp = os.path.join(p, 'IDENTITY.md')
+            if os.path.exists(fp):
+                try:
+                    c = open(fp, encoding='utf-8').read()
+                    m = _re.search(r'\*\*Name:\*\*\s*(.+)', c)
+                    if m: pet_name = m.group(1).strip(); break
+                except: pass
+        addr = ''
+        for p in [base, os.path.join(base,'..'), os.path.join(base,'..','..')]:
+            fp = os.path.join(p, 'USER.md')
+            if os.path.exists(fp):
+                try:
+                    c = open(fp, encoding='utf-8').read()
+                    m = _re.search(r'\*\*What to call them:\*\*\s*(.+)', c)
+                    if m: addr = m.group(1).strip(); break
+                except: pass
+        self.owner_name = pet_name or '南波万'
+        self.address_word = addr or '主人'
+
+    def _finish_setup(self):
+        self.root.title(self._home_title())
         self.cv.bind('<Button-1>',self.onclick)
         self.cv.bind('<Double-Button-1>', lambda e: self.open_garden())
         self.cv.bind('<B1-Motion>',self.ondrag)
@@ -336,7 +370,11 @@ class HomeWorld:
             self.health=float(d.get('health',100))
             self.sick=bool(d.get('sick',False))
             self.char_id=d.get('char_id', DEFAULT_CHAR)
-        except: pass
+            self.owner_name=d.get('owner_name', '')
+            self.address_word=d.get('address_word', '主人')
+        except:
+            self.owner_name=''
+            self.address_word='主人'
 
     def set_character(self, char_id):
         """切换角色并持久化（一次性选择）"""
@@ -355,7 +393,9 @@ class HomeWorld:
                     'hunger':self.hunger,'mood':self.mood,
                     'cleanliness':self.cleanliness,'health':self.health,
                     'sick':self.sick,
-                    'char_id':self.char_id
+                    'char_id':self.char_id,
+                    'owner_name':self.owner_name,
+                    'address_word':self.address_word
                 },f)
         except: pass
 
@@ -518,7 +558,7 @@ class HomeWorld:
         if getattr(self, 'mini_w', None):
             self._draw_mini()
             return
-        night=self.hour>=21 or self.hour<6
+        night=self.hour>=22 or self.hour<7
         gnd=self.gnd
 
         # ── 室内背景（QQ宠物风） ──────────────────────────────────────────
@@ -710,7 +750,7 @@ class HomeWorld:
 
         if self._mini_frames_r:
             fi = (self.frame // 5) % len(self._mini_frames_r)
-            _img = (self._mini_frames_l if self.flip else self._mini_frames_r)[fi]
+            _img = (self._mini_frames_r if self.flip else self._mini_frames_l)[fi]
             cv.create_oval(cx-52, gnd-106, cx+52, gnd-2, fill='#fffaf0', outline='#e0c8a0', width=1)
             cv.create_image(cx, gnd-2, anchor='s', image=_img)
             # 双重防GC
@@ -900,13 +940,13 @@ class HomeWorld:
         if self.frame%120==0: self.check_reminders()
 
         # 属性自然衰减（每600帧≈约48秒，玩一小时掉约50%）
-        if self.frame%600==0:
-            self.hunger=max(0,self.hunger-0.8)
-            self.mood=max(0,self.mood-0.4)
-            self.cleanliness=max(0,self.cleanliness-0.3)
+        if self.frame%1200==0:
+            self.hunger=max(0,self.hunger-0.4)
+            self.mood=max(0,self.mood-0.2)
+            self.cleanliness=max(0,self.cleanliness-0.15)
             # 健康值联动
             if self.hunger<20 or self.cleanliness<20:
-                self.health=max(0,self.health-0.8)
+                self.health=max(0,self.health-0.4)
                 if not self.sick and self.health<50:
                     self.sick=True
                     self.say('感觉身体不太好…🤒',150)
@@ -990,10 +1030,18 @@ class HomeWorld:
         _char = CHARACTERS.get(self.char_id, CHARACTERS[DEFAULT_CHAR])
         frames_right = load_frames(os.path.join(ASSET_DIR2, _char['right']))
         frames_left  = load_frames(os.path.join(ASSET_DIR2, _char['left']))
-        stand_img    = frames_right[0]
+        _stand_key = self.char_id
+        _stand_png = os.path.join(ASSET_DIR2, f'{_stand_key}_stand.png')
+        if not os.path.exists(_stand_png):
+            _stand_png = os.path.join(ASSET_DIR2, 'char_stand.png')
+        try:
+            _stand_pil = PILImage.open(_stand_png).convert('RGBA').resize((64, 64), PILImage.NEAREST)
+            stand_img = ImageTk.PhotoImage(_stand_pil)
+        except Exception:
+            stand_img = frames_right[0]
 
         # 所有图片引用挂在 win 上防止GC
-        win._img_refs = [bg_day, bg_night, ext_day, ext_night, forest_day, forest_night, up_day, up_night] + frames_right + frames_left
+        win._img_refs = [bg_day, bg_night, ext_day, ext_night, forest_day, forest_night, up_day, up_night, stand_img] + frames_right + frames_left
 
         # 角色尺寸
         CHAR_W, CHAR_H = 64, 64
@@ -1039,10 +1087,37 @@ class HomeWorld:
 
         # 预先把背景画到静态 canvas item（只建一次）
         _bg_item = cv_g.create_image(0, 0, anchor='nw', image=bg_day)
+        _time_overlay = cv_g.create_rectangle(0, 0, W_G, H_G-34, fill='#000000', outline='', state='hidden')
         _night_overlay = cv_g.create_rectangle(0, 0, W_G, H_G-34,
                                                 fill='#0a0820', stipple='gray50', outline='', state='hidden')
+        # 太阳图片
+        _sun_size = 60
+        _sun_pil = PILImage.open(os.path.join(ASSET_DIR2, 'sun.jpeg')).convert('RGBA').resize((_sun_size, _sun_size), PILImage.LANCZOS)
+        import numpy as _np
+        _sd = _np.array(_sun_pil)
+        _r,_g,_b,_a = _sd[:,:,0],_sd[:,:,1],_sd[:,:,2],_sd[:,:,3]
+        _is_bg = (_r>150)&(_g>150)&(_b>150)&(_np.abs(_r.astype(int)-_g.astype(int))<30)&(_np.abs(_g.astype(int)-_b.astype(int))<30)
+        _sd[:,:,3] = _np.where(_is_bg, 0, _a)
+        _sun_pil = PILImage.fromarray(_sd)
+        _sun_photo = ImageTk.PhotoImage(_sun_pil)
+        _sun_glow = cv_g.create_image(0, 0, anchor='center', image=_sun_photo, state='hidden')
+        _last_time_slot = None
         _last_night = False
         _last_scene = 'indoor'
+
+        def _get_time_slot():
+            h = self.hour
+            if 6 <= h < 11:  return 'morning'
+            elif 11 <= h < 16: return 'noon'
+            elif 16 <= h < 22: return 'evening'
+            else:              return 'night'
+
+        _TIME_PARAMS = {
+            'morning': ('', '', 120, 60,  '#ffe8a0', 90),
+            'noon':    ('', '', 430, 40,  '#fffacc', 120),
+            'evening': ('', '', 700, 80,  '#ff9966', 80),
+            'night':   ('', '', -99, -99, '',        0),
+        }
 
         # 门口触发区（左上角，靠近门的位置）
         # 室内：左上角楼梯（蓝色框）→ 二楼
@@ -1052,14 +1127,14 @@ class HomeWorld:
         CARPET_X1, CARPET_Y1 = 618, 438
         CARPET_X2, CARPET_Y2 = 822, 490
         # 户外门口落点
-        EXT_DOOR_X, EXT_DOOR_Y = 450, 380
+        EXT_DOOR_X, EXT_DOOR_Y = 430, 260
         EXT_DOOR_R = 55
         DOOR_X, DOOR_Y = 200, 220   # 兼容旧代码
 
         def draw_g():
             nonlocal _last_night, _last_scene
             if not win.winfo_exists(): return
-            f = g['frame']; night = self.hour >= 21 or self.hour < 6
+            f = g['frame']; night = self.hour >= 22 or self.hour < 7
             scene = g['scene']
 
             # ── 清除上一帧的动态元素（保留背景） ──
@@ -1081,10 +1156,14 @@ class HomeWorld:
 
             # ── 场景标签 ──
             wx_icon = {'rain':' 🌧️','snow':' ❄️'}.get(self.weather_mode, '')
+            time_icon = {'morning':'🌅 早晨','noon':'☀️ 正午','evening':'🌇 傍晚','night':'🌙 夜晚'}[time_slot]
             scene_label = {'outdoor':'🌿 户外','forest':'🌳 森林','upstairs':'🪜 二楼'}.get(scene, '🏠 室内') + wx_icon
             cv_g.create_text(14, 14, text=scene_label, anchor='nw',
                              font=('PingFang SC', 10, 'bold'),
                              fill='#ffffff', tags='dynamic')
+            cv_g.create_text(14, 32, text=time_icon, anchor='nw',
+                             font=('PingFang SC', 9),
+                             fill='#ccccee', tags='dynamic')
 
             # ── 门口提示 ──
             gcx, gcy = g['cx'], g['cy']
@@ -1189,9 +1268,9 @@ class HomeWorld:
             moving = g['moving']
             fi = (f // 4) % len(frames_right)
             if moving == 'right':
-                char_img = frames_right[fi]
-            elif moving == 'left':
                 char_img = frames_left[fi]
+            elif moving == 'left':
+                char_img = frames_right[fi]
             else:
                 char_img = stand_img
             cv_g.create_image(gcx, gcy - CHAR_H//2, anchor='s', image=char_img, tags='dynamic')
@@ -1231,12 +1310,24 @@ class HomeWorld:
             # ── 积分/时间/标题 ──
             cv_g.create_text(8,H_G-36,text=f'⭐{self.score}',anchor='sw',font=('PingFang SC',9), tags='dynamic',fill='#aaaacc')
             cv_g.create_text(W_G-8,H_G-36,text=time.strftime('%H:%M'),anchor='se',font=('PingFang SC',9),fill='#888888',tags='dynamic')
-            cv_g.create_text(W_G//2,12,text='🏡 南波万の小家园',font=('PingFang SC',12,'bold'), tags='dynamic',
+            cv_g.create_text(W_G//2,12,text=self._home_title(),font=('PingFang SC',12,'bold'), tags='dynamic',
                             fill='#ffffff' if night else '#3a1a6a')
 
             # ── 关闭按钮 ──
             cv_g.create_oval(W_G-26,4,W_G-6,24,fill='#cc2244',outline='#ff4466',width=1, tags='dynamic')
             cv_g.create_text(W_G-16,14,text='✕',font=('PingFang SC',10,'bold'), tags='dynamic',fill='#ffccdd')
+            # ── 天气切换按钮（右上角）──
+            wx_modes = [('☀️','clear'), ('🌧️','rain'), ('❄️','snow')]
+            for wi, (wicon, wmode) in enumerate(wx_modes):
+                bx = W_G - 100 + wi * 28
+                by = 6
+                active = (self.weather_mode == wmode)
+                cv_g.create_rectangle(bx, by, bx+24, by+20,
+                                      fill='#5533aa' if active else '#2a1a55',
+                                      outline='#8866cc' if active else '#443388',
+                                      width=1, tags='dynamic')
+                cv_g.create_text(bx+12, by+10, text=wicon,
+                                 font=('Apple Color Emoji', 10), tags='dynamic')
 
             # ── 操作提示 ──
             cv_g.create_text(W_G//2,H_G-50,text='← → ↑ ↓ 走动 | E 交互 | T 调试',font=('PingFang SC',8), tags='dynamic',fill='#8866aa')
@@ -1321,6 +1412,11 @@ class HomeWorld:
                 g['moving']=None
         def on_click(e):
             if W_G-24<=e.x<=W_G-4 and 2<=e.y<=22: win.destroy()
+            wx_modes = ['clear', 'rain', 'snow']
+            for wi, wmode in enumerate(wx_modes):
+                bx = W_G - 100 + wi * 28
+                if bx <= e.x <= bx+24 and 6 <= e.y <= 26:
+                    self._set_weather(wmode); break
         # 同时绑定 win 和 cv_g，确保键盘事件能收到
         win.bind('<KeyPress>',on_kp); win.bind('<KeyRelease>',on_kr)
         cv_g.bind('<KeyPress>',on_kp); cv_g.bind('<KeyRelease>',on_kr)
@@ -1405,10 +1501,6 @@ class HomeWorld:
 
         m.add_command(label='😴 睡觉',command=lambda:self.do('sleep'))
 
-        m.add_separator()
-        m.add_command(label='🌧️ 下雨效果',command=lambda:self._set_weather('rain'))
-        m.add_command(label='❄️ 下雪效果',command=lambda:self._set_weather('snow'))
-        m.add_command(label='☀️ 晴天',command=lambda:self._set_weather('clear'))
         m.add_separator()
         m.add_command(label='🏡 进入家园',command=self.open_garden)
         m.add_separator()
