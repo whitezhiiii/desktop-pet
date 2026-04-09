@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .DS_Store
 ~/.nbw_pet_save.json
+*_backup*.py
+desktop_pet_github.py
+pixel-pet/
+pixel-pet.skill
+assets/walk_*_f*.png

@@ -181,9 +181,24 @@ def draw_sprite(cv,cx,bottom_y,key='stand',flip=False):
 
 # ── 台词库 ─────────────────────────────────────────────────────────────
 QUOTES_IDLE=[
-    '今天也是美好的一天~','发什么呆好呢…','嗯……','天气不错！','摸会儿鱼先',
-    '主人在吗？','风好凉爽','有点无聊……','想睡觉了','南波万！🤙',
-    '今天吃什么呢🍜','好想晒太阳啊','云朵好漂亮~','菜地要浇水了吗？',
+    # 日常感叹
+    '今天也是美好的一天~','嗯……','摸会儿鱼先 🐟','主人在吗？',
+    '风好凉爽 🍃','有点无聊……','想睡觉了 😪','南波万！🤙',
+    '今天吃什么呢 🍜','好想晒太阳啊 ☀️','云朵好漂亮~','发什么呆好呢…',
+    # 搞怪
+    '我在想一件很重要的事…但忘了是什么','要不要偷偷吃点零食？🍪',
+    '🤔 如果我会飞的话…','哼哼哼~ 哼哼哼~',
+    '突然想跳舞 💃','有人叫我吗？没有？那算了',
+    '今天天气真好，适合摸鱼 🐟','我是世界上最可爱的！',
+    # 生活感悟
+    '工作是猫，我是老鼠，逃！','今天也要元气满满⚡',
+    '吃饭了吗主人？别忘了吃饭！','喝水了吗？多喝热水🫖',
+    '伸个懒腰~ 啊～～～','这道题难住我了…算了不想了',
+    # 有梗
+    '主人，宇宙的尽头是被我萌到🧡',
+    '今天的运势：🌟🌟🌟🌟🌟 超级好！',
+    '听说摸鱼有益健康，我在养生',
+    '如果我有100个积分，我要买好多好吃的！',
 ]
 QUOTES_ANGRY=[
     '够了够了！烦死了！😤','再戳我我生气了！','戳什么戳！','…哼！',
@@ -221,8 +236,70 @@ ACHIEVEMENTS=[
     {'id':'poke10','name':'👆 戳戳达人','desc':'戳了我10次','done':False},
     {'id':'score100','name':'💎 百分达人','desc':'积分达到100','done':False},
     {'id':'night_owl','name':'🦉 夜猫子','desc':'23点后还在','done':False},
+    {'id':'level5','name':'⭐ 成长达人','desc':'宠物升到5级','done':False},
+    {'id':'level10','name':'💫 满级传说','desc':'宠物升到满级10级','done':False},
+    {'id':'shop10','name':'🛒 购物达人','desc':'购买10次食物','done':False},
+    {'id':'travel5','name':'🚀 起飞了','desc':'到访5个省份','done':False},
+    {'id':'travel15','name':'🗺️ 天涯海角','desc':'到访15个省份','done':False},
+    {'id':'travel35','name':'🏆 足迹遂天下','desc':'走遍35个省市区','done':False},
 ]
 
+# ── 商店食物数据 ────────────────────────────────────────────────────────────
+FOOD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'food')
+
+SHOP_ITEMS = [
+    {'id':'bread',      'name':'面包',    'file':'07_bread.png',      'price':10,  'lv':1, 'hunger':20, 'mood':5,  'health':0,  'cat':'food',  'desc':'香脆面包，简单又美味'},
+    {'id':'bowl',       'name':'碗饭',    'file':'04_bowl.png',        'price':15,  'lv':1, 'hunger':30, 'mood':8,  'health':0,  'cat':'food',  'desc':'热腾腾的白米饭'},
+    {'id':'egg',        'name':'煎蛋',    'file':'38_friedegg.png',    'price':20,  'lv':2, 'hunger':25, 'mood':10, 'health':5,  'cat':'food',  'desc':'营养满满的煎蛋'},
+    {'id':'bun',        'name':'小圆包',  'file':'11_bun.png',         'price':12,  'lv':1, 'hunger':18, 'mood':5,  'health':0,  'cat':'food',  'desc':'软软的小圆包'},
+    {'id':'bacon',      'name':'培根',    'file':'13_bacon.png',       'price':25,  'lv':3, 'hunger':22, 'mood':12, 'health':3,  'cat':'food',  'desc':'香脆培根，满嘴油香'},
+    {'id':'dumpling',   'name':'饺子',    'file':'36_dumplings.png',   'price':30,  'lv':4, 'hunger':35, 'mood':15, 'health':5,  'cat':'food',  'desc':'手工饺子，家的味道'},
+    {'id':'hotdog',     'name':'热狗',    'file':'54_hotdog.png',      'price':22,  'lv':2, 'hunger':20, 'mood':15, 'health':0,  'cat':'food',  'desc':'经典热狗，街头美食'},
+    {'id':'fries',      'name':'薯条',    'file':'44_frenchfries.png', 'price':18,  'lv':2, 'hunger':15, 'mood':18, 'health':-3, 'cat':'food',  'desc':'脆脆的，停不下来'},
+    {'id':'curry',      'name':'咖喱',    'file':'32_curry.png',       'price':35,  'lv':4, 'hunger':40, 'mood':18, 'health':5,  'cat':'food',  'desc':'浓香咖喱，补气暖身'},
+    {'id':'burger',     'name':'汉堡',    'file':'15_burger.png',      'price':40,  'lv':5, 'hunger':45, 'mood':20, 'health':0,  'cat':'food',  'desc':'双层汉堡，豪华套餐'},
+    {'id':'baguette',   'name':'法棍',    'file':'09_baguette.png',    'price':28,  'lv':3, 'hunger':30, 'mood':12, 'health':8,  'cat':'food',  'desc':'正宗法棍，回味无穷'},
+    {'id':'burrito',    'name':'卷饼',    'file':'18_burrito.png',     'price':32,  'lv':4, 'hunger':38, 'mood':15, 'health':3,  'cat':'food',  'desc':'墨西哥卷饼，丰盛美味'},
+    {'id':'applepie',   'name':'苹果派',  'file':'05_apple_pie.png',   'price':45,  'lv':5, 'hunger':35, 'mood':25, 'health':10, 'cat':'food',  'desc':'甜蜜苹果派，充满爱'},
+    {'id':'cheesecake', 'name':'芝士蛋糕','file':'22_cheesecake.png',  'price':55,  'lv':6, 'hunger':30, 'mood':30, 'health':8,  'cat':'food',  'desc':'浓郁芝士蛋糕，超满足'},
+    {'id':'waffle',     'name':'华夫饼',  'file':'101_waffle.png',     'price':50,  'lv':6, 'hunger':32, 'mood':28, 'health':5,  'cat':'food',  'desc':'格子华夫饼，淋上糖浆'},
+    {'id':'choco',      'name':'巧克力',  'file':'26_chocolate.png',   'price':20,  'lv':2, 'hunger':5,  'mood':30, 'health':0,  'cat':'snack', 'desc':'甜甜巧克力，心情大好'},
+    {'id':'cookies',    'name':'曲奇饼干','file':'28_cookies.png',     'price':15,  'lv':1, 'hunger':8,  'mood':25, 'health':0,  'cat':'snack', 'desc':'酥脆曲奇，陪你玩耍'},
+    {'id':'donut',      'name':'甜甜圈',  'file':'34_donut.png',       'price':25,  'lv':3, 'hunger':10, 'mood':35, 'health':0,  'cat':'snack', 'desc':'彩虹甜甜圈，超开心'},
+    {'id':'icecream',   'name':'冰淇淋',  'file':'57_icecream.png',    'price':35,  'lv':4, 'hunger':8,  'mood':40, 'health':0,  'cat':'snack', 'desc':'清凉冰淇淋，夏日必备'},
+    # ── 新增食物（Ghostpixxells 扩展包）──
+    {'id':'bagel',       'name':'百吉饼',   'file':'20_bagel.png',        'price':22,  'lv':2, 'hunger':22, 'mood':8,  'health':2,  'cat':'food',  'desc':'圆圆的百吉饼，嚼劲十足'},
+    {'id':'cheesepuff',  'name':'芝士球',   'file':'24_cheesepuff.png',   'price':15,  'lv':1, 'hunger':10, 'mood':18, 'health':-2, 'cat':'snack', 'desc':'蓬松芝士球，停不下来'},
+    {'id':'chocake',     'name':'巧克力蛋糕','file':'30_chocolatecake.png','price':60,  'lv':8, 'hunger':35, 'mood':35, 'health':5,  'cat':'snack', 'desc':'浓郁巧克力蛋糕，超满足'},
+    {'id':'eggsalad',    'name':'鸡蛋沙拉', 'file':'40_eggsalad.png',     'price':28,  'lv':3, 'hunger':25, 'mood':12, 'health':8,  'cat':'food',  'desc':'新鲜鸡蛋沙拉，营养丰富'},
+    {'id':'eggtart',     'name':'蛋挞',     'file':'42_eggtart.png',      'price':20,  'lv':2, 'hunger':15, 'mood':20, 'health':3,  'cat':'snack', 'desc':'酥皮蛋挞，下午茶必备'},
+    {'id':'fruitcake',   'name':'水果蛋糕', 'file':'46_fruitcake.png',    'price':55,  'lv':6, 'hunger':32, 'mood':30, 'health':10, 'cat':'snack', 'desc':'缤纷水果蛋糕，维生素满满'},
+    {'id':'garlicbread', 'name':'蒜香面包', 'file':'48_garlicbread.png',  'price':18,  'lv':2, 'hunger':20, 'mood':10, 'health':2,  'cat':'food',  'desc':'香浓蒜香面包，回味无穷'},
+    {'id':'gummybear',   'name':'软糖熊',   'file':'50_giantgummybear.png','price':12, 'lv':1, 'hunger':5,  'mood':22, 'health':-3, 'cat':'snack', 'desc':'巨大软糖熊，童年的味道'},
+    {'id':'gingerman',   'name':'姜饼人',   'file':'52_gingerbreadman.png','price':16, 'lv':2, 'hunger':10, 'mood':20, 'health':0,  'cat':'snack', 'desc':'可爱姜饼人，圣诞必备'},
+    {'id':'jelly',       'name':'果冻',     'file':'59_jelly.png',        'price':14,  'lv':1, 'hunger':8,  'mood':18, 'health':0,  'cat':'snack', 'desc':'Q弹果冻，软软的好好吃'},
+    {'id':'jam',         'name':'草莓酱',   'file':'61_jam.png',          'price':10,  'lv':1, 'hunger':5,  'mood':15, 'health':2,  'cat':'snack', 'desc':'甜甜草莓酱，抹面包棒极了'},
+    {'id':'lemonpie',    'name':'柠檬派',   'file':'63_lemonpie.png',     'price':48,  'lv':6, 'hunger':30, 'mood':28, 'health':8,  'cat':'snack', 'desc':'酸甜柠檬派，清新爽口'},
+    {'id':'loafbread',   'name':'吐司',     'file':'65_loafbread.png',    'price':12,  'lv':1, 'hunger':18, 'mood':6,  'health':2,  'cat':'food',  'desc':'软绵吐司，早餐首选'},
+    {'id':'macncheese',  'name':'芝士通心粉','file':'67_macncheese.png',  'price':35,  'lv':4, 'hunger':38, 'mood':18, 'health':2,  'cat':'food',  'desc':'奶酪通心粉，暖暖的好满足'},
+    {'id':'meatball',    'name':'肉丸',     'file':'69_meatball.png',     'price':30,  'lv':4, 'hunger':28, 'mood':15, 'health':5,  'cat':'food',  'desc':'多汁肉丸，弹弹的很好吃'},
+    {'id':'nacho',       'name':'纳秋',     'file':'71_nacho.png',        'price':22,  'lv':2, 'hunger':15, 'mood':18, 'health':-2, 'cat':'snack', 'desc':'脆脆纳秋配芝士酱'},
+    {'id':'omlet',       'name':'煎蛋卷',   'file':'73_omlet.png',        'price':25,  'lv':3, 'hunger':25, 'mood':12, 'health':6,  'cat':'food',  'desc':'松软煎蛋卷，早午餐好选择'},
+    {'id':'pudding',     'name':'布丁',     'file':'75_pudding.png',      'price':20,  'lv':2, 'hunger':12, 'mood':22, 'health':2,  'cat':'snack', 'desc':'颤颤巍巍的布丁，超可爱'},
+    {'id':'chips',       'name':'薯片',     'file':'77_potatochips.png',  'price':15,  'lv':1, 'hunger':8,  'mood':20, 'health':-4, 'cat':'snack', 'desc':'香脆薯片，嘎嘎响'},
+    {'id':'pancakes',    'name':'松饼',     'file':'79_pancakes.png',     'price':40,  'lv':5, 'hunger':35, 'mood':25, 'health':5,  'cat':'food',  'desc':'厚松饼叠叠乐，淋上枫糖浆'},
+    {'id':'pizza',       'name':'披萨',     'file':'81_pizza.png',        'price':50,  'lv':7, 'hunger':45, 'mood':30, 'health':2,  'cat':'food',  'desc':'芝士拉丝披萨，派对必备'},
+    {'id':'popcorn',     'name':'爆米花',   'file':'83_popcorn.png',      'price':12,  'lv':1, 'hunger':8,  'mood':20, 'health':-2, 'cat':'snack', 'desc':'蓬松爆米花，电影伴侣'},
+    {'id':'chicken',     'name':'烤鸡',     'file':'85_roastedchicken.png','price':60, 'lv':9, 'hunger':50, 'mood':25, 'health':10, 'cat':'food',  'desc':'整只烤鸡，大餐的感觉！'},
+    {'id':'ramen',       'name':'拉面',     'file':'87_ramen.png',        'price':45,  'lv':6, 'hunger':45, 'mood':28, 'health':8,  'cat':'food',  'desc':'热腾腾的拉面，灵魂食物'},
+    {'id':'salmon',      'name':'三文鱼',   'file':'88_salmon.png',       'price':55,  'lv':7, 'hunger':40, 'mood':22, 'health':15, 'cat':'food',  'desc':'新鲜三文鱼，富含营养'},
+    {'id':'strawcake',   'name':'草莓蛋糕', 'file':'90_strawberrycake.png','price':65, 'lv':9, 'hunger':35, 'mood':40, 'health':8,  'cat':'snack', 'desc':'粉嫩草莓蛋糕，最幸福的甜点'},
+    {'id':'sandwich',    'name':'三明治',   'file':'92_sandwich.png',     'price':25,  'lv':3, 'hunger':28, 'mood':12, 'health':5,  'cat':'food',  'desc':'料多实在的三明治'},
+    {'id':'spaghetti',   'name':'意大利面', 'file':'94_spaghetti.png',    'price':40,  'lv':5, 'hunger':42, 'mood':20, 'health':5,  'cat':'food',  'desc':'al dente意面，加满番茄酱'},
+    {'id':'steak',       'name':'牛排',     'file':'95_steak.png',        'price':80,  'lv':10, 'hunger':55, 'mood':35, 'health':12, 'cat':'food',  'desc':'完美熟度的牛排，顶级享受'},
+    {'id':'sushi',       'name':'寿司',     'file':'97_sushi.png',        'price':50,  'lv':7, 'hunger':35, 'mood':30, 'health':10, 'cat':'food',  'desc':'精致寿司，日式美味'},
+    {'id':'taco',        'name':'墨西哥卷', 'file':'99_taco.png',         'price':30,  'lv':4, 'hunger':30, 'mood':20, 'health':3,  'cat':'food',  'desc':'香辣墨西哥卷，爱了爱了'},
+]
 
 class HomeWorld:
     def __init__(self):
@@ -243,8 +320,9 @@ class HomeWorld:
 
         self.cx=200; self.sprite='stand'; self.flip=False
         self.walk_t=0; self.target=200
-        self.act='idle'; self.act_timer=0; self.act_phase=''
+        self.act='idle'; self.act_timer=0; self.act_phase=''; self._last_sched_ts=0.0
         self.bubble=''; self.btimer=0
+        self.news_pool = []  # 实时热搜词条
 
         self.clouds=[
             {'x':40,'y':24,'w':18,'h':5,'s':0.15},
@@ -276,9 +354,22 @@ class HomeWorld:
         # 互动
         self.poke_count=0; self.angry_level=0; self.angry_timer=0
         self.last_poke=0
+        self.feed_count = 0
+        self.play_count = 0
+        self.bathe_count = 0
+        self.ai_history = []
+        self.ai_thinking = False
 
         # 积分/成就
         self.score=0
+        self.buy_count = 0  # 总购买次数
+        self.birth_ts = time.time()  # 出生时间戳
+        self.travel_visited = []  # 已到访省份列表
+        self.travel_state = {'active':False,'dest':'','end_ts':0}  # 旅行中状态
+        self.exp = 0          # 当前经验值
+        self.level = 1        # 等级（1-10）
+        self.exp_show = ''    # 经验值浮动文字
+        self.exp_timer = 0
         self.achievements=ACHIEVEMENTS[:]
         self.ach_show=''; self.ach_timer=0
 
@@ -296,6 +387,11 @@ class HomeWorld:
         self.lmt=time.time(); self.idle_warned=False
 
         self.drag=False; self.dox=self.doy=0
+
+        # 背包（购买的食物）
+        self.bag = {}  # {item_id: count}
+        self.furniture_bag = {}  # {furniture_id: count}
+        self.placed_furniture = []  # [{id, x, y}, ...]
 
         # 四维属性
         self.hunger=80.0       # 饥饿度 0-100（100=饱）
@@ -336,6 +432,8 @@ class HomeWorld:
                 except: pass
         self.owner_name = pet_name or '南波万'
         self.address_word = addr or '主人'
+        import os as _os_env
+        self.ai_api_key = _os_env.environ.get('NBW_API_KEY', 'sk-placeholder')
 
     def _finish_setup(self):
         self.root.title(self._home_title())
@@ -372,6 +470,17 @@ class HomeWorld:
             self.char_id=d.get('char_id', DEFAULT_CHAR)
             self.owner_name=d.get('owner_name', '')
             self.address_word=d.get('address_word', '主人')
+            self.exp = int(d.get('exp', 0))
+            self.level = int(d.get('level', 1))
+            self.feed_count = int(d.get('feed_count', 0))
+            self.play_count = int(d.get('play_count', 0))
+            self.bathe_count = int(d.get('bathe_count', 0))
+            self.bag = d.get('bag', {})
+            self.furniture_bag = d.get('furniture_bag', {})
+            self.placed_furniture = d.get('placed_furniture', [])
+            self.birth_ts = d.get('birth_ts', time.time())
+            self.travel_visited = d.get('travel_visited', [])
+            self.travel_state = d.get('travel_state', {'active':False,'dest':'','end_ts':0})
         except:
             self.owner_name=''
             self.address_word='主人'
@@ -395,17 +504,58 @@ class HomeWorld:
                     'sick':self.sick,
                     'char_id':self.char_id,
                     'owner_name':self.owner_name,
-                    'address_word':self.address_word
+                    'address_word':self.address_word,
+                    'exp':self.exp,
+                    'level':self.level,
+                    'feed_count':self.feed_count,
+                    'play_count':self.play_count,
+                    'bathe_count':self.bathe_count,
+                    'bag':self.bag,
+                    'birth_ts':self.birth_ts,
+                    'travel_visited':self.travel_visited,
+                    'travel_state':self.travel_state,
+                    'furniture_bag':self.furniture_bag,
+                    'placed_furniture':self.placed_furniture,
                 },f)
         except: pass
 
     # ── 后台线程 ─────────────────────────────────────────────────────
     def _bg(self):
-        lw=0
+        lw=0; ln=0
         while True:
             self.hour=time.localtime().tm_hour
             if time.time()-lw>3600: self._wx(); lw=time.time()
+            if time.time()-ln>1800: self._fetch_news(); ln=time.time()
             time.sleep(30)
+
+    def _fetch_news(self):
+        """后台抓取微博/百度热搜，存入 news_pool"""
+        try:
+            import urllib.request, json as _j, ssl as _ssl
+            ctx = _ssl.create_default_context()
+            ctx.check_hostname = False; ctx.verify_mode = _ssl.CERT_NONE
+            # 用百度热搜 API（无鉴权，免费）
+            url = 'https://top.baidu.com/board?tab=realtime'
+            req = urllib.request.Request(url, headers={
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+                'Accept': 'application/json'
+            })
+            # 改用聚合数据/天行热搜免费接口
+            # 微博热搜 RSS
+            url2 = 'https://weibo.com/ajax/statuses/hot_band'
+            req2 = urllib.request.Request(url2, headers={
+                'User-Agent': 'Mozilla/5.0',
+                'Referer': 'https://weibo.com/',
+                'Cookie': ''
+            })
+            with urllib.request.urlopen(req2, timeout=8, context=ctx) as r:
+                d = _j.loads(r.read())
+            items = d.get('data', {}).get('band_list', [])[:15]
+            titles = [it.get('word', '') for it in items if it.get('word')]
+            if titles:
+                self.news_pool = titles
+        except:
+            pass
 
     def _wx(self):
         try:
@@ -440,14 +590,125 @@ class HomeWorld:
         self.score+=n; self._save()
         if self.score>=100: self.unlock('score100')
 
+    def add_exp(self, n):
+        """增加经验值，满足升级条件时自动升级"""
+        if self.level >= 10:
+            return
+        self.exp += n
+        self.exp_show = f'+{n} EXP'  # 浮动文字，不覆盖气泡
+        self.exp_timer = 60
+        needed = self.level * 100
+        if self.exp >= needed:
+            self.exp -= needed
+            self.level = min(10, self.level + 1)
+            self.say(f'✨ 升级了！现在是 Lv.{self.level}！', 150)  # 只有升级才覆盖气泡
+            self.score += 50
+            if self.level >= 5:
+                self.unlock('level5')
+            if self.level >= 10:
+                self.unlock('level10')
+        self._save()
+
+    def get_personality(self):
+        counts = {'gluttonous': self.feed_count, 'playful': self.play_count, 'clean': self.bathe_count}
+        m = max(counts.values())
+        if m < 3:
+            return 'balanced'
+        return max(counts, key=counts.get)
+
+    def get_system_prompt(self):
+        addr = getattr(self, 'address_word', '主人')
+        name = getattr(self, 'owner_name', '南波万')
+        personality = self.get_personality()
+        p_desc = {
+            'gluttonous': '你是一只超级贪吃的桌宠，满脑子都是食物，说话经常提到吃东西，但依然很可爱。',
+            'playful': '你是一只超级活泼好动的桌宠，精力旺盛，喜欢玩耍，说话很活跃很开心。',
+            'clean': '你是一只有洁癖的桌宠，非常爱干净，对脏东西很敏感，但很温柔很可爱。',
+            'balanced': '你是一只均衡可爱的桌宠，性格温和，喜欢撒娇，偶尔会有点小任性。'
+        }
+        stats = f'当前状态：饥饿{int(self.hunger)}/100，心情{int(self.mood)}/100，清洁{int(self.cleanliness)}/100，健康{int(self.health)}/100，等级Lv.{self.level}'
+        return f"""你是一只叫"{name}"的虚拟桌宠，住在桌面小家园里。{p_desc[personality]}
+你的主人叫"{addr}"。回复要简短（不超过30字），用中文，口气要可爱自然，偶尔用emoji，不要用markdown。
+{stats}"""
+
+    def ai_chat(self, user_msg):
+        if self.ai_thinking:
+            self.say('等我想一想…🤔', 60)
+            return
+        self.ai_thinking = True
+        self.say('…思考中…', 40)
+        def _call():
+            try:
+                sys_prompt = self.get_system_prompt()
+                self.ai_history.append({'role': 'user', 'content': user_msg})
+                if len(self.ai_history) > 10:
+                    self.ai_history = self.ai_history[-10:]
+                messages = [{'role': 'system', 'content': sys_prompt}] + self.ai_history
+                body = json.dumps({
+                    'model': 'claude-sonnet-4-6',
+                    'max_tokens': 100,
+                    'messages': messages
+                }).encode('utf-8')
+                ctx = ssl.create_default_context()
+                conn = http.client.HTTPSConnection('vibe.deepminer.ai', context=ctx)
+                conn.request('POST', '/v1/chat/completions', body=body,
+                             headers={
+                                 'Content-Type': 'application/json',
+                                 'Authorization': f'Bearer {getattr(self, "ai_api_key", "sk-placeholder")}'
+                             })
+                resp = conn.getresponse()
+                data = json.loads(resp.read().decode('utf-8'))
+                reply = data['choices'][0]['message']['content'].strip()
+                if len(reply) > 40:
+                    reply = reply[:40] + '…'
+                self.ai_history.append({'role': 'assistant', 'content': reply})
+                if len(self.ai_history) > 10:
+                    self.ai_history = self.ai_history[-10:]
+                self.root.after(0, lambda: self.say(reply, 180))
+            except Exception:
+                self.root.after(0, lambda: self.say('网络不好，说不出话来…', 80))
+            finally:
+                self.ai_thinking = False
+        threading.Thread(target=_call, daemon=True).start()
+
+    def _chat_dialog(self):
+        win = tk.Toplevel(self.root)
+        win.title('💬 和宠物说话')
+        win.geometry('300x130')
+        win.resizable(False, False)
+        win.lift()
+        win.focus_force()
+        personality = self.get_personality()
+        p_name = {'gluttonous':'🍔 贪吃鬼', 'playful':'🎮 活泼型', 'clean':'🛁 洁癖型', 'balanced':'😊 均衡型'}
+        tk.Label(win, text=f'当前性格：{p_name[personality]}  Lv.{self.level}', font=('PingFang SC', 10)).pack(pady=(8,2))
+        msg_var = tk.StringVar()
+        entry = tk.Entry(win, textvariable=msg_var, width=35, font=('PingFang SC', 11))
+        entry.pack(pady=4)
+        entry.focus_set()
+        def send():
+            msg = msg_var.get().strip()
+            if msg:
+                win.destroy()
+                self.ai_chat(msg)
+        btn_frame = tk.Frame(win)
+        btn_frame.pack()
+        tk.Button(btn_frame, text='发送', command=send, width=8).pack(side='left', padx=5)
+        tk.Button(btn_frame, text='取消', command=win.destroy, width=8).pack(side='left', padx=5)
+        win.bind('<Return>', lambda e: send())
+
     # ── 活动调度 ─────────────────────────────────────────────────────
     def schedule(self):
-        night=self.hour>=22 or self.hour<7
-        pool=['sleep','sleep','idle'] if night else ['walk','walk','water','cook','fish','idle','idle','walk']
-        self.do(random.choice(pool))
+        try:
+            night=self.hour>=22 or self.hour<7
+            pool=['sleep','sleep','idle'] if night else ['walk','walk','water','cook','fish','idle','idle','walk']
+            self.do(random.choice(pool))
+        except Exception as e:
+            # 防止 schedule 链断掉
+            self.root.after(3000, self.schedule)
 
     def do(self,act):
         if self.angry_level>2: return  # 生气时不做事
+        self._last_sched_ts = time.time()
         self.act=act; self.act_phase='walk'; self.act_timer=280
         dests={'walk':[80,132,180,252,304,360],'water':[320],'cook':[116],
                'fish':[212],'sleep':[116],'idle':[self.cx]}
@@ -460,7 +721,13 @@ class HomeWorld:
               'idle':random.choice([QUOTES_IDLE])}
         pool=msgs.get(act,QUOTES_IDLE)
         if isinstance(pool[0],list): pool=pool[0]
-        self.say(random.choice(pool),65)
+        # 30% 概率插入热搜词条（更有趣）
+        if self.news_pool and random.random() < 0.30:
+            news = random.choice(self.news_pool)
+            prefix = random.choice(['🔥 热搜：','📢 大家都在聊：','👀 今日话题：','🌐 热点来了：'])
+            self.say(f'{prefix}\n{news[:16]}', 90)
+        else:
+            self.say(random.choice(pool),100)
 
     def update_act(self):
         if self.angry_level>2:
@@ -489,7 +756,7 @@ class HomeWorld:
                 if self.act in doing: self.say(random.choice(doing[self.act]),100)
                 if self.act=='cook':
                     self.smoke_on=90
-                    self.unlock('cook'); self.add_score(5)
+                    self.unlock('cook'); self.add_score(5); self.add_exp(12)
                 if self.act=='water':
                     for i in range(4):
                         if self.veg[i]<2: self.veg[i]+=1; break
@@ -507,7 +774,7 @@ class HomeWorld:
         result=random.choice(FISH_RESULTS)
         self.fish_catch=result[0]; self.catch_timer=120
         self.say(result[1],100)
-        self.unlock('first_fish'); self.add_score(10)
+        self.unlock('first_fish'); self.add_score(10); self.add_exp(15)
 
     def say(self,msg,dur=80): self.bubble,self.btimer=msg,dur
 
@@ -688,7 +955,7 @@ class HomeWorld:
             cv.create_text(ax+aw//2,ay+11,text=self.ach_show,font=('PingFang SC',9,'bold'),fill=T['medal_g'])
 
         # 积分显示
-        cv.create_text(6,H-36,text=f'⭐{self.score}',anchor='sw',font=('PingFang SC',8),fill='#aaaacc')
+        cv.create_text(6,H-36,text=f'⭐{self.score}  Lv.{self.level}',anchor='sw',font=('PingFang SC',8),fill='#aaaacc')
 
         # 天气图标
         cv.create_text(W-30,12,text=self.w_icon,font=('Apple Color Emoji',12))
@@ -760,6 +1027,10 @@ class HomeWorld:
             spr = 'angry' if self.angry_level > 2 else self.sprite
             draw_sprite(cv, cx, gnd, spr, self.flip)
 
+        if self.exp_show and self.exp_timer > 0:
+            W_M = getattr(self, 'mini_w', 140)
+            cv.create_text(W_M//2, 18, text=self.exp_show,
+                           font=('PingFang SC', 11, 'bold'), fill='#ffdd44')
         if self.sick and self.frame % 16 < 8:
             cv.create_text(cx+16, gnd-52, text='🤒', font=('Apple Color Emoji', 9))
         if self.bubble and self.btimer > 0:
@@ -770,16 +1041,52 @@ class HomeWorld:
                                font=('PingFang SC', 7+i*2, 'bold'), fill='#60d0ff')
 
     def _px_bubble_mini(self, cx, gnd):
-        cv = self.cv; text = self.bubble
-        W_M = getattr(self, 'mini_w', 140)
-        bw = min(max(len(text)*11+16, 60), W_M-10)
-        bh = 28
-        bx = max(4, cx - bw//2)
-        by = gnd - 140  # 角色上方
-        cv.create_rectangle(bx, by, bx+bw, by+bh, fill='#fffef0', outline='#7744cc', width=2)
-        # 小三角指向角色
-        cv.create_polygon(cx-4, by+bh, cx, by+bh+6, cx+4, by+bh, fill='#fffef0', outline='#7744cc')
-        cv.create_text(bx+bw//2, by+bh//2, text=text, font=('PingFang SC', 13), fill='#1e0a3c')
+        """Mini气泡：复用已有浮层，不抢焦点不打断输入法"""
+        text = self.bubble
+        lines = text.split('\n')
+        max_len = max(len(l) for l in lines)
+        bw = max(max_len * 13 + 24, 100)
+        bh = 16 + len(lines) * 24
+
+        try:
+            rx = self.root.winfo_rootx()
+            ry = self.root.winfo_rooty()
+            rw = self.root.winfo_width()
+        except: return
+
+        bx_screen = rx + rw//2 - bw//2
+        by_screen = ry - bh - 10
+
+        # 一次性创建气泡窗口（之后只更新内容和位置，不 deiconify/withdraw）
+        if not hasattr(self, '_bubble_win') or not self.root.winfo_exists():
+            self._bubble_win = None
+        bwin = getattr(self, '_bubble_win', None)
+        if bwin is None or not bwin.winfo_exists():
+            bwin = tk.Toplevel(self.root)
+            bwin.overrideredirect(True)
+            bwin.attributes('-topmost', True)
+            bwin.attributes('-alpha', 0.0)   # 先透明
+            bwin.configure(bg='#fffef0')
+            # 确保不会获取焦点
+            bwin.wm_attributes('-topmost', True)
+            self._bubble_win = bwin
+            self._bubble_cv = tk.Canvas(bwin, bg='#fffef0', highlightthickness=2,
+                                        highlightbackground='#7744cc', takefocus=False)
+            self._bubble_cv.pack()
+            # 预先放到屏幕外，让它一直"存在"但不可见
+            bwin.geometry(f'1x1+0+0')
+            bwin.deiconify()  # 只在创建时 deiconify 一次
+
+        # 更新内容
+        bwin.geometry(f'{bw}x{bh}+{bx_screen}+{by_screen}')
+        bcv = self._bubble_cv
+        bcv.config(width=bw, height=bh)
+        bcv.delete('all')
+        for i, line in enumerate(lines):
+            bcv.create_text(bw//2, 10 + i*24, text=line, font=('PingFang SC', 13),
+                            fill='#1e0a3c', justify='center')
+        # 显示气泡（纯alpha控制，不抢焦点）
+        bwin.attributes('-alpha', 0.95)
 
     def _draw_window(self, cv, x, y, w, h, night):
         """室内窗户"""
@@ -925,9 +1232,18 @@ class HomeWorld:
         self.particles=[p for p in self.particles if p['life']>0 and p['y']<self.gnd+10]
 
         if self.act_timer>0: self.update_act()
+        elif time.time()-self._last_sched_ts>30: self.schedule()  # 保底：超30秒没动静就重启
         if self.btimer>0:
             self.btimer-=1
-            if self.btimer==0: self.bubble=''
+            if self.btimer==0:
+                self.bubble=''
+                # 气泡浮层隐藏
+                bwin=getattr(self,'_bubble_win',None)
+                if bwin and bwin.winfo_exists():
+                    bwin.attributes('-alpha', 0.0)  # 透明隐藏，不用withdraw
+        if self.exp_timer>0:
+            self.exp_timer-=1
+            if self.exp_timer==0: self.exp_show=''
         if self.catch_timer>0:
             self.catch_timer-=1
         if self.ach_timer>0:
@@ -938,6 +1254,28 @@ class HomeWorld:
             i=random.randint(0,3); self.veg[i]=(self.veg[i]+1)%3
         if self.frame%60==0: self.check_idle()
         if self.frame%120==0: self.check_reminders()
+
+        # 旅行中：每5秒刷新气泡；旅行结束自动完成
+        if self.travel_state.get('active'):
+            import time as _tt3
+            rem = int(self.travel_state.get('end_ts',0)-_tt3.time())
+            if rem <= 0:
+                # 旅行完成
+                dest = self.travel_state.get('dest','?')
+                self.travel_state = {'active':False,'dest':'','end_ts':0}
+                if dest not in self.travel_visited: self.travel_visited.append(dest)
+                n = len(self.travel_visited)
+                self.add_exp(15); self.add_score(10); self._save()
+                if n>=5:  self.unlock('travel5')
+                if n>=15: self.unlock('travel15')
+                if n>=34: self.unlock('travel35')
+                self.say(f'🎉 到{dest}啦！带特产回来~', 120)
+                self.bubble = f'🎉 到{dest}啦！带特产回来~'
+                self.btimer = 120
+            elif self.frame%62==0:  # ~5秒刷新
+                dest = self.travel_state.get('dest','?')
+                min_l = rem//60; sec_l = rem%60
+                self.say(f'✈️ 去{dest}旅行中\n还剩{min_l}分{sec_l:02d}秒', 65)
 
         # 属性自然衰减（每600帧≈约48秒，玩一小时掉约50%）
         if self.frame%1200==0:
@@ -985,7 +1323,8 @@ class HomeWorld:
         win.title('南波万の小家园')
         win.geometry(f'{W_G}x{H_G}+80+60')
         win.resizable(False, False)
-        win.attributes('-topmost', True)
+        win.lift()
+        win.focus_force()
         win.configure(bg='systemTransparent')
         self.garden_win = win
         cv_g = tk.Canvas(win, width=W_G, height=H_G, bg='#100825', highlightthickness=0)
@@ -1134,6 +1473,16 @@ class HomeWorld:
         def draw_g():
             nonlocal _last_night, _last_scene
             if not win.winfo_exists(): return
+            try:
+                _draw_g_inner()
+            except Exception as _eg:
+                import traceback
+                with open('/tmp/pet_garden_err.log','a') as _ef:
+                    traceback.print_exc(file=_ef)
+            if win.winfo_exists(): win.after(80, draw_g)
+
+        def _draw_g_inner():
+            nonlocal _last_night, _last_scene
             f = g['frame']; night = self.hour >= 22 or self.hour < 7
             scene = g['scene']
 
@@ -1156,6 +1505,7 @@ class HomeWorld:
 
             # ── 场景标签 ──
             wx_icon = {'rain':' 🌧️','snow':' ❄️'}.get(self.weather_mode, '')
+            time_slot = _get_time_slot()
             time_icon = {'morning':'🌅 早晨','noon':'☀️ 正午','evening':'🌇 傍晚','night':'🌙 夜晚'}[time_slot]
             scene_label = {'outdoor':'🌿 户外','forest':'🌳 森林','upstairs':'🪜 二楼'}.get(scene, '🏠 室内') + wx_icon
             cv_g.create_text(14, 14, text=scene_label, anchor='nw',
@@ -1164,6 +1514,33 @@ class HomeWorld:
             cv_g.create_text(14, 32, text=time_icon, anchor='nw',
                              font=('PingFang SC', 9),
                              fill='#ccccee', tags='dynamic')
+
+            # ── 已摆放家具 ──
+            if self.placed_furniture:
+                from PIL import Image as _PIf, ImageTk as _ITf
+                import os as _osf
+                FDIR = _osf.path.join(_osf.path.dirname(_osf.path.abspath(__file__)), 'assets', 'furniture')
+                if not hasattr(self, '_furn_img_cache'): self._furn_img_cache = {}
+                for pf in self.placed_furniture:
+                    fid = pf.get('file','')
+                    if not fid: continue
+                    if fid not in self._furn_img_cache:
+                        try:
+                            img = _ITf.PhotoImage(_PIf.open(_osf.path.join(FDIR, fid)).convert('RGBA').resize((48,48), _PIf.NEAREST))
+                            self._furn_img_cache[fid] = img
+                        except: self._furn_img_cache[fid] = None
+                    img = self._furn_img_cache.get(fid)
+                    if img:
+                        cv_g.create_image(pf['x'], pf['y'], anchor='center', image=img, tags='dynamic')
+                        cv_g.create_text(pf['x'], pf['y']+28, text=pf.get('name',''), font=('PingFang SC',7), fill='#ccbbee', tags='dynamic')
+
+            # 摆放模式提示
+            pending = getattr(self, '_pending_place', None)
+            if pending:
+                cv_g.create_text(W_G//2, 50, text=f"🛋️ 点击任意位置摆放『{pending['name']}』",
+                                 font=('PingFang SC', 12, 'bold'), fill='#ffee44', tags='dynamic')
+                cv_g.create_text(W_G//2, 72, text='右键可取消摆放',
+                                 font=('PingFang SC', 9), fill='#ccccff', tags='dynamic')
 
             # ── 门口提示 ──
             gcx, gcy = g['cx'], g['cy']
@@ -1260,27 +1637,43 @@ class HomeWorld:
                         sy = _rnd.randint(40, 200)
                         cv_g.create_oval(sx-1, sy-1, sx+1, sy+1, fill='#ddeeff', outline='', tags='dynamic')
 
-            # ── 角色阴影 ──
+            # ── 旅行中：不显示角色 ──
             gcx = g['cx']; gcy = g['cy']
-            cv_g.create_oval(gcx-20, gcy-4, gcx+20, gcy+4, fill='#443322', outline='', tags='dynamic')
-
-            # ── 角色图片 ──
-            moving = g['moving']
-            fi = (f // 4) % len(frames_right)
-            if moving == 'right':
-                char_img = frames_left[fi]
-            elif moving == 'left':
-                char_img = frames_right[fi]
+            if self.travel_state.get('active'):
+                import time as _tt2
+                rem = int(self.travel_state.get('end_ts', 0) - _tt2.time())
+                dest = self.travel_state.get('dest', '?')
+                # 显示飞机和提示文字
+                cv_g.create_text(W_G//2, H_G//2 - 50, text='✈️',
+                                 font=('Apple Color Emoji', 48), tags='dynamic')
+                cv_g.create_text(W_G//2, H_G//2 + 20,
+                                 text=f'正在去 {dest} 旅行中...',
+                                 font=('PingFang SC', 14, 'bold'), fill='#ffcc44', tags='dynamic')
+                min_left = max(0, rem) // 60; sec_left = max(0, rem) % 60
+                cv_g.create_text(W_G//2, H_G//2 + 48,
+                                 text=f'还有 {min_left}分{sec_left:02d}秒 到达',
+                                 font=('PingFang SC', 11), fill='#ccddff', tags='dynamic')
             else:
-                char_img = stand_img
-            cv_g.create_image(gcx, gcy - CHAR_H//2, anchor='s', image=char_img, tags='dynamic')
+                # ── 角色阴影 ──
+                cv_g.create_oval(gcx-20, gcy-4, gcx+20, gcy+4, fill='#443322', outline='', tags='dynamic')
 
-            # ── 生病图标 ──
-            if self.sick and f%16<8:
-                cv_g.create_text(gcx+20, gcy-CHAR_H-4, text='🤒', font=('Apple Color Emoji',12), tags='dynamic')
+                # ── 角色图片 ──
+                moving = g['moving']
+                fi = (f // 4) % len(frames_right)
+                if moving == 'right':
+                    char_img = frames_left[fi]
+                elif moving == 'left':
+                    char_img = frames_right[fi]
+                else:
+                    char_img = stand_img
+                cv_g.create_image(gcx, gcy - CHAR_H//2, anchor='s', image=char_img, tags='dynamic')
 
-            # ── 气泡（简洁版，小圆角文字框）──
-            if self.bubble and self.btimer > 0:
+                # ── 生病图标 ──
+                if self.sick and f%16<8:
+                    cv_g.create_text(gcx+20, gcy-CHAR_H-4, text='🤒', font=('Apple Color Emoji',12), tags='dynamic')
+
+            # ── 气泡（旅行中不显示）──
+            if self.bubble and self.btimer > 0 and not self.travel_state.get('active'):
                 btxt = self.bubble[:20] + ('…' if len(self.bubble)>20 else '')
                 bx, by = gcx, gcy - CHAR_H - 6
                 cv_g.create_oval(bx-4, by-22, bx+4, by, fill='#fff9f0', outline='#ccaa88', tags='dynamic')
@@ -1306,6 +1699,9 @@ class HomeWorld:
                     cv_g.create_rectangle(bx2,y2-4,bx2+fw,y2-3,fill='#ffffff',outline='', tags='dynamic')
                 if val<25 and f%20<10:
                     cv_g.create_rectangle(bx2-1,y2-5,bx2+bar_w+1,y2+5,fill='',outline='#ff4444',width=1, tags='dynamic')
+                # 数字显示在进度条右侧
+                num_color='#ff4444' if val<25 else '#ffaa22' if val<55 else '#ccffcc'
+                cv_g.create_text(bx2+bar_w+3,y2,text=f'{int(val)}',font=('PingFang SC',7),anchor='w',tags='dynamic',fill=num_color)
 
             # ── 积分/时间/标题 ──
             cv_g.create_text(8,H_G-36,text=f'⭐{self.score}',anchor='sw',font=('PingFang SC',9), tags='dynamic',fill='#aaaacc')
@@ -1393,7 +1789,7 @@ class HomeWorld:
                     self.say('下楼了 🏠', 80)
             g['e_pressed'] = False
 
-            if win.winfo_exists(): win.after(80, draw_g)
+            # after已移至draw_g外层，此处不需要
 
 
         g['debug'] = False; g['mouse_x'] = 0; g['mouse_y'] = 0
@@ -1417,22 +1813,50 @@ class HomeWorld:
                 bx = W_G - 100 + wi * 28
                 if bx <= e.x <= bx+24 and 6 <= e.y <= 26:
                     self._set_weather(wmode); break
+            # 摆放模式
+            pending = getattr(self, '_pending_place', None)
+            if pending:
+                self.placed_furniture.append({'id': pending['id'], 'x': e.x, 'y': e.y,
+                                              'file': pending['file'], 'name': pending['name']})
+                cnt = self.furniture_bag.get(pending['id'], 0)
+                self.furniture_bag[pending['id']] = max(0, cnt - 1)
+                self._save()
+                self.say(f"摆好{pending['name']}了！🛋️", 80)
+                self._pending_place = None
         # 同时绑定 win 和 cv_g，确保键盘事件能收到
         win.bind('<KeyPress>',on_kp); win.bind('<KeyRelease>',on_kr)
         cv_g.bind('<KeyPress>',on_kp); cv_g.bind('<KeyRelease>',on_kr)
-        cv_g.bind('<Button-1>', lambda e: (on_click(e), win.focus_force()))
+        def _garden_click(e):
+            on_click(e)
+            # 如果小卖部/档案等子窗口开着，保持它们在前面
+            for attr in ('_shop_win','_profile_win','_travel_win'):
+                sub = getattr(self, attr, None)
+                if sub and sub.winfo_exists():
+                    sub.lift()
+        cv_g.bind('<Button-1>', lambda e: (_garden_click(e), None))
         win.bind('<Button-1>', lambda e: win.focus_force())
 
         # 右键菜单
         def on_g_rclick(e):
+            # 如果正在摆放模式，右键取消
+            if getattr(self, '_pending_place', None):
+                self._pending_place = None
+                self.say('取消摆放', 40)
+                return
             m = tk.Menu(win, tearoff=0, bg='#1e0f3a', fg='#ddccff',
                         activebackground='#7733cc', activeforeground='white', font=('PingFang SC',11))
+            m.add_command(label='💬  找我说话', command=lambda: (self._chat_dialog(), win.focus_force()))
+            m.add_command(label='🐾  宠物档案', command=lambda: (self.open_profile(), win.focus_force()))
+            m.add_command(label='🗺️  旅行地图', command=lambda: (self.open_travel(), win.focus_force()))
+            m.add_command(label='🛒  小卖部',   command=lambda: (self.open_shop(), win.focus_force()))
+            m.add_command(label='🛋️  家具店',   command=lambda: (self.open_furniture_shop(), win.focus_force()))
+            m.add_separator()
             m.add_command(label='🍔  喂食', command=lambda: (self.feed(), win.focus_force()))
             m.add_command(label='🛁  洗澡', command=lambda: (self.bathe(), win.focus_force()))
-            m.add_command(label='🎮  玩耍', command=lambda: (self.play(), win.focus_force()))
-            m.add_command(label='💊  喂药', command=lambda: (self.medicine(), win.focus_force()))
+            m.add_command(label='🎮  玩耍', command=lambda: (self.play_with(), win.focus_force()))
+            m.add_command(label='💊  喂药', command=lambda: (self.give_medicine(), win.focus_force()))
             m.add_separator()
-            m.add_command(label=f'饥{int(self.hunger)} 情{int(self.mood)} 洁{int(self.cleanliness)} 命{int(self.health)}', state='disabled')
+            m.add_command(label=f'饥{int(self.hunger)} 情{int(self.mood)} 洁{int(self.cleanliness)} 命{int(self.health)}  Lv.{self.level}', state='disabled')
             m.add_separator()
             m.add_command(label='❌  关闭家园', command=win.destroy)
             try: m.tk_popup(e.x_root, e.y_root)
@@ -1476,7 +1900,7 @@ class HomeWorld:
 
     def onrel(self,e):
         if not self.drag:
-            self.poke_count+=1; self.add_score(1)
+            self.poke_count+=1; self.add_score(1); self.add_exp(2)
             # 连续快速戳 → 生气
             now=time.time()
             if now-self.last_poke<1.5:
@@ -1494,6 +1918,12 @@ class HomeWorld:
 
     def onright(self,e):
         m=tk.Menu(self.root,tearoff=0)
+        m.add_command(label='💬 找我说话',command=self._chat_dialog)
+        m.add_command(label='🐾 宠物档案',command=self.open_profile)
+        m.add_command(label='🗺️ 旅行地图',command=self.open_travel)
+        m.add_command(label='🛒 小卖部',command=self.open_shop)
+        m.add_command(label='🛋️ 家具店',command=self.open_furniture_shop)
+        m.add_separator()
         m.add_command(label='🍔 喂食',command=self.feed)
         m.add_command(label='🛁 洗澡',command=self.bathe)
         m.add_command(label='🎮 玩耍',command=self.play_with)
@@ -1528,7 +1958,7 @@ class HomeWorld:
     def _add_reminder_dialog(self):
         win=tk.Toplevel(self.root); win.title('添加提醒')
         win.geometry('280x120'); win.resizable(False,False)
-        win.attributes('-topmost',True)
+        win.lift()
         tk.Label(win,text='提醒内容：').pack(pady=(10,0))
         msg_var=tk.StringVar()
         tk.Entry(win,textvariable=msg_var,width=30).pack()
@@ -1547,25 +1977,771 @@ class HomeWorld:
         done=[a for a in self.achievements if a['done']]
         todo=[a for a in self.achievements if not a['done']]
         lines=['🏆 已解锁：']+[f"  {a['name']}" for a in done]+['','🔒 未解锁：']+[f"  {a['name']}  ({a['desc']})" for a in todo]
-        win=tk.Toplevel(self.root); win.title('成就'); win.attributes('-topmost',True)
+        win=tk.Toplevel(self.root); win.title('成就'); win.lift()
         win.geometry('260x'+str(30+len(lines)*18))
         for l in lines:
             tk.Label(win,text=l,anchor='w',font=('PingFang SC',9)).pack(fill='x',padx=8)
         tk.Button(win,text='关闭',command=win.destroy).pack(pady=4)
 
+    # ── 商店系统 ──────────────────────────────────────────────────────
+    def open_shop(self, start_tab='shop'):
+        """QQ宠物风格喂养商店"""
+        if hasattr(self,'_shop_win') and self._shop_win and self._shop_win.winfo_exists():
+            self._shop_win.lift()
+            if hasattr(self._shop_win,'_switch_tab'):
+                self._shop_win._switch_tab(start_tab)
+            return
+        from PIL import Image as _PI, ImageTk as _IT
+        win=tk.Toplevel(self.root)
+        win.title('🛒 小卖部')
+        win.geometry('550x480+200+80')
+        win.resizable(False,False)
+        win.lift()
+        win.focus_force()
+        win.configure(bg='#f5e8c8')
+        self._shop_win=win
+        MID='#c8883a'; PANEL='#ffe8b0'; DARK='#7a4a10'; LIGHT='#fff5dc'
+        SEL='#ffe066'; BTN_BUY='#e85520'; BTN_USE='#3a9a30'; BTN_DIS='#aaaaaa'; TEXT='#3a1a00'
+        state={'tab':start_tab,'cat':'food','sel':None,'imgs':{}}
+
+        def load_img(fname,size=56):
+            k=(fname,size)
+            if k in state['imgs']: return state['imgs'][k]
+            fp=os.path.join(FOOD_DIR,fname)
+            try:
+                p=_IT.PhotoImage(_PI.open(fp).convert('RGBA').resize((size,size),_PI.NEAREST))
+            except: p=None
+            state['imgs'][k]=p; return p
+
+        # 顶部标题栏
+        top=tk.Frame(win,bg=MID,height=44); top.pack(fill='x'); top.pack_propagate(False)
+        tk.Label(top,text='🛒  小卖部',font=('PingFang SC',14,'bold'),bg=MID,fg='#fff5dc').pack(side='left',padx=16)
+        tbf=tk.Frame(top,bg=MID); tbf.pack(side='right',padx=8)
+        tbtns={}
+        def sw_tab(t):
+            state['tab']=t; state['sel']=None
+            for k,b in tbtns.items(): b.config(bg=SEL if k==t else PANEL,relief='sunken' if k==t else 'raised')
+            refresh()
+        for tid,tl in [('shop','🏪 商店'),('bag','🎒 背包')]:
+            b=tk.Button(tbf,text=tl,font=('PingFang SC',10),bg=SEL if tid==start_tab else PANEL,fg=TEXT,
+                        relief='sunken' if tid==start_tab else 'raised',bd=1,padx=8,pady=2,
+                        command=lambda t=tid:sw_tab(t)); b.pack(side='left',padx=2); tbtns[tid]=b
+
+        # 左右分栏
+        lp=tk.Frame(win,bg='#f5e8c8',width=390); lp.pack(side='left',fill='y'); lp.pack_propagate(False)
+        rp=tk.Frame(win,bg=PANEL,width=160); rp.pack(side='right',fill='both',expand=True)
+
+        # 分类tab
+        cf=tk.Frame(lp,bg='#e8c880',height=30); cf.pack(fill='x')
+        cbtns={}
+        def sw_cat(c):
+            state['cat']=c; state['sel']=None
+            for k,b in cbtns.items(): b.config(bg=SEL if k==c else '#e8c880')
+            refresh()
+        for cid,cl in [('food','🍚 主食'),('snack','🍬 零食')]:
+            b=tk.Button(cf,text=cl,font=('PingFang SC',10),bg=SEL if cid=='food' else '#e8c880',fg=TEXT,
+                        relief='flat',bd=0,padx=12,pady=3,command=lambda c=cid:sw_cat(c))
+            b.pack(side='left'); cbtns[cid]=b
+
+        # 物品网格（可滚动）
+        grid_container=tk.Frame(lp,bg=LIGHT); grid_container.pack(fill='both',expand=True,padx=1,pady=2)
+        gcv=tk.Canvas(grid_container,bg=LIGHT,highlightthickness=0)
+        gsb=tk.Scrollbar(grid_container,orient='vertical',command=gcv.yview)
+        gcv.configure(yscrollcommand=gsb.set)
+        gsb.pack(side='right',fill='y'); gcv.pack(side='left',fill='both',expand=True)
+        gf=tk.Frame(gcv,bg=LIGHT); gcv.create_window((0,0),window=gf,anchor='nw')
+        def _on_scroll(e):
+            gcv.yview_scroll(int(-1*(e.delta/120)),'units')
+        def _bind_scroll(widget):
+            widget.bind('<MouseWheel>',_on_scroll)
+            for child in widget.winfo_children():
+                _bind_scroll(child)
+        gcv.bind('<MouseWheel>',_on_scroll)
+        gf.bind('<MouseWheel>',_on_scroll)
+        win.bind('<MouseWheel>',_on_scroll)
+
+        # 底部积分
+        bb=tk.Frame(lp,bg='#e8c880',height=28); bb.pack(fill='x'); bb.pack_propagate(False)
+        sc_lbl=tk.Label(bb,text=f'⭐ 当前积分：{self.score}',font=('PingFang SC',10),bg='#e8c880',fg=DARK)
+        sc_lbl.pack(side='left',padx=10)
+
+        # 右侧详情
+        di=tk.Label(rp,bg=PANEL); di.pack(pady=(20,6))
+        dn=tk.Label(rp,text='',font=('PingFang SC',13,'bold'),bg=PANEL,fg=DARK); dn.pack()
+        dd=tk.Label(rp,text='',font=('PingFang SC',10),bg=PANEL,fg=TEXT,wraplength=145); dd.pack(pady=4)
+        de=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#556688',wraplength=145); de.pack(pady=2)
+        dp=tk.Label(rp,text='',font=('PingFang SC',11,'bold'),bg=PANEL,fg=BTN_BUY); dp.pack(pady=4)
+        dlv=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#886644'); dlv.pack()
+        dct=tk.Label(rp,text='',font=('PingFang SC',10),bg=PANEL,fg=DARK); dct.pack(pady=2)
+        b_buy=tk.Button(rp,text='💰 购买',font=('PingFang SC',12,'bold'),bg=BTN_BUY,fg='white',
+                        relief='flat',bd=0,padx=20,pady=6,state='disabled',cursor='hand2'); b_buy.pack(pady=(8,4))
+        b_use=tk.Button(rp,text='🍽 喂食',font=('PingFang SC',12,'bold'),bg=BTN_USE,fg='white',
+                        relief='flat',bd=0,padx=20,pady=6,state='disabled',cursor='hand2'); b_use.pack()
+        ml=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#cc3300',wraplength=145); ml.pack(pady=4)
+
+        def upd_detail(item):
+            img=load_img(item['file'],56)
+            if img: di.config(image=img); di._img=img
+            dn.config(text=item['name']); dd.config(text=item['desc'])
+            fx=[]
+            if item['hunger']>0: fx.append(f'饱腹度 +{item["hunger"]}')
+            if item['mood']>0: fx.append(f'心情 +{item["mood"]}')
+            if item['health']!=0: fx.append(f'健康 {item["health"]:+d}')
+            de.config(text=' | '.join(fx))
+            locked=item['lv']>self.level; cnt=self.bag.get(item['id'],0)
+            if state['tab']=='shop':
+                dp.config(text=f'⭐ {item["price"]} 积分')
+                dlv.config(text=f'需要等级 Lv.{item["lv"]}'+(' 🔒' if locked else ' ✅'))
+                dct.config(text=f'背包库存：×{cnt}')
+                if locked: b_buy.config(state='disabled',bg=BTN_DIS,text='🔒 等级不足')
+                elif self.score<item['price']: b_buy.config(state='disabled',bg=BTN_DIS,text='💰 积分不足')
+                else: b_buy.config(state='normal',bg=BTN_BUY,text='💰 购买',command=lambda it=item:do_buy(it))
+                b_use.config(state='normal' if cnt>0 else 'disabled',
+                             bg=BTN_USE if cnt>0 else BTN_DIS,
+                             text='🍽 喂食' if cnt>0 else '🎒 未购买',
+                             command=lambda it=item:do_use(it))
+            else:
+                dp.config(text=''); dlv.config(text=''); dct.config(text=f'背包库存：×{cnt}')
+                b_buy.config(state='disabled',bg=BTN_DIS,text='💰 购买')
+                b_use.config(state='normal' if cnt>0 else 'disabled',bg=BTN_USE if cnt>0 else BTN_DIS,
+                             text='🍽 喂食',command=lambda it=item:do_use(it))
+
+        def do_buy(item):
+            if self.score<item['price']: ml.config(text='积分不足！'); return
+            if item['lv']>self.level: ml.config(text=f'需要 Lv.{item["lv"]}！'); return
+            self.score-=item['price']
+            self.bag[item['id']]=self.bag.get(item['id'],0)+1
+            self.buy_count=getattr(self,'buy_count',0)+1
+            self.add_exp(3); self._save()
+            if self.buy_count>=10: self.unlock('shop10')
+            self.say(f'买到{item["name"]}了！🛒',70)
+            ml.config(text=f'✅ 购买成功！背包 ×{self.bag[item["id"]]}')
+            refresh()
+
+        def do_use(item):
+            cnt=self.bag.get(item['id'],0)
+            if cnt<=0: ml.config(text='背包里没有！'); return
+            self.hunger=min(100,self.hunger+item['hunger'])
+            self.mood=min(100,self.mood+item['mood'])
+            self.health=min(100,max(0,self.health+item['health']))
+            if self.sick and self.health>=75: self.sick=False
+            self.bag[item['id']]=cnt-1; self.feed_count+=1; self.add_exp(5); self._save()
+            import random as _r
+            replies=[f'{item["name"]}好好吃！😋',f'啊~{item["name"]}太香了！',
+                     f'谢谢主人！{item["name"]}！',f'是{item["name"]}！我最喜欢了！']
+            self.say(_r.choice(replies),100)
+            ml.config(text=f'✅ 喂食成功！剩余 ×{self.bag[item["id"]]}')
+            refresh()
+
+        def refresh():
+            for w in gf.winfo_children(): w.destroy()
+            if state['tab']=='shop':
+                pool=[it for it in SHOP_ITEMS if it['cat']==state['cat']]
+            else:
+                pool=[it for it in SHOP_ITEMS if self.bag.get(it['id'],0)>0]
+            COLS=4
+            for i,item in enumerate(pool):
+                r,c=i//COLS,i%COLS
+                issel=item['id']==state['sel']
+                fr=tk.Frame(gf,bg=SEL if issel else LIGHT,bd=2,
+                            relief='ridge' if issel else 'flat',cursor='hand2')
+                fr.grid(row=r,column=c,padx=3,pady=4)
+                img=load_img(item['file'],64)
+                if img:
+                    il=tk.Label(fr,image=img,bg=SEL if issel else LIGHT); il.pack(); il._img=img
+                tk.Label(fr,text=item['name'],font=('PingFang SC',11,'bold'),
+                         bg=SEL if issel else LIGHT,fg=TEXT).pack()
+                locked=item['lv']>self.level
+                if state['tab']=='shop':
+                    tk.Label(fr,text=f'🔒Lv{item["lv"]}' if locked else f'⭐{item["price"]}',
+                             font=('PingFang SC',10),bg=SEL if issel else LIGHT,
+                             fg='#888888' if locked else BTN_BUY).pack()
+                else:
+                    tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',
+                             font=('PingFang SC',10,'bold'),
+                             bg=SEL if issel else LIGHT,fg=BTN_USE).pack()
+                def on_click(it=item):
+                    state['sel']=it['id']; refresh(); upd_detail(it)
+                for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:on_click(it))
+                fr.bind('<Button-1>',lambda e,it=item:on_click(it))
+            gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
+            _bind_scroll(gf)  # 确保新子控件也能滚轮
+            sc_lbl.config(text=f'⭐ 当前积分：{self.score}'); ml.config(text='')
+            if state['sel']:
+                it=next((x for x in SHOP_ITEMS if x['id']==state['sel']),None)
+                if it: upd_detail(it)
+
+        refresh(); win.focus_force()
+        win._switch_tab = sw_tab  # 暴露给外部调用
+
+
+    # ── 家具店系统 ──────────────────────────────────────────────────
+    def open_furniture_shop(self):
+        """家具店 —— 购买家具，在家园中摆放"""
+        if hasattr(self,'_fshop_win') and self._fshop_win and self._fshop_win.winfo_exists():
+            self._fshop_win.lift(); return
+        from PIL import Image as _PI, ImageTk as _IT
+        import os as _os3
+
+        FURN_DIR = _os3.path.join(_os3.path.dirname(_os3.path.abspath(__file__)), 'assets', 'furniture')
+
+        # 家具数据
+        FURNITURE_ITEMS = [
+            {'id':'fridge',    'name':'冰箱',    'file':'01_00_冰箱.png',       'price':80, 'lv':3,'cat':'kitchen','mood':5, 'desc':'保鲜食物，饥饿恢复+5%'},
+            {'id':'oven',      'name':'烤箱',    'file':'01_03_烤箱.png',       'price':60, 'lv':2,'cat':'kitchen','mood':3, 'desc':'烤箱，让食物更美味'},
+            {'id':'microwave', 'name':'微波炉',  'file':'01_05_微波炉.png',     'price':40, 'lv':2,'cat':'kitchen','mood':2, 'desc':'快速加热食物'},
+            {'id':'sink',      'name':'水槽',    'file':'01_06_水槽.png',       'price':35, 'lv':1,'cat':'kitchen','mood':2, 'desc':'厨房必备'},
+            {'id':'stove',     'name':'灶台',    'file':'01_09_灶台.png',       'price':50, 'lv':2,'cat':'kitchen','mood':3, 'desc':'烹饪美食'},
+            {'id':'cabinet',   'name':'橱柜',    'file':'01_10_橱柜.png',       'price':45, 'lv':2,'cat':'kitchen','mood':2, 'desc':'储藏食材'},
+            {'id':'sofa_l',    'name':'沙发(左)','file':'02_00_沙发左.png',     'price':60, 'lv':2,'cat':'living', 'mood':8, 'desc':'舒适沙发，心情+8'},
+            {'id':'sofa_m',    'name':'沙发(中)','file':'02_01_沙发中.png',     'price':60, 'lv':2,'cat':'living', 'mood':8, 'desc':'舒适沙发，心情+8'},
+            {'id':'sofa_r',    'name':'沙发(右)','file':'02_02_沙发右.png',     'price':60, 'lv':2,'cat':'living', 'mood':8, 'desc':'舒适沙发，心情+8'},
+            {'id':'armchair',  'name':'单人沙发','file':'02_03_单人沙发.png',   'price':50, 'lv':2,'cat':'living', 'mood':6, 'desc':'单人沙发，心情+6'},
+            {'id':'coffee_tb', 'name':'茶几',    'file':'02_05_茶几.png',       'price':30, 'lv':1,'cat':'living', 'mood':3, 'desc':'放茶杯的小桌'},
+            {'id':'tv_stand',  'name':'电视柜',  'file':'02_06_电视柜.png',     'price':40, 'lv':2,'cat':'living', 'mood':4, 'desc':'电视专属柜'},
+            {'id':'bookshelf', 'name':'书架',    'file':'02_09_书架上.png',     'price':55, 'lv':3,'cat':'study',  'mood':6, 'desc':'知识的海洋，心情+6'},
+            {'id':'bed_tl',    'name':'床(左上)','file':'03_00_床左上.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
+            {'id':'bed_tr',    'name':'床(右上)','file':'03_01_床右上.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
+            {'id':'dresser',   'name':'梳妆台',  'file':'03_09_梳妆台.png',     'price':65, 'lv':3,'cat':'bedroom','mood':7, 'desc':'整理仪容，心情+7'},
+            {'id':'wardrobe',  'name':'衣柜',    'file':'03_10_衣柜上.png',     'price':70, 'lv':3,'cat':'bedroom','mood':5, 'desc':'宽敞衣柜'},
+            {'id':'bed_bl',    'name':'床(左下)','file':'04_00_床左下.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
+            {'id':'bed_br',    'name':'床(右下)','file':'04_01_床右下.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
+            {'id':'nightstand','name':'床头柜',  'file':'04_09_床头柜.png',     'price':30, 'lv':1,'cat':'bedroom','mood':2, 'desc':'床边小桌'},
+            {'id':'bathtub',   'name':'浴缸',    'file':'05_00_浴缸.png',       'price':90, 'lv':4,'cat':'bath',   'mood':8, 'desc':'泡澡放松，洁净+8'},
+            {'id':'toilet',    'name':'马桶',    'file':'05_01_马桶.png',       'price':40, 'lv':1,'cat':'bath',   'mood':2, 'desc':'卫生间必备'},
+            {'id':'washbasin', 'name':'洗手台',  'file':'05_02_洗手台.png',     'price':35, 'lv':1,'cat':'bath',   'mood':3, 'desc':'清洁双手'},
+            {'id':'shower',    'name':'淋浴间',  'file':'05_03_淋浴间.png',     'price':60, 'lv':2,'cat':'bath',   'mood':6, 'desc':'冲澡超爽'},
+            {'id':'piano',     'name':'钢琴',    'file':'06_00_钢琴.png',       'price':150,'lv':6,'cat':'entertain','mood':15,'desc':'演奏音乐，心情+15'},
+            {'id':'piano_k',   'name':'钢琴键',  'file':'06_01_钢琴键.png',     'price':150,'lv':6,'cat':'entertain','mood':15,'desc':'演奏音乐，心情+15'},
+            {'id':'guitar',    'name':'吉他',    'file':'06_05_吉他.png',       'price':80, 'lv':4,'cat':'entertain','mood':10,'desc':'弹吉他，心情+10'},
+            {'id':'computer',  'name':'电脑桌',  'file':'06_09_电脑桌.png',     'price':75, 'lv':3,'cat':'study',  'mood':8, 'desc':'学习工作，心情+8'},
+            {'id':'lamp',      'name':'台灯',    'file':'06_10_台灯.png',       'price':20, 'lv':1,'cat':'living', 'mood':2, 'desc':'温馨台灯'},
+            {'id':'desk',      'name':'书桌',    'file':'07_00_书桌.png',       'price':60, 'lv':3,'cat':'study',  'mood':6, 'desc':'认真学习的地方'},
+            {'id':'chair',     'name':'椅子',    'file':'07_01_椅子.png',       'price':25, 'lv':1,'cat':'living', 'mood':3, 'desc':'坐下休息一下'},
+            {'id':'plant',     'name':'盆栽',    'file':'07_05_植物盆栽.png',   'price':20, 'lv':1,'cat':'deco',   'mood':4, 'desc':'绿色植物，心情+4'},
+            {'id':'cactus',    'name':'仙人掌',  'file':'07_06_仙人掌.png',     'price':15, 'lv':1,'cat':'deco',   'mood':3, 'desc':'低维护植物'},
+            {'id':'rug',       'name':'地毯',    'file':'07_09_地毯.png',       'price':35, 'lv':2,'cat':'deco',   'mood':4, 'desc':'柔软地毯，心情+4'},
+            {'id':'tv',        'name':'电视',    'file':'08_00_电视.png',       'price':120,'lv':5,'cat':'entertain','mood':12,'desc':'看电视，心情+12'},
+            {'id':'speaker',   'name':'音响',    'file':'08_05_音响.png',       'price':70, 'lv':4,'cat':'entertain','mood':8, 'desc':'听音乐，心情+8'},
+            {'id':'painting',  'name':'壁画',    'file':'09_00_壁画.png',       'price':45, 'lv':2,'cat':'deco',   'mood':5, 'desc':'装饰壁画，心情+5'},
+            {'id':'mirror',    'name':'镜子',    'file':'09_01_镜子.png',       'price':30, 'lv':1,'cat':'deco',   'mood':3, 'desc':'梳妆打扮'},
+            {'id':'clock',     'name':'时钟',    'file':'09_05_时钟.png',       'price':25, 'lv':1,'cat':'deco',   'mood':2, 'desc':'掌握时间'},
+            {'id':'cat_bed',   'name':'猫咪窝',  'file':'10_00_猫咪窝.png',     'price':40, 'lv':2,'cat':'pet',    'mood':5, 'desc':'宠物最爱，心情+5'},
+            {'id':'scratcher', 'name':'猫抓板',  'file':'10_01_猫抓板.png',     'price':30, 'lv':1,'cat':'pet',    'mood':3, 'desc':'宠物玩具'},
+        ]
+
+        win = tk.Toplevel(self.root)
+        win.title('🛋️ 家具店')
+        win.geometry('640x520+180+60')
+        win.resizable(False, False)
+        win.lift(); win.focus_force()
+        win.configure(bg='#f0ede0')
+        self._fshop_win = win
+
+        BG='#f0ede0'; PANEL='#e8d8a0'; DARK='#4a3010'; LIGHT='#fffbee'
+        SEL='#ffe066'; BTN_BUY='#7a4a10'; BTN_USE='#3a7a30'; BTN_DIS='#aaaaaa'; TEXT='#3a2000'
+        MID='#c8883a'
+
+        state = {'cat':'all', 'sel':None, 'imgs':{}}
+
+        def load_img(fname, size=56):
+            k = (fname, size)
+            if k in state['imgs']: return state['imgs'][k]
+            fp = _os3.path.join(FURN_DIR, fname)
+            try:
+                p = _IT.PhotoImage(_PI.open(fp).convert('RGBA').resize((size,size), _PI.NEAREST))
+            except: p = None
+            state['imgs'][k] = p; return p
+
+        # 顶部
+        top = tk.Frame(win, bg=MID, height=44); top.pack(fill='x'); top.pack_propagate(False)
+        tk.Label(top, text='🛋️  家具店', font=('PingFang SC',14,'bold'), bg=MID, fg='#fff5dc').pack(side='left', padx=16)
+        score_lbl = tk.Label(top, text=f'⭐ {self.score}', font=('PingFang SC',11), bg=MID, fg='#fff5dc')
+        score_lbl.pack(side='right', padx=16)
+
+        # 分类 tab
+        cats = [('all','🏠 全部'),('kitchen','🍳 厨房'),('living','🛋️ 客厅'),
+                ('bedroom','🛏️ 卧室'),('bath','🚿 浴室'),('entertain','🎹 娱乐'),
+                ('study','📚 书房'),('deco','🌿 装饰'),('pet','🐾 宠物')]
+        cf = tk.Frame(win, bg='#e0c870', height=30); cf.pack(fill='x'); cf.pack_propagate(False)
+        cbtns = {}
+        def sw_cat(c):
+            state['cat'] = c; state['sel'] = None
+            for k,b in cbtns.items(): b.config(bg=SEL if k==c else '#e0c870')
+            refresh()
+        for cid, cl in cats:
+            b = tk.Button(cf, text=cl, font=('PingFang SC',9), bg=SEL if cid=='all' else '#e0c870',
+                          fg=TEXT, relief='flat', bd=0, padx=8, pady=3, command=lambda c=cid: sw_cat(c))
+            b.pack(side='left'); cbtns[cid] = b
+
+        # 左右分栏
+        lp = tk.Frame(win, bg='#f0ede0', width=430); lp.pack(side='left', fill='y'); lp.pack_propagate(False)
+        rp = tk.Frame(win, bg=PANEL, width=210); rp.pack(side='right', fill='both', expand=True)
+
+        # 可滚动网格
+        gc = tk.Frame(lp, bg=LIGHT); gc.pack(fill='both', expand=True, padx=2, pady=2)
+        gcv = tk.Canvas(gc, bg=LIGHT, highlightthickness=0)
+        gsb = tk.Scrollbar(gc, orient='vertical', command=gcv.yview)
+        gcv.configure(yscrollcommand=gsb.set)
+        gsb.pack(side='right', fill='y'); gcv.pack(side='left', fill='both', expand=True)
+        gf = tk.Frame(gcv, bg=LIGHT); gcv.create_window((0,0), window=gf, anchor='nw')
+        def _on_scroll(e): gcv.yview_scroll(int(-1*(e.delta/120)), 'units')
+        def _bind_scroll(w):
+            w.bind('<MouseWheel>', _on_scroll)
+            for ch in w.winfo_children(): _bind_scroll(ch)
+        gcv.bind('<MouseWheel>', _on_scroll)
+
+        # 右侧详情
+        di = tk.Label(rp, bg=PANEL); di.pack(pady=(16,4))
+        dn = tk.Label(rp, text='', font=('PingFang SC',13,'bold'), bg=PANEL, fg=DARK); dn.pack()
+        dd = tk.Label(rp, text='', font=('PingFang SC',10), bg=PANEL, fg=TEXT, wraplength=185); dd.pack(pady=4)
+        dp = tk.Label(rp, text='', font=('PingFang SC',11,'bold'), bg=PANEL, fg=BTN_BUY); dp.pack(pady=4)
+        dlv= tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#886644'); dlv.pack()
+        dct= tk.Label(rp, text='', font=('PingFang SC',10), bg=PANEL, fg=DARK); dct.pack(pady=2)
+        dmood = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#3a7a30'); dmood.pack(pady=2)
+        b_buy = tk.Button(rp, text='💰 购买', font=('PingFang SC',12,'bold'), bg=BTN_BUY, fg='white',
+                          relief='flat', bd=0, padx=20, pady=6, state='disabled', cursor='hand2'); b_buy.pack(pady=(8,4))
+        b_place = tk.Button(rp, text='🏠 前往摆放', font=('PingFang SC',11,'bold'), bg='#3a7a30', fg='white',
+                            relief='flat', bd=0, padx=16, pady=5, state='disabled', cursor='hand2'); b_place.pack()
+        ml = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#cc3300', wraplength=185); ml.pack(pady=4)
+
+        def upd_detail(item):
+            img = load_img(item['file'], 80)
+            if img: di.config(image=img); di._img = img
+            dn.config(text=item['name'])
+            dd.config(text=item['desc'])
+            locked = item['lv'] > self.level
+            cnt = self.furniture_bag.get(item['id'], 0)
+            placed = sum(1 for p in self.placed_furniture if p['id']==item['id'])
+            dp.config(text=f"⭐ {item['price']} 积分")
+            dlv.config(text=f"需要等级 Lv.{item['lv']}" + (' 🔒' if locked else ' ✅'))
+            dct.config(text=f'背包: ×{cnt}  已摆: ×{placed}')
+            dmood.config(text=f"💛 摆放后心情+{item['mood']}")
+            if locked: b_buy.config(state='disabled', bg=BTN_DIS, text='🔒 等级不足')
+            elif self.score < item['price']: b_buy.config(state='disabled', bg=BTN_DIS, text='💰 积分不足')
+            else: b_buy.config(state='normal', bg=BTN_BUY, text='💰 购买',
+                               command=lambda it=item: do_buy(it))
+            b_place.config(state='normal' if cnt>0 else 'disabled',
+                           bg='#3a7a30' if cnt>0 else BTN_DIS,
+                           command=lambda it=item: do_place(it))
+
+        def do_buy(item):
+            if self.score < item['price']: ml.config(text='积分不足！'); return
+            if item['lv'] > self.level: ml.config(text=f"需要 Lv.{item['lv']}！"); return
+            self.score -= item['price']
+            self.furniture_bag[item['id']] = self.furniture_bag.get(item['id'],0) + 1
+            self._save()
+            self.say(f"买到{item['name']}了！🛋️", 70)
+            ml.config(text=f"✅ 购买成功！背包 ×{self.furniture_bag[item['id']]}")
+            score_lbl.config(text=f'⭐ {self.score}')
+            refresh()
+
+        def do_place(item):
+            cnt = self.furniture_bag.get(item['id'], 0)
+            if cnt <= 0: ml.config(text='背包里没有！'); return
+            ml.config(text=f"🏠 打开家园，点击要放置的位置来摆放{item['name']}")
+            # 打开家园并进入摆放模式
+            self._pending_place = item
+            win.destroy()
+            self.open_garden()
+
+        def refresh():
+            for w in gf.winfo_children(): w.destroy()
+            pool = [it for it in FURNITURE_ITEMS if state['cat']=='all' or it['cat']==state['cat']]
+            COLS = 4
+            for i, item in enumerate(pool):
+                r, c = i//COLS, i%COLS
+                issel = item['id'] == state['sel']
+                cnt = self.furniture_bag.get(item['id'], 0)
+                fr = tk.Frame(gf, bg=SEL if issel else LIGHT, bd=2,
+                              relief='ridge' if issel else 'flat', cursor='hand2')
+                fr.grid(row=r, column=c, padx=3, pady=4)
+                img = load_img(item['file'], 56)
+                if img:
+                    il = tk.Label(fr, image=img, bg=SEL if issel else LIGHT); il.pack(); il._img = img
+                tk.Label(fr, text=item['name'], font=('PingFang SC',9,'bold'),
+                         bg=SEL if issel else LIGHT, fg=TEXT).pack()
+                locked = item['lv'] > self.level
+                tk.Label(fr, text=f'🔒Lv{item["lv"]}' if locked else f'⭐{item["price"]}',
+                         font=('PingFang SC',8),
+                         bg=SEL if issel else LIGHT, fg='#888888' if locked else BTN_BUY).pack()
+                if cnt > 0:
+                    tk.Label(fr, text=f'×{cnt}', font=('PingFang SC',8,'bold'),
+                             bg=SEL if issel else LIGHT, fg='#3a7a30').pack()
+                def on_click(it=item):
+                    state['sel'] = it['id']; refresh(); upd_detail(it)
+                for w in fr.winfo_children(): w.bind('<Button-1>', lambda e,it=item: on_click(it))
+                fr.bind('<Button-1>', lambda e,it=item: on_click(it))
+            gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
+            _bind_scroll(gf)
+            ml.config(text=''); score_lbl.config(text=f'⭐ {self.score}')
+            if state['sel']:
+                it = next((x for x in FURNITURE_ITEMS if x['id']==state['sel']), None)
+                if it: upd_detail(it)
+
+        refresh(); win.focus_force()
+
+
+    # ── 旅行地图系统 ─────────────────────────────────────────────
+    def open_travel(self):
+        """旅行地图窗口 —— 真实 GeoJSON 中国地图"""
+        if hasattr(self,'_travel_win') and self._travel_win and self._travel_win.winfo_exists():
+            self._travel_win.lift(); return
+        import time as _t, json as _json, os as _os2
+
+        # ── 加载 GeoJSON ──────────────────────────────────────────
+        _geo_path = _os2.path.join(_os2.path.dirname(_os2.path.abspath(__file__)), 'china_provinces.json')
+        with open(_geo_path, encoding='utf-8') as _f:
+            _geo = _json.load(_f)
+
+        # 名称映射（去掉"省/市/自治区/特别行政区"等后缀）
+        def _short(name):
+            for s in ('特别行政区','壮族自治区','回族自治区','维吾尔自治区','自治区','省','市'):
+                name = name.replace(s,'')
+            return name
+
+        # Canvas 尺寸
+        CW, CH = 720, 510
+        # 经纬度范围（墨卡托投影近似）
+        LON_MIN, LON_MAX = 72.0, 136.0
+        LAT_MIN, LAT_MAX = 3.0,  54.0
+
+        def geo2px(lon, lat):
+            x = (lon - LON_MIN) / (LON_MAX - LON_MIN) * CW
+            # 纬度翻转（屏幕Y轴向下）
+            y = (1 - (lat - LAT_MIN) / (LAT_MAX - LAT_MIN)) * CH
+            return x, y
+
+        # 简化多边形点（每 step 个点取1个，减少渲染压力）
+        def simplify(ring, step=3):
+            return ring[::step] + [ring[-1]]
+
+        # 构建省份数据：name_short -> {feat, polygons(canvas coords), center}
+        PROV_DATA = {}
+        for feat in _geo['features']:
+            raw_name = feat['properties'].get('name','')
+            if not raw_name: continue
+            short = _short(raw_name)
+            geom = feat['geometry']
+            polys = []  # list of flat coord lists for create_polygon
+            cx_sum, cy_sum, cnt = 0.0, 0.0, 0
+
+            def add_ring(ring):
+                nonlocal cx_sum, cy_sum, cnt
+                pts = simplify(ring, step=4)
+                flat = []
+                for lon, lat in pts:
+                    px, py = geo2px(lon, lat)
+                    flat.extend([px, py])
+                    cx_sum += px; cy_sum += py; cnt += 1
+                if len(flat) >= 6:
+                    polys.append(flat)
+
+            if geom['type'] == 'Polygon':
+                add_ring(geom['coordinates'][0])
+            elif geom['type'] == 'MultiPolygon':
+                # 只取面积最大的多边形（点数最多的 ring）
+                all_rings = [poly[0] for poly in geom['coordinates'] if poly]
+                # 按点数排序，取最大的（主体轮廓）
+                main_rings = sorted(all_rings, key=len, reverse=True)[:3]
+                for ring in main_rings:
+                    add_ring(ring)
+
+            if polys and cnt > 0:
+                PROV_DATA[short] = {
+                    'polys': polys,
+                    'cx': cx_sum / cnt,
+                    'cy': cy_sum / cnt,
+                }
+
+        TRAVEL_COST = 200; TRAVEL_SEC = 600
+
+        win = tk.Toplevel(self.root)
+        win.title('🗺️ 中国旅行地图')
+        win.geometry('720x600+60+40')
+        win.resizable(False, False)
+        win.lift(); win.focus_force()
+        win.configure(bg='#eef4fb')
+        self._travel_win = win
+
+        BG='#eef4fb'; PANEL='#d0e8f8'; DARK='#1a3a5c'
+        C_VISITED='#e05030'; C_UNVISIT='#d8e8f0'; C_HOVER='#ffaa44'; C_SEA='#c0d8ee'
+        C_BORDER='#8aaabf'; C_TEXT_V='#ffffff'; C_TEXT_U='#2a4a6a'
+
+        tip_var = tk.StringVar()
+        tip_bar = tk.Frame(win, bg=PANEL, height=36); tip_bar.pack(fill='x'); tip_bar.pack_propagate(False)
+        tk.Label(tip_bar, textvariable=tip_var, font=('PingFang SC',11), bg=PANEL, fg=DARK).pack(side='left', padx=14)
+
+        cv = tk.Canvas(win, width=CW, height=CH, bg=C_SEA, highlightthickness=0)
+        cv.pack()
+
+        bot = tk.Frame(win, bg=BG, height=52); bot.pack(fill='x'); bot.pack_propagate(False)
+        status_var = tk.StringVar(value='点击省份查看，点「去旅行」随机出发')
+        btn_go = tk.Button(bot, text='✈️ 去旅行', font=('PingFang SC',12,'bold'),
+                           bg='#e85520', fg='white', relief='flat', bd=0, padx=18, pady=6, cursor='hand2')
+        btn_go.pack(side='left', padx=12, pady=8)
+        tk.Label(bot, textvariable=status_var, font=('PingFang SC',10), bg=BG, fg=DARK,
+                 wraplength=520, anchor='w').pack(side='left', padx=8)
+
+        hover = [None]; sel = [None]
+        # 记录每个省份的 canvas item ids，用于 hit-test
+        _prov_items = {}  # short_name -> [item_id, ...]
+
+        def draw_map():
+            cv.delete('all')
+            n_vis = len(self.travel_visited); n_tot = len(PROV_DATA)
+            tip_var.set(f'每次旅行消耗 {TRAVEL_COST} 积分，约{TRAVEL_SEC}秒到达 ── 已点亮 {n_vis} / {n_tot} 个省市')
+            _prov_items.clear()
+
+            for name, pd in PROV_DATA.items():
+                visited   = name in self.travel_visited
+                is_hover  = name == hover[0]
+                is_sel    = name == sel[0]
+                traveling = self.travel_state['active'] and self.travel_state['dest'] == name
+
+                if traveling:   fill = '#ffcc00'
+                elif is_sel:    fill = '#ff6622'
+                elif is_hover:  fill = C_HOVER
+                elif visited:   fill = C_VISITED
+                else:           fill = C_UNVISIT
+
+                border = '#ff4400' if (is_sel or traveling) else ('#cc3300' if visited else C_BORDER)
+                width  = 2 if (is_sel or is_hover or traveling) else 1
+
+                ids = []
+                for flat in pd['polys']:
+                    iid = cv.create_polygon(flat, fill=fill, outline=border, width=width)
+                    ids.append(iid)
+                _prov_items[name] = ids
+
+                # 文字标签
+                cx, cy = pd['cx'], pd['cy']
+                txt_col = C_TEXT_V if visited else C_TEXT_U
+                short2 = name.replace('黑龙江','黑龙\n江').replace('内蒙古','内蒙\n古')
+                fsize  = 7 if name in ('上海','天津','北京','澳门','香港','宁夏') else 9
+                cv.create_text(cx, cy, text=short2, font=('PingFang SC',fsize,'bold'),
+                               fill=txt_col, justify='center')
+
+        def hit_province(ex, ey):
+            # 先用 canvas find_closest 找近邻多边形，再精确匹配
+            items = cv.find_overlapping(ex-2, ey-2, ex+2, ey+2)
+            for iid in items:
+                for name, ids in _prov_items.items():
+                    if iid in ids: return name
+            return None
+
+        def on_move(e):
+            found = hit_province(e.x, e.y)
+            if found != hover[0]: hover[0] = found; draw_map()
+
+        def on_click(e):
+            name = hit_province(e.x, e.y)
+            if name:
+                sel[0] = name
+                visited   = name in self.travel_visited
+                traveling = self.travel_state['active'] and self.travel_state['dest'] == name
+                if traveling:
+                    rem = int(self.travel_state['end_ts'] - _t.time())
+                    status_var.set(f'🚕 在去{name}的路上，还有 {max(0,rem)} 秒到达...')
+                elif visited: status_var.set(f'✅ {name} — 已打卡！点「去旅行」再去一次')
+                else: status_var.set(f'📍 {name} — 还没去过，点「去旅行」出发！')
+                draw_map()
+
+        def do_travel():
+            if self.travel_state['active']:
+                rem = int(self.travel_state['end_ts'] - _t.time())
+                if rem > 0: status_var.set(f'🚕 已在路中！去 {self.travel_state["dest"]}，还有 {rem} 秒...'); return
+                else: finish_travel(); return
+            if self.score < TRAVEL_COST:
+                status_var.set(f'积分不足！需要 {TRAVEL_COST} 积分，当前 {self.score}'); return
+            unvisited = [n for n in PROV_DATA if n not in self.travel_visited]
+            if not unvisited: unvisited = list(PROV_DATA.keys())
+            dest = sel[0] if sel[0] and sel[0] not in self.travel_visited else random.choice(unvisited)
+            self.score -= TRAVEL_COST; end_ts = _t.time() + TRAVEL_SEC
+            self.travel_state = {'active':True,'dest':dest,'end_ts':end_ts}
+            self._save()
+            status_var.set(f'✈️ 出发去 {dest}！路上需要 {TRAVEL_SEC} 秒~')
+            self.say(f'出发去{dest}啦！我会带特产回来！', 100)
+            draw_map()
+            win.after(TRAVEL_SEC * 1000, lambda: finish_travel(force=True))
+
+        def finish_travel(force=False):
+            if not self.travel_state['active']: return
+            dest = self.travel_state['dest']
+            self.travel_state = {'active':False,'dest':'','end_ts':0}
+            if dest not in self.travel_visited: self.travel_visited.append(dest)
+            n = len(self.travel_visited)
+            self.add_exp(15); self.add_score(10); self._save()
+            if n >= 5:  self.unlock('travel5')
+            if n >= 15: self.unlock('travel15')
+            if n >= 34: self.unlock('travel35')
+            status_var.set(f'🎉 到达 {dest}！已打卡 {n} 个省市！+10积分 +15EXP')
+            if force: self.say(f'到{dest}啦！带了特产回来~', 100)
+            draw_map()
+
+        btn_go.config(command=do_travel)
+        cv.bind('<Motion>', on_move)
+        cv.bind('<Button-1>', on_click)
+
+        def check_travel():
+            if not win.winfo_exists(): return
+            if self.travel_state['active']:
+                rem = int(self.travel_state['end_ts'] - _t.time())
+                if rem <= 0: finish_travel(force=True)
+                else: status_var.set(f'✈️ 在去 {self.travel_state["dest"]} 的路上… 还有 {rem} 秒到达')
+            win.after(2000, check_travel)
+        check_travel()
+
+        if self.travel_state['active']:
+            rem = int(self.travel_state['end_ts'] - _t.time())
+            if rem > 0: status_var.set(f'✈️ 已出发去 {self.travel_state["dest"]}，还有 {rem} 秒到达')
+            else: finish_travel()
+
+        draw_map()
+        win.focus_force()
+
+    # ── 宠物档案 ───────────────────────────────────────────────────
+    def open_profile(self):
+        """QQ宠物风格宠物档案"""
+        if hasattr(self,'_profile_win') and self._profile_win and self._profile_win.winfo_exists():
+            self._profile_win.lift(); return
+        import time as _t
+
+        win=tk.Toplevel(self.root)
+        win.title('🐾 宠物档案')
+        win.geometry('360x520+300+80')
+        win.resizable(False,False)
+        win.lift()
+        win.focus_force()
+        win.configure(bg='#e8f4f8')
+        self._profile_win=win
+
+        BG='#e8f4f8'; CARD='#ffffff'; DARK='#1a3a5c'; MID='#3a8cc8'
+        BAR_BG='#cce4f4'; BAR_FG='#3a8cc8'; BAR_H=18
+        HUNGER_C='#44aaee'; CLEAN_C='#44ccaa'; HEALTH_C='#ee6644'; MOOD_C='#aa66ee'
+        EXP_C='#ffaa22'
+
+        # 卡片框架
+        card=tk.Frame(win,bg=CARD,relief='flat',bd=0)
+        card.place(x=20,y=20,width=320,height=480)
+
+        # 标题
+        title_f=tk.Frame(card,bg='#3a8cc8',height=44); title_f.pack(fill='x'); title_f.pack_propagate(False)
+        tk.Label(title_f,text='🐾  宠物档案',font=('PingFang SC',14,'bold'),
+                 bg='#3a8cc8',fg='white').pack(side='left',padx=14)
+        tk.Button(title_f,text='✕',font=('PingFang SC',12),bg='#3a8cc8',fg='white',
+                  relief='flat',bd=0,command=win.destroy).pack(side='right',padx=8)
+
+        body=tk.Frame(card,bg=CARD); body.pack(fill='both',expand=True,padx=16,pady=10)
+
+        def bar(parent, label, val, maxval, color, row):
+            """label + 进度条"""
+            tk.Label(parent,text=label,font=('PingFang SC',10,'bold'),
+                     bg=CARD,fg=DARK,width=4,anchor='e').grid(row=row,column=0,sticky='e',pady=3)
+            outer=tk.Frame(parent,bg=BAR_BG,width=210,height=BAR_H)
+            outer.grid(row=row,column=1,padx=(6,0),pady=3,sticky='w')
+            outer.pack_propagate(False)
+            fill_w=max(4,int(210*min(val,maxval)/maxval))
+            fill=tk.Frame(outer,bg=color,width=fill_w,height=BAR_H)
+            fill.place(x=0,y=0)
+            pct=tk.Label(outer,text=f'{int(val)}/{int(maxval)}',
+                         font=('PingFang SC',8),bg=color if fill_w>40 else BAR_BG,
+                         fg='white' if fill_w>40 else '#666666')
+            pct.place(x=max(2,fill_w-36),y=1)
+
+        # 动态内容区
+        info_frame=tk.Frame(body,bg=CARD); info_frame.pack(fill='both',expand=True)
+
+        char_info=CHARACTERS.get(self.char_id,{})
+        pet_name=getattr(self,'owner_name',None) or char_info.get('name','宠物')
+
+        def refresh():
+            for w in info_frame.winfo_children(): w.destroy()
+
+            # 基本信息
+            age_sec=int(_t.time()-self.birth_ts)
+            if age_sec<3600:
+                age_str=f'{age_sec//60} 分钟'
+            elif age_sec<86400:
+                age_str=f'{age_sec//3600} 小时'
+            else:
+                age_str=f'{age_sec//86400} 天'
+
+            personality=self.get_personality() if hasattr(self,'get_personality') else 'balanced'
+            pers_map={'food_lover':'贪吃鬼🍖','playful':'玩袍蹒🎮','clean_freak':'洁癒达人🛁','balanced':'平衡小天使⚖️'}
+            pers_str=pers_map.get(personality,personality)
+
+            exp_need=self.level*100
+
+            row=0
+            for label,val in [
+                ('昵称',pet_name),
+                ('主人',self.address_word if hasattr(self,'address_word') else '主人'),
+                ('等级',f'Lv.{self.level}  👔'),
+                ('年龄',age_str),
+                ('性格',pers_str),
+                ('到访',f'{len(self.travel_visited)} 个省市'),
+                ('积分',f'⭐ {self.score}'),
+                ('成就',f'{sum(1 for a in self.achievements if a["done"])} / {len(self.achievements)}'),
+            ]:
+                tk.Label(info_frame,text=f'{label}',font=('PingFang SC',10,'bold'),
+                         bg=CARD,fg='#3a8cc8',anchor='e',width=4).grid(row=row,column=0,sticky='e',pady=2)
+                tk.Label(info_frame,text=f'：{val}',font=('PingFang SC',10),
+                         bg=CARD,fg=DARK,anchor='w').grid(row=row,column=1,sticky='w',padx=6,pady=2)
+                row+=1
+
+            # 成长进度（EXP）
+            tk.Label(info_frame,text='成长',font=('PingFang SC',10,'bold'),
+                     bg=CARD,fg='#3a8cc8',anchor='e',width=4).grid(row=row,column=0,sticky='e',pady=3)
+            outer_exp=tk.Frame(info_frame,bg='#ffe4aa',width=210,height=BAR_H)
+            outer_exp.grid(row=row,column=1,padx=(6,0),pady=3,sticky='w')
+            outer_exp.pack_propagate(False)
+            cur_exp=getattr(self,'exp',0)
+            fw=max(4,int(210*min(cur_exp,exp_need)/exp_need))
+            tk.Frame(outer_exp,bg=EXP_C,width=fw,height=BAR_H).place(x=0,y=0)
+            tk.Label(outer_exp,text=f'{cur_exp}/{exp_need}',font=('PingFang SC',8),
+                     bg=EXP_C if fw>50 else '#ffe4aa',
+                     fg='white' if fw>50 else '#886600').place(x=max(2,fw-42),y=1)
+            row+=1
+
+            # 四维属性进度条
+            for label,val,color in [
+                ('饱度',self.hunger, HUNGER_C),
+                ('洁洁',self.cleanliness, CLEAN_C),
+                ('健康',self.health, HEALTH_C),
+                ('心情',self.mood, MOOD_C),
+            ]:
+                bar(info_frame,label,val,100,color,row); row+=1
+
+        refresh()
+
+        # 底部
+        bot=tk.Frame(card,bg='#ddeeff',height=36); bot.pack(fill='x'); bot.pack_propagate(False)
+        tk.Label(bot,text='💓 我的宠物',font=('PingFang SC',9),bg='#ddeeff',fg=DARK).pack(side='left',padx=12)
+        tk.Button(bot,text='刷新',font=('PingFang SC',9),bg=MID,fg='white',
+                  relief='flat',bd=0,padx=10,pady=2,command=refresh).pack(side='right',padx=8)
+
+        win.focus_force()
+
     def harvest(self):
         self.veg=[0,0,0,0]; self.veg_harvest=False
-        self.unlock('harvest'); self.add_score(15)
+        self.unlock('harvest'); self.add_score(15); self.add_exp(20)
         self.say('🥕 收菜啦！撒种继续种~',100)
 
     # ── 照料系统 ────────────────────────────────────────────────────────
     def feed(self):
+        """喂食：有背包食物就直接开背包Tab，没有就开商店购买Tab"""
+        has_food = any(self.bag.get(it['id'],0)>0 for it in SHOP_ITEMS if it['cat'] in ('food','snack'))
+        self.open_shop(start_tab='bag' if has_food else 'shop')
+
+    def _do_feed_direct(self):
+        """旧的直接喂食逻辑（保留供内部调用）"""
         if self.hunger>=98:
             self.say('已经吃饱了~不能再吃了！',60); return
         self.hunger=min(100,self.hunger+30)
         self.mood=min(100,self.mood+5)
         self.say(random.choice(['啊~吃饱了！😋','好好吃！谢谢主人~','饿死我了！终于！','香！再来一碗！']),80)
-        self.add_score(2); self._save()
+        self.feed_count += 1; self.add_score(2); self.add_exp(5); self._save()
 
     def bathe(self):
         if self.cleanliness>=98:
@@ -1573,13 +2749,13 @@ class HomeWorld:
         self.cleanliness=min(100,self.cleanliness+40)
         self.mood=min(100,self.mood+10)
         self.say(random.choice(['🛁 洗干净了！好舒服~','香香的~☁️','冲澡真爽！','泡澡太幸福了~']),80)
-        self.add_score(3); self._save()
+        self.bathe_count += 1; self.add_score(3); self.add_exp(8); self._save()
 
     def play_with(self):
         self.mood=min(100,self.mood+30)
         self.hunger=max(0,self.hunger-5)
         self.say(random.choice(['一起玩！🎮','好开心！','再来！再来！','哈哈哈~好好玩！']),80)
-        self.add_score(3); self._save()
+        self.play_count += 1; self.add_score(3); self.add_exp(10); self._save()
 
     def give_medicine(self):
         if not self.sick and self.health>=90:
@@ -1587,7 +2763,7 @@ class HomeWorld:
         self.health=min(100,self.health+25)
         if self.health>=75: self.sick=False
         self.say(random.choice(['苦死了…但谢谢主人🤒','吃完药好多了~','身体慢慢好起来了']),80)
-        self.add_score(5); self._save()
+        self.add_score(5); self.add_exp(6); self._save()
 
     # ── 属性面板绘制 ────────────────────────────────────────────────────
     def _draw_stats(self):
