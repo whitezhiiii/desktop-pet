@@ -3,6 +3,45 @@
 import tkinter as tk
 import random, math, time, threading, urllib.request, json, os, http.client, ssl
 
+# ── 自动下载资源 ──────────────────────────────────────────────────────────────
+def _ensure_assets():
+    """首次运行时从 GitHub 自动下载必要的图片资源"""
+    _BASE = 'https://raw.githubusercontent.com/whitezhiiii/desktop-pet/main/assets/'
+    _DIR  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets')
+    _REQUIRED = [
+        'room_bg.png', 'exterior_bg.png', 'forest_bg.png', 'upstairs_bg.png',
+        'sun.jpeg',
+        'walk_left.gif', 'walk_right.gif',
+        'cat_orange_walk_right.gif', 'cat_orange_walk_left.gif',
+        'cat_gray_walk_right.gif',  'cat_gray_walk_left.gif',
+        'fox_walk_right.gif',       'fox_walk_left.gif',
+        'raccoon_walk_right.gif',   'raccoon_walk_left.gif',
+        'bird_blue_walk_right.gif', 'bird_blue_walk_left.gif',
+        'bird_white_walk_right.gif','bird_white_walk_left.gif',
+    ]
+    os.makedirs(_DIR, exist_ok=True)
+    missing = [f for f in _REQUIRED if not os.path.exists(os.path.join(_DIR, f))]
+    if not missing:
+        return
+    try:
+        import tkinter as _tk
+        _r = _tk.Tk(); _r.withdraw()
+        _lbl = _tk.Label(_r, text='🏡 首次运行，正在下载资源...\n请稍候', font=('Arial', 14), padx=20, pady=20)
+        _lbl.pack(); _r.update()
+    except Exception:
+        _r = None
+    for fname in missing:
+        try:
+            urllib.request.urlretrieve(_BASE + fname, os.path.join(_DIR, fname))
+        except Exception as e:
+            print(f'[assets] 下载失败: {fname} — {e}')
+    if _r:
+        try: _r.destroy()
+        except: pass
+
+_ensure_assets()
+# ─────────────────────────────────────────────────────────────────────────────
+
 W, H = 480, 332
 WEATHER_CITY = 'Beijing'
 PET_OWNER = '主人'  # 改成你的名字，小屋标题会显示「{名字}の小家园」
