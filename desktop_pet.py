@@ -299,6 +299,50 @@ SHOP_ITEMS = [
     {'id':'steak',       'name':'牛排',     'file':'95_steak.png',        'price':80,  'lv':10, 'hunger':55, 'mood':35, 'health':12, 'cat':'food',  'desc':'完美熟度的牛排，顶级享受'},
     {'id':'sushi',       'name':'寿司',     'file':'97_sushi.png',        'price':50,  'lv':7, 'hunger':35, 'mood':30, 'health':10, 'cat':'food',  'desc':'精致寿司，日式美味'},
     {'id':'taco',        'name':'墨西哥卷', 'file':'99_taco.png',         'price':30,  'lv':4, 'hunger':30, 'mood':20, 'health':3,  'cat':'food',  'desc':'香辣墨西哥卷，爱了爱了'},
+    # ── 浴球系列 ──
+    {'id':'bathball_s',  'name':'小浴球',   'file':'bathball_s.png',     'price':50,   'lv':1, 'hunger':0, 'mood':5,  'health':5,  'cat':'bath',  'clean':20, 'desc':'基础浴球，泡个舒服澡'},
+    {'id':'bathball_m',  'name':'香薰浴球', 'file':'bathball_m.png',     'price':200,  'lv':3, 'hunger':0, 'mood':15, 'health':10, 'cat':'bath',  'clean':40, 'desc':'香薰浴球，满室芬芳'},
+    {'id':'bathball_l',  'name':'玫瑰浴球', 'file':'bathball_l.png',     'price':500,  'lv':5, 'hunger':0, 'mood':25, 'health':15, 'cat':'bath',  'clean':60, 'desc':'玫瑰精油浴球，奢华享受'},
+    {'id':'bathball_xl', 'name':'黄金浴球', 'file':'bathball_xl.png',    'price':2000, 'lv':8, 'hunger':0, 'mood':50, 'health':30, 'cat':'bath',  'clean':100,'desc':'传说级黄金浴球，洗完满血复活'},
+    {'id':'bathball_ex', 'name':'宇宙浴球', 'file':'bathball_ex.png',    'price':5000, 'lv':10,'hunger':0, 'mood':100,'health':50, 'cat':'bath',  'clean':100,'desc':'宇宙无敌浴球，主人专属！'},
+]
+
+
+FURNITURE_ITEMS = [
+    # ── 客厅 ──
+    {'id':'sofa_gray',    'name':'灰色沙发',  'file':'沙发-灰色.png',   'preview':'沙发-灰色.png',   'price':800,  'lv':2,'cat':'living', 'mood':10,'desc':'舒适灰色沙发，心情+10'},
+    {'id':'coffee_hi',    'name':'高级茶几',  'file':'茶几-高级.png',   'preview':'茶几-高级.png',   'price':600,  'lv':3,'cat':'living', 'mood':5, 'desc':'精致茶几，品位之选'},
+    {'id':'rug1',         'name':'暖色地毯',  'file':'地毯1.png',       'preview':'地毯1.png',       'price':300,  'lv':1,'cat':'living', 'mood':4, 'desc':'温馨暖色地毯'},
+    {'id':'rug2',         'name':'绿边地毯',  'file':'地毯2.png',       'preview':'地毯2.png',       'price':400,  'lv':2,'cat':'living', 'mood':5, 'desc':'精致绿边地毯，心情+5'},
+    {'id':'lamp1',        'name':'蓝色台灯',  'file':'立式台灯1.png',   'preview':'立式台灯1.png',   'price':200,  'lv':1,'cat':'living', 'mood':3, 'desc':'温馨蓝色立式台灯'},
+    {'id':'lamp2',        'name':'米色台灯',  'file':'立式台灯2.png',   'preview':'立式台灯2.png',   'price':200,  'lv':1,'cat':'living', 'mood':3, 'desc':'简约米色立式台灯'},
+    {'id':'chair1',       'name':'木椅',      'file':'椅子1.png',       'preview':'椅子1.png',       'price':150,  'lv':1,'cat':'living', 'mood':2, 'desc':'简约木椅，随处可坐'},
+    # ── 书房 ──
+    {'id':'bookshelf1',   'name':'书架·彩',  'file':'书架1.png',       'preview':'书架1.png',       'price':500,  'lv':2,'cat':'study',  'mood':6, 'desc':'色彩缤纷的书架'},
+    {'id':'bookshelf2',   'name':'书架·蓝',  'file':'书架2.png',       'preview':'书架2.png',       'price':500,  'lv':2,'cat':'study',  'mood':6, 'desc':'整齐蓝色书架'},
+    {'id':'bookshelf3',   'name':'书架·混',  'file':'书架3.png',       'preview':'书架3.png',       'price':500,  'lv':3,'cat':'study',  'mood':6, 'desc':'混搭风书架'},
+    {'id':'desk1',        'name':'书桌',      'file':'书桌.png',        'preview':'书桌.png',        'price':600,  'lv':2,'cat':'study',  'mood':5, 'desc':'宽敞书桌，认真学习'},
+    {'id':'globe1',       'name':'地球仪·木', 'file':'地球仪1.png',     'preview':'地球仪1.png',     'price':400,  'lv':2,'cat':'study',  'mood':7, 'desc':'木底座地球仪，探索世界'},
+    {'id':'globe2',       'name':'地球仪·金', 'file':'地球仪2.png',     'preview':'地球仪2.png',     'price':800,  'lv':4,'cat':'study',  'mood':8, 'desc':'金底座地球仪，尊贵感'},
+    {'id':'worldmap',     'name':'世界地图',  'file':'世界地图.png',    'preview':'世界地图.png',    'price':350,  'lv':2,'cat':'study',  'mood':5, 'desc':'精致世界地图，心情+5'},
+    # ── 卧室 ──
+    {'id':'wardrobe1',    'name':'衣柜',      'file':'衣柜1.png',       'preview':'衣柜1.png',       'price':700,  'lv':3,'cat':'bedroom','mood':5, 'desc':'宽敞木质衣柜'},
+    {'id':'wardrobe_hi',  'name':'豪华衣柜',  'file':'衣柜-高级.png',   'preview':'衣柜-高级.png',   'price':2000, 'lv':6,'cat':'bedroom','mood':10,'desc':'金色豪华双开衣柜'},
+    {'id':'dresser1',     'name':'梳妆台·棕', 'file':'梳妆台1.png',     'preview':'梳妆台1.png',     'price':800,  'lv':3,'cat':'bedroom','mood':7, 'desc':'精致棕色梳妆台'},
+    {'id':'dresser2',     'name':'梳妆台·白', 'file':'梳妆台2.png',     'preview':'梳妆台2.png',     'price':800,  'lv':3,'cat':'bedroom','mood':7, 'desc':'简约白色梳妆台'},
+    {'id':'mirror1',      'name':'全身镜·金', 'file':'全身镜1.png',     'preview':'全身镜1.png',     'price':500,  'lv':2,'cat':'bedroom','mood':5, 'desc':'金框全身镜'},
+    {'id':'mirror2',      'name':'全身镜·棕', 'file':'全身镜2.png',     'preview':'全身镜2.png',     'price':500,  'lv':2,'cat':'bedroom','mood':5, 'desc':'棕木全身镜'},
+    {'id':'mirror3',      'name':'全身镜·白', 'file':'全身镜3.png',     'preview':'全身镜3.png',     'price':400,  'lv':1,'cat':'bedroom','mood':4, 'desc':'简约白框全身镜'},
+    # ── 装饰 ──
+    {'id':'painting1',    'name':'挂画·彩格', 'file':'挂画1.png',       'preview':'挂画1.png',       'price':300,  'lv':1,'cat':'deco',   'mood':4, 'desc':'彩格装饰挂画'},
+    {'id':'painting2',    'name':'挂画·蓝面', 'file':'挂画2.png',       'preview':'挂画2.png',       'price':400,  'lv':2,'cat':'deco',   'mood':5, 'desc':'神秘蓝面挂画'},
+    {'id':'painting3',    'name':'挂画·紫怪', 'file':'挂画3.png',       'preview':'挂画3.png',       'price':400,  'lv':2,'cat':'deco',   'mood':5, 'desc':'个性紫色怪兽画'},
+    {'id':'painting4',    'name':'挂画·拼布', 'file':'挂画4.png',       'preview':'挂画4.png',       'price':350,  'lv':2,'cat':'deco',   'mood':5, 'desc':'复古拼布挂画'},
+    {'id':'clock1',       'name':'摆钟',      'file':'立式摆钟.png',    'preview':'立式摆钟.png',    'price':600,  'lv':3,'cat':'deco',   'mood':4, 'desc':'精致立式摆钟'},
+    {'id':'cabinet1',     'name':'柜子',      'file':'柜子1.png',       'preview':'柜子1.png',       'price':400,  'lv':2,'cat':'deco',   'mood':3, 'desc':'实木储物柜'},
+    {'id':'plant1',       'name':'盆栽·棕榈', 'file':'盆栽1.png',       'preview':'盆栽1.png',       'price':250,  'lv':1,'cat':'deco',   'mood':5, 'desc':'热带棕榈盆栽'},
+    {'id':'plant2',       'name':'盆栽·绿树', 'file':'盆栽2.png',       'preview':'盆栽2.png',       'price':300,  'lv':1,'cat':'deco',   'mood':5, 'desc':'茂盛绿树盆栽'},
+    {'id':'plant3',       'name':'盆栽·小树', 'file':'盆栽3.png',       'preview':'盆栽3.png',       'price':200,  'lv':1,'cat':'deco',   'mood':4, 'desc':'可爱小树盆栽'},
 ]
 
 class HomeWorld:
@@ -676,6 +720,7 @@ class HomeWorld:
         win.title('💬 和宠物说话')
         win.geometry('300x130')
         win.resizable(False, False)
+        win.attributes('-topmost', True)
         win.lift()
         win.focus_force()
         personality = self.get_personality()
@@ -1087,6 +1132,7 @@ class HomeWorld:
                             fill='#1e0a3c', justify='center')
         # 显示气泡（纯alpha控制，不抢焦点）
         bwin.attributes('-alpha', 0.95)
+        bwin.lift()  # 确保永远浮在最上面
 
     def _draw_window(self, cv, x, y, w, h, night):
         """室内窗户"""
@@ -1526,7 +1572,9 @@ class HomeWorld:
                     if not fid: continue
                     if fid not in self._furn_img_cache:
                         try:
-                            img = _ITf.PhotoImage(_PIf.open(_osf.path.join(FDIR, fid)).convert('RGBA').resize((48,48), _PIf.NEAREST))
+                            raw = _PIf.open(_osf.path.join(FDIR, fid)).convert('RGBA')
+                            ow,oh=raw.size; s=min(80/ow,80/oh); nw,nh=int(ow*s),int(oh*s)
+                            img = _ITf.PhotoImage(raw.resize((nw,nh), _PIf.LANCZOS))
                             self._furn_img_cache[fid] = img
                         except: self._furn_img_cache[fid] = None
                     img = self._furn_img_cache.get(fid)
@@ -1834,6 +1882,38 @@ class HomeWorld:
                 if sub and sub.winfo_exists():
                     sub.lift()
         cv_g.bind('<Button-1>', lambda e: (_garden_click(e), None))
+
+        # ── 拖动已摆放家具 ──
+        _drag_state = {'idx': None, 'ox': 0, 'oy': 0}
+        def on_furn_press(e):
+            # 摘放模式优先——点击即摆
+            pending = getattr(self, '_pending_place', None)
+            if pending:
+                _garden_click(e)
+                return
+            # 非摆放模式：检测是否点到已摆家具（拖动准备）
+            HIT = 50
+            for i, pf in enumerate(self.placed_furniture):
+                if abs(e.x - pf['x']) < HIT and abs(e.y - pf['y']) < HIT:
+                    _drag_state['idx'] = i
+                    _drag_state['ox'] = e.x - pf['x']
+                    _drag_state['oy'] = e.y - pf['y']
+                    return
+            _drag_state['idx'] = None
+            _garden_click(e)  # 点到空白处也走通用点击逻辑
+        def on_furn_drag(e):
+            idx = _drag_state['idx']
+            if idx is None or idx >= len(self.placed_furniture): return
+            self.placed_furniture[idx]['x'] = e.x - _drag_state['ox']
+            self.placed_furniture[idx]['y'] = e.y - _drag_state['oy']
+        def on_furn_release(e):
+            if _drag_state['idx'] is not None:
+                self._save()
+            _drag_state['idx'] = None
+        cv_g.bind('<Button-1>',        lambda e: None)  # 禁用旧的 Button-1
+        cv_g.bind('<ButtonPress-1>',   on_furn_press)
+        cv_g.bind('<B1-Motion>',       on_furn_drag)
+        cv_g.bind('<ButtonRelease-1>', on_furn_release)
         win.bind('<Button-1>', lambda e: win.focus_force())
 
         # 右键菜单
@@ -1843,11 +1923,45 @@ class HomeWorld:
                 self._pending_place = None
                 self.say('取消摆放', 40)
                 return
+            # 检测是否右键点到了已摆放的家具（命中范围 50px）
+            HIT = 50
+            hit_furn = None
+            for i, pf in enumerate(self.placed_furniture):
+                if abs(e.x - pf['x']) < HIT and abs(e.y - pf['y']) < HIT:
+                    hit_furn = (i, pf)
+                    break
+            if hit_furn:
+                idx, pf = hit_furn
+                # 找到该家具的原价
+                _fmeta = next((it for it in FURNITURE_ITEMS if it['id']==pf['id']), None)
+                _sell_price = int((_fmeta['price'] if _fmeta else 0) * 0.6)
+                def do_recall(_idx=idx, _pf=pf):
+                    self.placed_furniture.pop(_idx)
+                    self.furniture_bag[_pf['id']] = self.furniture_bag.get(_pf['id'], 0) + 1
+                    self._furn_img_cache = {}
+                    self._save()
+                    self.say(f"收回了{_pf['name']}～", 60)
+                def do_sell(_idx=idx, _pf=pf, _sp=_sell_price):
+                    self.placed_furniture.pop(_idx)
+                    self.score += _sp
+                    self._furn_img_cache = {}
+                    self._save()
+                    self.say(f"出售{_pf['name']}，获得⭐{_sp}！", 80)
+                rm = tk.Menu(win, tearoff=0, bg='#1e0f3a', fg='#ddccff',
+                             activebackground='#cc3333', activeforeground='white', font=('PingFang SC',11))
+                rm.add_command(label=f"📦  收回『{pf['name']}』", command=do_recall)
+                rm.add_command(label=f"💰  出售（六折 ⭐{_sell_price}）", command=do_sell)
+                rm.add_separator()
+                rm.add_command(label='取消')
+                try: rm.tk_popup(e.x_root, e.y_root)
+                finally: rm.grab_release()
+                return
             m = tk.Menu(win, tearoff=0, bg='#1e0f3a', fg='#ddccff',
                         activebackground='#7733cc', activeforeground='white', font=('PingFang SC',11))
             m.add_command(label='💬  找我说话', command=lambda: (self._chat_dialog(), win.focus_force()))
             m.add_command(label='🐾  宠物档案', command=lambda: (self.open_profile(), win.focus_force()))
             m.add_command(label='🗺️  旅行地图', command=lambda: (self.open_travel(), win.focus_force()))
+            m.add_command(label='🎒  背包 & 仓库', command=lambda: (self.open_bag(), win.focus_force()))
             m.add_command(label='🛒  小卖部',   command=lambda: (self.open_shop(), win.focus_force()))
             m.add_command(label='🛋️  家具店',   command=lambda: (self.open_furniture_shop(), win.focus_force()))
             m.add_separator()
@@ -1921,6 +2035,7 @@ class HomeWorld:
         m.add_command(label='💬 找我说话',command=self._chat_dialog)
         m.add_command(label='🐾 宠物档案',command=self.open_profile)
         m.add_command(label='🗺️ 旅行地图',command=self.open_travel)
+        m.add_command(label='🎒 背包 & 仓库',command=self.open_bag)
         m.add_command(label='🛒 小卖部',command=self.open_shop)
         m.add_command(label='🛋️ 家具店',command=self.open_furniture_shop)
         m.add_separator()
@@ -1984,195 +2099,423 @@ class HomeWorld:
         tk.Button(win,text='关闭',command=win.destroy).pack(pady=4)
 
     # ── 商店系统 ──────────────────────────────────────────────────────
-    def open_shop(self, start_tab='shop'):
-        """QQ宠物风格喂养商店"""
+    def open_shop(self):
+        """小卖部 —— 只买东西，支持批量购买"""
         if hasattr(self,'_shop_win') and self._shop_win and self._shop_win.winfo_exists():
-            self._shop_win.lift()
-            if hasattr(self._shop_win,'_switch_tab'):
-                self._shop_win._switch_tab(start_tab)
-            return
+            self._shop_win.lift(); return
         from PIL import Image as _PI, ImageTk as _IT
         win=tk.Toplevel(self.root)
         win.title('🛒 小卖部')
-        win.geometry('550x480+200+80')
+        win.geometry('600x500+180+70')
         win.resizable(False,False)
-        win.lift()
-        win.focus_force()
+        win.attributes('-topmost', True)
+        win.lift(); win.focus_force()
         win.configure(bg='#f5e8c8')
         self._shop_win=win
         MID='#c8883a'; PANEL='#ffe8b0'; DARK='#7a4a10'; LIGHT='#fff5dc'
-        SEL='#ffe066'; BTN_BUY='#e85520'; BTN_USE='#3a9a30'; BTN_DIS='#aaaaaa'; TEXT='#3a1a00'
-        state={'tab':start_tab,'cat':'food','sel':None,'imgs':{}}
+        SEL='#ffe066'; BTN_BUY='#e85520'; BTN_DIS='#aaaaaa'; TEXT='#3a1a00'
+        state={'cat':'food','sel':None,'qty':1,'imgs':{}}
 
-        def load_img(fname,size=56):
+        def load_img(fname,size=64):
             k=(fname,size)
             if k in state['imgs']: return state['imgs'][k]
             fp=os.path.join(FOOD_DIR,fname)
-            try:
-                p=_IT.PhotoImage(_PI.open(fp).convert('RGBA').resize((size,size),_PI.NEAREST))
+            try: p=_IT.PhotoImage(_PI.open(fp).convert('RGBA').resize((size,size),_PI.NEAREST))
             except: p=None
             state['imgs'][k]=p; return p
 
-        # 顶部标题栏
+        # 顶部
         top=tk.Frame(win,bg=MID,height=44); top.pack(fill='x'); top.pack_propagate(False)
         tk.Label(top,text='🛒  小卖部',font=('PingFang SC',14,'bold'),bg=MID,fg='#fff5dc').pack(side='left',padx=16)
-        tbf=tk.Frame(top,bg=MID); tbf.pack(side='right',padx=8)
-        tbtns={}
-        def sw_tab(t):
-            state['tab']=t; state['sel']=None
-            for k,b in tbtns.items(): b.config(bg=SEL if k==t else PANEL,relief='sunken' if k==t else 'raised')
-            refresh()
-        for tid,tl in [('shop','🏪 商店'),('bag','🎒 背包')]:
-            b=tk.Button(tbf,text=tl,font=('PingFang SC',10),bg=SEL if tid==start_tab else PANEL,fg=TEXT,
-                        relief='sunken' if tid==start_tab else 'raised',bd=1,padx=8,pady=2,
-                        command=lambda t=tid:sw_tab(t)); b.pack(side='left',padx=2); tbtns[tid]=b
+        sc_lbl=tk.Label(top,text=f'⭐ {self.score}',font=('PingFang SC',11),bg=MID,fg='#fff5dc')
+        sc_lbl.pack(side='right',padx=16)
 
-        # 左右分栏
-        lp=tk.Frame(win,bg='#f5e8c8',width=390); lp.pack(side='left',fill='y'); lp.pack_propagate(False)
-        rp=tk.Frame(win,bg=PANEL,width=160); rp.pack(side='right',fill='both',expand=True)
-
-        # 分类tab
-        cf=tk.Frame(lp,bg='#e8c880',height=30); cf.pack(fill='x')
+        # 分类
+        cf=tk.Frame(win,bg='#e8c880',height=30); cf.pack(fill='x'); cf.pack_propagate(False)
         cbtns={}
         def sw_cat(c):
             state['cat']=c; state['sel']=None
             for k,b in cbtns.items(): b.config(bg=SEL if k==c else '#e8c880')
             refresh()
-        for cid,cl in [('food','🍚 主食'),('snack','🍬 零食')]:
-            b=tk.Button(cf,text=cl,font=('PingFang SC',10),bg=SEL if cid=='food' else '#e8c880',fg=TEXT,
-                        relief='flat',bd=0,padx=12,pady=3,command=lambda c=cid:sw_cat(c))
+        for cid,cl in [('food','🍚 主食'),('snack','🍬 零食'),('bath','🛁 浴球')]:
+            b=tk.Button(cf,text=cl,font=('PingFang SC',10),bg=SEL if cid=='food' else '#e8c880',
+                        fg=TEXT,relief='flat',bd=0,padx=14,pady=3,command=lambda c=cid:sw_cat(c))
             b.pack(side='left'); cbtns[cid]=b
 
-        # 物品网格（可滚动）
-        grid_container=tk.Frame(lp,bg=LIGHT); grid_container.pack(fill='both',expand=True,padx=1,pady=2)
-        gcv=tk.Canvas(grid_container,bg=LIGHT,highlightthickness=0)
-        gsb=tk.Scrollbar(grid_container,orient='vertical',command=gcv.yview)
+        # 左右
+        lp=tk.Frame(win,bg='#f5e8c8',width=420); lp.pack(side='left',fill='y'); lp.pack_propagate(False)
+        rp=tk.Frame(win,bg=PANEL,width=180); rp.pack(side='right',fill='both',expand=True)
+
+        # 网格
+        gc=tk.Frame(lp,bg=LIGHT); gc.pack(fill='both',expand=True,padx=1,pady=2)
+        gcv=tk.Canvas(gc,bg=LIGHT,highlightthickness=0)
+        gsb=tk.Scrollbar(gc,orient='vertical',command=gcv.yview)
         gcv.configure(yscrollcommand=gsb.set)
         gsb.pack(side='right',fill='y'); gcv.pack(side='left',fill='both',expand=True)
         gf=tk.Frame(gcv,bg=LIGHT); gcv.create_window((0,0),window=gf,anchor='nw')
-        def _on_scroll(e):
-            gcv.yview_scroll(int(-1*(e.delta/120)),'units')
-        def _bind_scroll(widget):
-            widget.bind('<MouseWheel>',_on_scroll)
-            for child in widget.winfo_children():
-                _bind_scroll(child)
+        def _on_scroll(e): gcv.yview_scroll(int(-1*(e.delta/120)),'units')
+        def _bind_scroll(w):
+            w.bind('<MouseWheel>',_on_scroll)
+            for ch in w.winfo_children(): _bind_scroll(ch)
         gcv.bind('<MouseWheel>',_on_scroll)
-        gf.bind('<MouseWheel>',_on_scroll)
-        win.bind('<MouseWheel>',_on_scroll)
-
-        # 底部积分
-        bb=tk.Frame(lp,bg='#e8c880',height=28); bb.pack(fill='x'); bb.pack_propagate(False)
-        sc_lbl=tk.Label(bb,text=f'⭐ 当前积分：{self.score}',font=('PingFang SC',10),bg='#e8c880',fg=DARK)
-        sc_lbl.pack(side='left',padx=10)
 
         # 右侧详情
-        di=tk.Label(rp,bg=PANEL); di.pack(pady=(20,6))
-        dn=tk.Label(rp,text='',font=('PingFang SC',13,'bold'),bg=PANEL,fg=DARK); dn.pack()
-        dd=tk.Label(rp,text='',font=('PingFang SC',10),bg=PANEL,fg=TEXT,wraplength=145); dd.pack(pady=4)
-        de=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#556688',wraplength=145); de.pack(pady=2)
+        di=tk.Label(rp,bg=PANEL); di.pack(pady=(16,4))
+        dn=tk.Label(rp,text='',font=('PingFang SC',12,'bold'),bg=PANEL,fg=DARK); dn.pack()
+        dd=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg=TEXT,wraplength=160); dd.pack(pady=2)
+        de=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#556688',wraplength=160); de.pack(pady=2)
         dp=tk.Label(rp,text='',font=('PingFang SC',11,'bold'),bg=PANEL,fg=BTN_BUY); dp.pack(pady=4)
         dlv=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#886644'); dlv.pack()
         dct=tk.Label(rp,text='',font=('PingFang SC',10),bg=PANEL,fg=DARK); dct.pack(pady=2)
+
+        # 数量选择
+        tk.Label(rp,text='购买数量：',font=('PingFang SC',9),bg=PANEL,fg=DARK).pack(pady=(6,0))
+        # 快捷按钮行
+        quick_f=tk.Frame(rp,bg=PANEL); quick_f.pack(pady=2)
+        qty_var=tk.StringVar(value='1')
+        def _set_qty(q):
+            qty_var.set(str(q))
+            qty_entry.config(fg=DARK)
+            upd_qty()
+        for q in [1,5,10,20]:
+            tk.Button(quick_f,text=f'×{q}',font=('PingFang SC',9),bg='#e8c870',fg=DARK,
+                      relief='flat',bd=0,padx=6,pady=2,cursor='hand2',
+                      command=lambda _q=q:_set_qty(_q)).pack(side='left',padx=2)
+        # 自定义输入框
+        input_f=tk.Frame(rp,bg=PANEL); input_f.pack(pady=2)
+        tk.Label(input_f,text='自定义：',font=('PingFang SC',9),bg=PANEL,fg=DARK).pack(side='left')
+        qty_entry=tk.Entry(input_f,textvariable=qty_var,font=('PingFang SC',11),
+                           width=5,justify='center',bg=LIGHT,fg=DARK,relief='solid',bd=1)
+        qty_entry.pack(side='left',padx=2)
+        qty_entry.bind('<KeyRelease>',lambda e:upd_qty())
+        qty_entry.bind('<FocusOut>',lambda e:upd_qty())
+
+        total_lbl=tk.Label(rp,text='',font=('PingFang SC',10,'bold'),bg=PANEL,fg='#aa3300'); total_lbl.pack(pady=2)
+
         b_buy=tk.Button(rp,text='💰 购买',font=('PingFang SC',12,'bold'),bg=BTN_BUY,fg='white',
-                        relief='flat',bd=0,padx=20,pady=6,state='disabled',cursor='hand2'); b_buy.pack(pady=(8,4))
-        b_use=tk.Button(rp,text='🍽 喂食',font=('PingFang SC',12,'bold'),bg=BTN_USE,fg='white',
-                        relief='flat',bd=0,padx=20,pady=6,state='disabled',cursor='hand2'); b_use.pack()
-        ml=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#cc3300',wraplength=145); ml.pack(pady=4)
+                        relief='flat',bd=0,padx=20,pady=7,state='disabled',cursor='hand2'); b_buy.pack(pady=(6,2))
+        ml=tk.Label(rp,text='',font=('PingFang SC',9),bg=PANEL,fg='#cc3300',wraplength=165); ml.pack(pady=4)
+
+        def upd_qty():
+            try:
+                q=int(qty_var.get())
+                if q<1: q=1
+                if q>999: q=999
+            except: q=1
+            state['qty']=q
+            if state['sel']:
+                it=next((x for x in SHOP_ITEMS if x['id']==state['sel']),None)
+                if it: _update_buy_btn(it)
+
+        def _update_buy_btn(item):
+            q=state['qty']
+            total=item['price']*q
+            locked=item['lv']>self.level
+            total_lbl.config(text=f'合计 ⭐{total}' if not locked else '')
+            if locked: b_buy.config(state='disabled',bg=BTN_DIS,text='🔒 等级不足')
+            elif self.score<total: b_buy.config(state='disabled',bg=BTN_DIS,text=f'💰 积分不足')
+            else: b_buy.config(state='normal',bg=BTN_BUY,text=f'💰 ×{q} 购买',
+                               command=lambda it=item,_q=q:do_buy(it,_q))
 
         def upd_detail(item):
-            img=load_img(item['file'],56)
+            img=load_img(item['file'],60)
             if img: di.config(image=img); di._img=img
             dn.config(text=item['name']); dd.config(text=item['desc'])
             fx=[]
-            if item['hunger']>0: fx.append(f'饱腹度 +{item["hunger"]}')
-            if item['mood']>0: fx.append(f'心情 +{item["mood"]}')
-            if item['health']!=0: fx.append(f'健康 {item["health"]:+d}')
-            de.config(text=' | '.join(fx))
-            locked=item['lv']>self.level; cnt=self.bag.get(item['id'],0)
-            if state['tab']=='shop':
-                dp.config(text=f'⭐ {item["price"]} 积分')
-                dlv.config(text=f'需要等级 Lv.{item["lv"]}'+(' 🔒' if locked else ' ✅'))
-                dct.config(text=f'背包库存：×{cnt}')
-                if locked: b_buy.config(state='disabled',bg=BTN_DIS,text='🔒 等级不足')
-                elif self.score<item['price']: b_buy.config(state='disabled',bg=BTN_DIS,text='💰 积分不足')
-                else: b_buy.config(state='normal',bg=BTN_BUY,text='💰 购买',command=lambda it=item:do_buy(it))
-                b_use.config(state='normal' if cnt>0 else 'disabled',
-                             bg=BTN_USE if cnt>0 else BTN_DIS,
-                             text='🍽 喂食' if cnt>0 else '🎒 未购买',
-                             command=lambda it=item:do_use(it))
-            else:
-                dp.config(text=''); dlv.config(text=''); dct.config(text=f'背包库存：×{cnt}')
-                b_buy.config(state='disabled',bg=BTN_DIS,text='💰 购买')
-                b_use.config(state='normal' if cnt>0 else 'disabled',bg=BTN_USE if cnt>0 else BTN_DIS,
-                             text='🍽 喂食',command=lambda it=item:do_use(it))
+            if item['hunger']>0: fx.append(f'饱腹+{item["hunger"]}')
+            if item['mood']>0: fx.append(f'心情+{item["mood"]}')
+            if item['health']!=0: fx.append(f'健康{item["health"]:+d}')
+            de.config(text='  '.join(fx))
+            dp.config(text=f'⭐ {item["price"]}/个')
+            dlv.config(text=f'需要 Lv.{item["lv"]}'+(' 🔒' if item["lv"]>self.level else ' ✅'))
+            dct.config(text=f'背包库存：×{self.bag.get(item["id"],0)}')
+            _update_buy_btn(item)
 
-        def do_buy(item):
-            if self.score<item['price']: ml.config(text='积分不足！'); return
+        def do_buy(item,qty):
+            total=item['price']*qty
+            if self.score<total: ml.config(text='积分不足！'); return
             if item['lv']>self.level: ml.config(text=f'需要 Lv.{item["lv"]}！'); return
-            self.score-=item['price']
-            self.bag[item['id']]=self.bag.get(item['id'],0)+1
-            self.buy_count=getattr(self,'buy_count',0)+1
-            self.add_exp(3); self._save()
+            self.score-=total
+            self.bag[item['id']]=self.bag.get(item['id'],0)+qty
+            self.buy_count=getattr(self,'buy_count',0)+qty
+            self.add_exp(3*qty); self._save()
             if self.buy_count>=10: self.unlock('shop10')
-            self.say(f'买到{item["name"]}了！🛒',70)
+            self.say(f'买到×{qty} {item["name"]}！🛒',70)
             ml.config(text=f'✅ 购买成功！背包 ×{self.bag[item["id"]]}')
-            refresh()
-
-        def do_use(item):
-            cnt=self.bag.get(item['id'],0)
-            if cnt<=0: ml.config(text='背包里没有！'); return
-            self.hunger=min(100,self.hunger+item['hunger'])
-            self.mood=min(100,self.mood+item['mood'])
-            self.health=min(100,max(0,self.health+item['health']))
-            if self.sick and self.health>=75: self.sick=False
-            self.bag[item['id']]=cnt-1; self.feed_count+=1; self.add_exp(5); self._save()
-            import random as _r
-            replies=[f'{item["name"]}好好吃！😋',f'啊~{item["name"]}太香了！',
-                     f'谢谢主人！{item["name"]}！',f'是{item["name"]}！我最喜欢了！']
-            self.say(_r.choice(replies),100)
-            ml.config(text=f'✅ 喂食成功！剩余 ×{self.bag[item["id"]]}')
-            refresh()
+            sc_lbl.config(text=f'⭐ {self.score}')
+            dct.config(text=f'背包库存：×{self.bag.get(item["id"],0)}')
+            _update_buy_btn(item)
 
         def refresh():
             for w in gf.winfo_children(): w.destroy()
-            if state['tab']=='shop':
-                pool=[it for it in SHOP_ITEMS if it['cat']==state['cat']]
-            else:
-                pool=[it for it in SHOP_ITEMS if self.bag.get(it['id'],0)>0]
+            pool=[it for it in SHOP_ITEMS if it['cat']==state['cat']]
             COLS=4
             for i,item in enumerate(pool):
                 r,c=i//COLS,i%COLS
                 issel=item['id']==state['sel']
-                fr=tk.Frame(gf,bg=SEL if issel else LIGHT,bd=2,
-                            relief='ridge' if issel else 'flat',cursor='hand2')
+                locked=item['lv']>self.level
+                cell_bg=SEL if issel else ('#ece4d0' if locked else LIGHT)
+                fr=tk.Frame(gf,bg=cell_bg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
                 fr.grid(row=r,column=c,padx=3,pady=4)
                 img=load_img(item['file'],64)
                 if img:
-                    il=tk.Label(fr,image=img,bg=SEL if issel else LIGHT); il.pack(); il._img=img
-                tk.Label(fr,text=item['name'],font=('PingFang SC',11,'bold'),
-                         bg=SEL if issel else LIGHT,fg=TEXT).pack()
-                locked=item['lv']>self.level
-                if state['tab']=='shop':
-                    tk.Label(fr,text=f'🔒Lv{item["lv"]}' if locked else f'⭐{item["price"]}',
-                             font=('PingFang SC',10),bg=SEL if issel else LIGHT,
-                             fg='#888888' if locked else BTN_BUY).pack()
-                else:
-                    tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',
-                             font=('PingFang SC',10,'bold'),
-                             bg=SEL if issel else LIGHT,fg=BTN_USE).pack()
+                    il=tk.Label(fr,image=img,bg=cell_bg); il.pack(); il._img=img
+                tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),
+                         bg=cell_bg,fg='#888888' if locked else TEXT).pack()
+                tk.Label(fr,text=f'🔒Lv{item["lv"]}' if locked else f'⭐{item["price"]}',
+                         font=('PingFang SC',9),bg=cell_bg,
+                         fg='#aaaaaa' if locked else BTN_BUY).pack()
+                cnt=self.bag.get(item['id'],0)
+                if cnt>0:
+                    tk.Label(fr,text=f'×{cnt}',font=('PingFang SC',8,'bold'),
+                             bg=cell_bg,fg='#3a7a30').pack()
                 def on_click(it=item):
                     state['sel']=it['id']; refresh(); upd_detail(it)
                 for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:on_click(it))
                 fr.bind('<Button-1>',lambda e,it=item:on_click(it))
             gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
-            _bind_scroll(gf)  # 确保新子控件也能滚轮
-            sc_lbl.config(text=f'⭐ 当前积分：{self.score}'); ml.config(text='')
+            _bind_scroll(gf)
+            sc_lbl.config(text=f'⭐ {self.score}'); ml.config(text='')
             if state['sel']:
                 it=next((x for x in SHOP_ITEMS if x['id']==state['sel']),None)
                 if it: upd_detail(it)
 
         refresh(); win.focus_force()
-        win._switch_tab = sw_tab  # 暴露给外部调用
+
+    def open_bag(self):
+        """背包（食物）+ 家具仓库 —— Tab 切换"""
+        if hasattr(self,'_bag_win') and self._bag_win and self._bag_win.winfo_exists():
+            self._bag_win.lift(); return
+        from PIL import Image as _PI, ImageTk as _IT
+        import os as _os2
+        FOOD_DIR = _os2.path.join(_os2.path.dirname(_os2.path.abspath(__file__)), 'assets', 'food')
+        FURN_DIR = _os2.path.join(_os2.path.dirname(_os2.path.abspath(__file__)), 'assets', 'furniture')
+        PREV_DIR = _os2.path.join(_os2.path.dirname(_os2.path.abspath(__file__)), 'assets', 'furniture_preview')
+
+        win = tk.Toplevel(self.root)
+        win.title('🎒 背包 & 仓库')
+        win.geometry('520x460+200+80')
+        win.resizable(False, False)
+        win.attributes('-topmost', True)
+        win.lift(); win.focus_force()
+        win.configure(bg='#f5e8c8')
+        self._bag_win = win
+
+        MID='#c8883a'; PANEL='#ffe8b0'; DARK='#7a4a10'; LIGHT='#fff5dc'
+        SEL='#ffe066'; BTN_OK='#3a9a30'; BTN_DIS='#aaaaaa'; TEXT='#3a1a00'
+        state = {'tab':'food', 'sel':None, 'imgs':{}}
+
+        def _img_cache(fp, size):
+            k = (fp, size)
+            if k in state['imgs']: return state['imgs'][k]
+            try:
+                raw = _PI.open(fp).convert('RGBA')
+                ow,oh = raw.size; s = min(size/ow, size/oh)
+                nw,nh = int(ow*s), int(oh*s)
+                p = _IT.PhotoImage(raw.resize((nw,nh), _PI.LANCZOS))
+            except: p = None
+            state['imgs'][k] = p; return p
+
+        # ── Tab 栏 ──
+        tab_bar = tk.Frame(win, bg=MID, height=40); tab_bar.pack(fill='x'); tab_bar.pack_propagate(False)
+        tk.Label(tab_bar, text='🎒  背包 & 🏠 仓库', font=('PingFang SC',13,'bold'), bg=MID, fg='#fff5dc').pack(side='left', padx=12, pady=6)
+        t_food = tk.Button(tab_bar, text='🍔 食物背包', font=('PingFang SC',10,'bold'),
+                           bg='#ffe066', fg=DARK, relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
+        t_furn = tk.Button(tab_bar, text='🏠 家具仓库', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
+        t_food.pack(side='right', padx=4, pady=5)
+        t_furn.pack(side='right', padx=4, pady=5)
+
+        # ── 主体区 ──
+        body = tk.Frame(win, bg='#f5e8c8'); body.pack(fill='both', expand=True)
+        lp = tk.Frame(body, bg='#f5e8c8', width=330); lp.pack(side='left', fill='y'); lp.pack_propagate(False)
+        rp = tk.Frame(body, bg=PANEL, width=190); rp.pack(side='right', fill='both', expand=True)
+
+        # 右侧面板元素
+        di   = tk.Label(rp, bg=PANEL); di.pack(pady=(16,4))
+        dn   = tk.Label(rp, text='', font=('PingFang SC',12,'bold'), bg=PANEL, fg=DARK); dn.pack()
+        dd   = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg=TEXT, wraplength=170); dd.pack(pady=2)
+        de   = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#556688', wraplength=170); de.pack(pady=2)
+        dct  = tk.Label(rp, text='', font=('PingFang SC',10,'bold'), bg=PANEL, fg=DARK); dct.pack(pady=4)
+        b1   = tk.Button(rp, text='', font=('PingFang SC',12,'bold'), bg=BTN_OK, fg='white',
+                         relief='flat', bd=0, padx=16, pady=7, state='disabled', cursor='hand2'); b1.pack(pady=(6,3))
+        b2   = tk.Button(rp, text='', font=('PingFang SC',12,'bold'), bg='#aa3333', fg='white',
+                         relief='flat', bd=0, padx=16, pady=7, state='disabled', cursor='hand2'); b2.pack(pady=3)
+        b3   = tk.Button(rp, text='', font=('PingFang SC',11), bg='#555', fg='white',
+                         relief='flat', bd=0, padx=16, pady=5, state='disabled', cursor='hand2'); b3.pack(pady=3)
+        ml   = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#cc3300', wraplength=170); ml.pack(pady=4)
+
+        def reset_right():
+            di.config(image=''); di._img=None
+            dn.config(text=''); dd.config(text=''); de.config(text=''); dct.config(text=''); ml.config(text='')
+            for b in (b1,b2,b3): b.config(text='', state='disabled', bg='#888')
+
+        # ── 左侧滚动网格 ──
+        gc = tk.Frame(lp, bg=LIGHT); gc.pack(fill='both', expand=True, padx=1, pady=2)
+        gcv = tk.Canvas(gc, bg=LIGHT, highlightthickness=0)
+        gsb = tk.Scrollbar(gc, orient='vertical', command=gcv.yview)
+        gcv.configure(yscrollcommand=gsb.set)
+        gsb.pack(side='right', fill='y'); gcv.pack(side='left', fill='both', expand=True)
+        gf = tk.Frame(gcv, bg=LIGHT); gcv.create_window((0,0), window=gf, anchor='nw')
+        def _on_scroll(e): gcv.yview_scroll(int(-1*(e.delta/120)), 'units')
+        gcv.bind('<MouseWheel>', _on_scroll)
+
+        # ════ 食物背包 ════
+        def show_food_detail(item):
+            fp = _os2.path.join(FOOD_DIR, item['file'])
+            img = _img_cache(fp, 64)
+            if img: di.config(image=img); di._img=img
+            dn.config(text=item['name']); dd.config(text=item['desc'])
+            fx=[]
+            if item['hunger']>0: fx.append(f'饱腹+{item["hunger"]}')
+            if item['mood']>0: fx.append(f'心情+{item["mood"]}')
+            if item['health']!=0: fx.append(f'健康{item["health"]:+d}')
+            de.config(text='  '.join(fx))
+            cnt = self.bag.get(item['id'],0)
+            dct.config(text=f'剩余 ×{cnt}')
+            def do_use(it=item):
+                c = self.bag.get(it['id'],0)
+                if c<=0: ml.config(text='没有了！'); return
+                self.hunger=min(100,self.hunger+it['hunger'])
+                self.mood=min(100,self.mood+it['mood'])
+                self.health=min(100,max(0,self.health+it['health']))
+                if self.sick and self.health>=75: self.sick=False
+                self.bag[it['id']]=c-1; self.feed_count+=1; self.add_exp(5); self._save()
+                import random as _r
+                self.say(_r.choice([f'{it["name"]}好好吃！😋',f'啊~太香了！',f'谢谢主人！',f'最喜欢了！']),100)
+                ml.config(text=f'✅ 剩余×{self.bag[it["id"]]}')
+                dct.config(text=f'剩余 ×{self.bag[it["id"]]}')
+                b1.config(state='normal' if self.bag[it['id']]>0 else 'disabled',
+                          bg=BTN_OK if self.bag[it['id']]>0 else BTN_DIS)
+                refresh_grid()
+            b1.config(text='🍽 喂食', bg=BTN_OK if cnt>0 else BTN_DIS,
+                      state='normal' if cnt>0 else 'disabled', command=do_use)
+            b2.config(text='', state='disabled', bg='#888')
+            b3.config(text='', state='disabled', bg='#888')
+
+        # ════ 家具仓库 ════
+        def show_furn_detail(item):
+            prev_fp = _os2.path.join(PREV_DIR, item.get('preview',''))
+            if not _os2.path.exists(prev_fp):
+                prev_fp = _os2.path.join(FURN_DIR, item['file'])
+            img = _img_cache(prev_fp, 80)
+            if img: di.config(image=img); di._img=img
+            dn.config(text=item['name'])
+            dd.config(text=item['desc'])
+            de.config(text=f'心情+{item["mood"]}')
+            bag_cnt    = self.furniture_bag.get(item['id'],0)
+            placed_cnt = sum(1 for p in self.placed_furniture if p['id']==item['id'])
+            sell_price = int(item['price']*0.6)
+            dct.config(text=f'背包×{bag_cnt}  已摆×{placed_cnt}')
+            def do_place(it=item):
+                if self.furniture_bag.get(it['id'],0)<=0: ml.config(text='背包里没有了！'); return
+                self._pending_place = it
+                win.destroy()
+                self.say(f'点击家园中的位置来摆放{it["name"]}吧～', 100)
+            def do_recall(it=item):
+                candidates=[i for i,p in enumerate(self.placed_furniture) if p['id']==it['id']]
+                if not candidates: ml.config(text='没有已摆放的！'); return
+                self.placed_furniture.pop(candidates[-1])
+                self.furniture_bag[it['id']] = self.furniture_bag.get(it['id'],0)+1
+                self._furn_img_cache={}; self._save()
+                self.say(f'收回了{it["name"]}～',60)
+                ml.config(text='✅ 已收回到背包')
+                show_furn_detail(it); refresh_grid()
+            def do_sell(it=item, sp=sell_price):
+                if self.furniture_bag.get(it['id'],0)<=0: ml.config(text='背包里没有！'); return
+                self.furniture_bag[it['id']] -= 1
+                self.score += sp; self._save()
+                self.say(f'出售{it["name"]}，获得⭐{sp}！',80)
+                ml.config(text=f'✅ 出售+⭐{sp}')
+                show_furn_detail(it); refresh_grid()
+            b1.config(text='🏠 摆放', bg='#3a7a30' if bag_cnt>0 else BTN_DIS,
+                      state='normal' if bag_cnt>0 else 'disabled', command=do_place)
+            b2.config(text='📦 收回', bg='#cc7700' if placed_cnt>0 else BTN_DIS,
+                      state='normal' if placed_cnt>0 else 'disabled', command=do_recall)
+            b3.config(text=f'💰 出售 ⭐{sell_price}', bg='#aa3333' if bag_cnt>0 else BTN_DIS,
+                      state='normal' if bag_cnt>0 else 'disabled', command=do_sell)
+
+        # ════ 网格刷新 ════
+        def refresh_grid():
+            for w in gf.winfo_children(): w.destroy()
+            if state['tab'] == 'food':
+                pool=[it for it in SHOP_ITEMS if self.bag.get(it['id'],0)>0]
+                if not pool:
+                    tk.Label(gf,text='食物背包空空如也～\n去小卖部买点吧',
+                             font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                    gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all')); return
+                COLS=3
+                for i,item in enumerate(pool):
+                    r,c=divmod(i,COLS)
+                    issel = item['id']==state['sel']
+                    cbg = SEL if issel else LIGHT
+                    fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
+                    fr.grid(row=r,column=c,padx=5,pady=5)
+                    fp=_os2.path.join(FOOD_DIR,item['file'])
+                    img=_img_cache(fp,64)
+                    if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
+                    tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=TEXT).pack()
+                    tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',font=('PingFang SC',10,'bold'),bg=cbg,fg='#3a7a30').pack()
+                    def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_food_detail(it)
+                    for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
+                    fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+            else:
+                all_ids = set(k for k,v in self.furniture_bag.items() if v>0)
+                all_ids |= set(p['id'] for p in self.placed_furniture)
+                pool = [it for it in FURNITURE_ITEMS if it['id'] in all_ids]
+                if not pool:
+                    tk.Label(gf,text='仓库空空如也～\n去家具店买点吧',
+                             font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                    gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all')); return
+                COLS=3
+                for i,item in enumerate(pool):
+                    r,c=divmod(i,COLS)
+                    issel = item['id']==state['sel']
+                    bag_c=self.furniture_bag.get(item['id'],0)
+                    placed_c=sum(1 for p in self.placed_furniture if p['id']==item['id'])
+                    # 已摆放且背包为0：灰色；选中：黄色；其他：正常
+                    if issel:
+                        cbg = SEL
+                    elif bag_c == 0 and placed_c > 0:
+                        cbg = '#d8d0c0'  # 灰色——已全部摆出
+                    else:
+                        cbg = LIGHT
+                    fg_name = '#888877' if (bag_c==0 and placed_c>0 and not issel) else TEXT
+                    fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
+                    fr.grid(row=r,column=c,padx=5,pady=5)
+                    prev_fp=_os2.path.join(PREV_DIR,item.get('preview',''))
+                    if not _os2.path.exists(prev_fp): prev_fp=_os2.path.join(FURN_DIR,item['file'])
+                    img=_img_cache(prev_fp,72)
+                    if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
+                    tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=fg_name).pack()
+                    status_txt = f'已摆×{placed_c}' if bag_c==0 else f'背包×{bag_c}  已摆×{placed_c}'
+                    tk.Label(fr,text=status_txt,font=('PingFang SC',9),bg=cbg,fg='#777766' if bag_c==0 else '#556688').pack()
+                    def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_furn_detail(it)
+                    for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
+                    fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+            gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
+            gcv.bind('<MouseWheel>',_on_scroll)
+            if state['sel']:
+                if state['tab']=='food':
+                    it=next((x for x in SHOP_ITEMS if x['id']==state['sel']),None)
+                    if it: show_food_detail(it)
+                else:
+                    it=next((x for x in FURNITURE_ITEMS if x['id']==state['sel']),None)
+                    if it: show_furn_detail(it)
+
+        def switch_tab(tab):
+            state['tab']=tab; state['sel']=None; reset_right()
+            if tab=='food':
+                t_food.config(bg='#ffe066',fg=DARK); t_furn.config(bg=MID,fg='#fff5dc')
+            else:
+                t_furn.config(bg='#ffe066',fg=DARK); t_food.config(bg=MID,fg='#fff5dc')
+            refresh_grid()
+
+        t_food.config(command=lambda:switch_tab('food'))
+        t_furn.config(command=lambda:switch_tab('furn'))
+
+        refresh_grid()
+        win.focus_force()
 
 
     # ── 家具店系统 ──────────────────────────────────────────────────
@@ -2183,57 +2526,17 @@ class HomeWorld:
         from PIL import Image as _PI, ImageTk as _IT
         import os as _os3
 
-        FURN_DIR = _os3.path.join(_os3.path.dirname(_os3.path.abspath(__file__)), 'assets', 'furniture')
+        FURN_DIR  = _os3.path.join(_os3.path.dirname(_os3.path.abspath(__file__)), 'assets', 'furniture')
+        PREV_DIR  = _os3.path.join(_os3.path.dirname(_os3.path.abspath(__file__)), 'assets', 'furniture_preview')
 
-        # 家具数据
-        FURNITURE_ITEMS = [
-            {'id':'fridge',    'name':'冰箱',    'file':'01_00_冰箱.png',       'price':80, 'lv':3,'cat':'kitchen','mood':5, 'desc':'保鲜食物，饥饿恢复+5%'},
-            {'id':'oven',      'name':'烤箱',    'file':'01_03_烤箱.png',       'price':60, 'lv':2,'cat':'kitchen','mood':3, 'desc':'烤箱，让食物更美味'},
-            {'id':'microwave', 'name':'微波炉',  'file':'01_05_微波炉.png',     'price':40, 'lv':2,'cat':'kitchen','mood':2, 'desc':'快速加热食物'},
-            {'id':'sink',      'name':'水槽',    'file':'01_06_水槽.png',       'price':35, 'lv':1,'cat':'kitchen','mood':2, 'desc':'厨房必备'},
-            {'id':'stove',     'name':'灶台',    'file':'01_09_灶台.png',       'price':50, 'lv':2,'cat':'kitchen','mood':3, 'desc':'烹饪美食'},
-            {'id':'cabinet',   'name':'橱柜',    'file':'01_10_橱柜.png',       'price':45, 'lv':2,'cat':'kitchen','mood':2, 'desc':'储藏食材'},
-            {'id':'sofa_l',    'name':'沙发(左)','file':'02_00_沙发左.png',     'price':60, 'lv':2,'cat':'living', 'mood':8, 'desc':'舒适沙发，心情+8'},
-            {'id':'sofa_m',    'name':'沙发(中)','file':'02_01_沙发中.png',     'price':60, 'lv':2,'cat':'living', 'mood':8, 'desc':'舒适沙发，心情+8'},
-            {'id':'sofa_r',    'name':'沙发(右)','file':'02_02_沙发右.png',     'price':60, 'lv':2,'cat':'living', 'mood':8, 'desc':'舒适沙发，心情+8'},
-            {'id':'armchair',  'name':'单人沙发','file':'02_03_单人沙发.png',   'price':50, 'lv':2,'cat':'living', 'mood':6, 'desc':'单人沙发，心情+6'},
-            {'id':'coffee_tb', 'name':'茶几',    'file':'02_05_茶几.png',       'price':30, 'lv':1,'cat':'living', 'mood':3, 'desc':'放茶杯的小桌'},
-            {'id':'tv_stand',  'name':'电视柜',  'file':'02_06_电视柜.png',     'price':40, 'lv':2,'cat':'living', 'mood':4, 'desc':'电视专属柜'},
-            {'id':'bookshelf', 'name':'书架',    'file':'02_09_书架上.png',     'price':55, 'lv':3,'cat':'study',  'mood':6, 'desc':'知识的海洋，心情+6'},
-            {'id':'bed_tl',    'name':'床(左上)','file':'03_00_床左上.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
-            {'id':'bed_tr',    'name':'床(右上)','file':'03_01_床右上.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
-            {'id':'dresser',   'name':'梳妆台',  'file':'03_09_梳妆台.png',     'price':65, 'lv':3,'cat':'bedroom','mood':7, 'desc':'整理仪容，心情+7'},
-            {'id':'wardrobe',  'name':'衣柜',    'file':'03_10_衣柜上.png',     'price':70, 'lv':3,'cat':'bedroom','mood':5, 'desc':'宽敞衣柜'},
-            {'id':'bed_bl',    'name':'床(左下)','file':'04_00_床左下.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
-            {'id':'bed_br',    'name':'床(右下)','file':'04_01_床右下.png',     'price':100,'lv':4,'cat':'bedroom','mood':10,'desc':'舒适的床，心情+10'},
-            {'id':'nightstand','name':'床头柜',  'file':'04_09_床头柜.png',     'price':30, 'lv':1,'cat':'bedroom','mood':2, 'desc':'床边小桌'},
-            {'id':'bathtub',   'name':'浴缸',    'file':'05_00_浴缸.png',       'price':90, 'lv':4,'cat':'bath',   'mood':8, 'desc':'泡澡放松，洁净+8'},
-            {'id':'toilet',    'name':'马桶',    'file':'05_01_马桶.png',       'price':40, 'lv':1,'cat':'bath',   'mood':2, 'desc':'卫生间必备'},
-            {'id':'washbasin', 'name':'洗手台',  'file':'05_02_洗手台.png',     'price':35, 'lv':1,'cat':'bath',   'mood':3, 'desc':'清洁双手'},
-            {'id':'shower',    'name':'淋浴间',  'file':'05_03_淋浴间.png',     'price':60, 'lv':2,'cat':'bath',   'mood':6, 'desc':'冲澡超爽'},
-            {'id':'piano',     'name':'钢琴',    'file':'06_00_钢琴.png',       'price':150,'lv':6,'cat':'entertain','mood':15,'desc':'演奏音乐，心情+15'},
-            {'id':'piano_k',   'name':'钢琴键',  'file':'06_01_钢琴键.png',     'price':150,'lv':6,'cat':'entertain','mood':15,'desc':'演奏音乐，心情+15'},
-            {'id':'guitar',    'name':'吉他',    'file':'06_05_吉他.png',       'price':80, 'lv':4,'cat':'entertain','mood':10,'desc':'弹吉他，心情+10'},
-            {'id':'computer',  'name':'电脑桌',  'file':'06_09_电脑桌.png',     'price':75, 'lv':3,'cat':'study',  'mood':8, 'desc':'学习工作，心情+8'},
-            {'id':'lamp',      'name':'台灯',    'file':'06_10_台灯.png',       'price':20, 'lv':1,'cat':'living', 'mood':2, 'desc':'温馨台灯'},
-            {'id':'desk',      'name':'书桌',    'file':'07_00_书桌.png',       'price':60, 'lv':3,'cat':'study',  'mood':6, 'desc':'认真学习的地方'},
-            {'id':'chair',     'name':'椅子',    'file':'07_01_椅子.png',       'price':25, 'lv':1,'cat':'living', 'mood':3, 'desc':'坐下休息一下'},
-            {'id':'plant',     'name':'盆栽',    'file':'07_05_植物盆栽.png',   'price':20, 'lv':1,'cat':'deco',   'mood':4, 'desc':'绿色植物，心情+4'},
-            {'id':'cactus',    'name':'仙人掌',  'file':'07_06_仙人掌.png',     'price':15, 'lv':1,'cat':'deco',   'mood':3, 'desc':'低维护植物'},
-            {'id':'rug',       'name':'地毯',    'file':'07_09_地毯.png',       'price':35, 'lv':2,'cat':'deco',   'mood':4, 'desc':'柔软地毯，心情+4'},
-            {'id':'tv',        'name':'电视',    'file':'08_00_电视.png',       'price':120,'lv':5,'cat':'entertain','mood':12,'desc':'看电视，心情+12'},
-            {'id':'speaker',   'name':'音响',    'file':'08_05_音响.png',       'price':70, 'lv':4,'cat':'entertain','mood':8, 'desc':'听音乐，心情+8'},
-            {'id':'painting',  'name':'壁画',    'file':'09_00_壁画.png',       'price':45, 'lv':2,'cat':'deco',   'mood':5, 'desc':'装饰壁画，心情+5'},
-            {'id':'mirror',    'name':'镜子',    'file':'09_01_镜子.png',       'price':30, 'lv':1,'cat':'deco',   'mood':3, 'desc':'梳妆打扮'},
-            {'id':'clock',     'name':'时钟',    'file':'09_05_时钟.png',       'price':25, 'lv':1,'cat':'deco',   'mood':2, 'desc':'掌握时间'},
-            {'id':'cat_bed',   'name':'猫咪窝',  'file':'10_00_猫咪窝.png',     'price':40, 'lv':2,'cat':'pet',    'mood':5, 'desc':'宠物最爱，心情+5'},
-            {'id':'scratcher', 'name':'猫抓板',  'file':'10_01_猫抓板.png',     'price':30, 'lv':1,'cat':'pet',    'mood':3, 'desc':'宠物玩具'},
-        ]
-
+        # 家具数据 —— preview: 合成预览图文件名（已含暖色背景），用于商店展示
+        # 床/沙发/书架/钢琴使用合成图（多块拼合），其余直接用原图
+        # FURNITURE_ITEMS 定义在模块顶层
         win = tk.Toplevel(self.root)
         win.title('🛋️ 家具店')
-        win.geometry('640x520+180+60')
+        win.geometry('760x560+120+50')
         win.resizable(False, False)
+        win.attributes('-topmost', True)
         win.lift(); win.focus_force()
         win.configure(bg='#f0ede0')
         self._fshop_win = win
@@ -2244,14 +2547,36 @@ class HomeWorld:
 
         state = {'cat':'all', 'sel':None, 'imgs':{}}
 
-        def load_img(fname, size=56):
-            k = (fname, size)
-            if k in state['imgs']: return state['imgs'][k]
-            fp = _os3.path.join(FURN_DIR, fname)
-            try:
-                p = _IT.PhotoImage(_PI.open(fp).convert('RGBA').resize((size,size), _PI.NEAREST))
-            except: p = None
-            state['imgs'][k] = p; return p
+        def load_prev(item, size=None):
+            """加载预览图（含暖色背景，已合成）；size=None 表示原始尺寸"""
+            pname = item.get('preview', '')
+            fp = _os3.path.join(PREV_DIR, pname) if pname else None
+            if not fp or not _os3.path.exists(fp):
+                # fallback: 原始文件加背景
+                fp2 = _os3.path.join(FURN_DIR, item['file'])
+                try:
+                    raw = _PI.open(fp2).convert('RGBA')
+                    bg  = _PI.new('RGBA', raw.size, (245, 238, 210, 255))
+                    bg.paste(raw, mask=raw.split()[3])
+                    img = bg.convert('RGB')
+                except: return None
+            else:
+                try:
+                    img = _PI.open(fp).convert('RGB')
+                except: return None
+            if size:
+                # 保持长宽比缩放到 size×size 正方形内，居中
+                ow, oh = img.size
+                scale = min(size/ow, size/oh)
+                nw, nh = max(1,int(ow*scale)), max(1,int(oh*scale))
+                img = img.resize((nw, nh), _PI.NEAREST)
+                canvas = _PI.new('RGB', (size, size), (245, 238, 210))
+                canvas.paste(img, ((size-nw)//2, (size-nh)//2))
+                img = canvas
+            k = (item['id'], size)
+            p = _IT.PhotoImage(img)
+            state['imgs'][k] = p
+            return p
 
         # 顶部
         top = tk.Frame(win, bg=MID, height=44); top.pack(fill='x'); top.pack_propagate(False)
@@ -2275,8 +2600,8 @@ class HomeWorld:
             b.pack(side='left'); cbtns[cid] = b
 
         # 左右分栏
-        lp = tk.Frame(win, bg='#f0ede0', width=430); lp.pack(side='left', fill='y'); lp.pack_propagate(False)
-        rp = tk.Frame(win, bg=PANEL, width=210); rp.pack(side='right', fill='both', expand=True)
+        lp = tk.Frame(win, bg='#f0ede0', width=520); lp.pack(side='left', fill='y'); lp.pack_propagate(False)
+        rp = tk.Frame(win, bg=PANEL, width=240); rp.pack(side='right', fill='both', expand=True)
 
         # 可滚动网格
         gc = tk.Frame(lp, bg=LIGHT); gc.pack(fill='both', expand=True, padx=2, pady=2)
@@ -2294,7 +2619,7 @@ class HomeWorld:
         # 右侧详情
         di = tk.Label(rp, bg=PANEL); di.pack(pady=(16,4))
         dn = tk.Label(rp, text='', font=('PingFang SC',13,'bold'), bg=PANEL, fg=DARK); dn.pack()
-        dd = tk.Label(rp, text='', font=('PingFang SC',10), bg=PANEL, fg=TEXT, wraplength=185); dd.pack(pady=4)
+        dd = tk.Label(rp, text='', font=('PingFang SC',10), bg=PANEL, fg=TEXT, wraplength=200); dd.pack(pady=4)
         dp = tk.Label(rp, text='', font=('PingFang SC',11,'bold'), bg=PANEL, fg=BTN_BUY); dp.pack(pady=4)
         dlv= tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#886644'); dlv.pack()
         dct= tk.Label(rp, text='', font=('PingFang SC',10), bg=PANEL, fg=DARK); dct.pack(pady=2)
@@ -2303,10 +2628,10 @@ class HomeWorld:
                           relief='flat', bd=0, padx=20, pady=6, state='disabled', cursor='hand2'); b_buy.pack(pady=(8,4))
         b_place = tk.Button(rp, text='🏠 前往摆放', font=('PingFang SC',11,'bold'), bg='#3a7a30', fg='white',
                             relief='flat', bd=0, padx=16, pady=5, state='disabled', cursor='hand2'); b_place.pack()
-        ml = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#cc3300', wraplength=185); ml.pack(pady=4)
+        ml = tk.Label(rp, text='', font=('PingFang SC',9), bg=PANEL, fg='#cc3300', wraplength=210); ml.pack(pady=4)
 
         def upd_detail(item):
-            img = load_img(item['file'], 80)
+            img = load_prev(item, 96)
             if img: di.config(image=img); di._img = img
             dn.config(text=item['name'])
             dd.config(text=item['desc'])
@@ -2340,7 +2665,6 @@ class HomeWorld:
             cnt = self.furniture_bag.get(item['id'], 0)
             if cnt <= 0: ml.config(text='背包里没有！'); return
             ml.config(text=f"🏠 打开家园，点击要放置的位置来摆放{item['name']}")
-            # 打开家园并进入摆放模式
             self._pending_place = item
             win.destroy()
             self.open_garden()
@@ -2349,25 +2673,31 @@ class HomeWorld:
             for w in gf.winfo_children(): w.destroy()
             pool = [it for it in FURNITURE_ITEMS if state['cat']=='all' or it['cat']==state['cat']]
             COLS = 4
+            THUMB = 80  # 格子缩略图尺寸
             for i, item in enumerate(pool):
                 r, c = i//COLS, i%COLS
                 issel = item['id'] == state['sel']
                 cnt = self.furniture_bag.get(item['id'], 0)
-                fr = tk.Frame(gf, bg=SEL if issel else LIGHT, bd=2,
-                              relief='ridge' if issel else 'flat', cursor='hand2')
-                fr.grid(row=r, column=c, padx=3, pady=4)
-                img = load_img(item['file'], 56)
-                if img:
-                    il = tk.Label(fr, image=img, bg=SEL if issel else LIGHT); il.pack(); il._img = img
-                tk.Label(fr, text=item['name'], font=('PingFang SC',9,'bold'),
-                         bg=SEL if issel else LIGHT, fg=TEXT).pack()
                 locked = item['lv'] > self.level
-                tk.Label(fr, text=f'🔒Lv{item["lv"]}' if locked else f'⭐{item["price"]}',
-                         font=('PingFang SC',8),
-                         bg=SEL if issel else LIGHT, fg='#888888' if locked else BTN_BUY).pack()
-                if cnt > 0:
-                    tk.Label(fr, text=f'×{cnt}', font=('PingFang SC',8,'bold'),
-                             bg=SEL if issel else LIGHT, fg='#3a7a30').pack()
+                cell_bg = SEL if issel else ('#e8e0d0' if locked else LIGHT)
+                fr = tk.Frame(gf, bg=cell_bg, bd=2,
+                              relief='ridge' if issel else 'flat', cursor='hand2',
+                              width=THUMB+16, height=THUMB+38)
+                fr.grid(row=r, column=c, padx=4, pady=5)
+                fr.pack_propagate(False)
+                img = load_prev(item, THUMB)
+                if img:
+                    il = tk.Label(fr, image=img, bg=cell_bg, bd=0); il.pack(pady=(4,1)); il._img = img
+                name_lbl = tk.Label(fr, text=item['name'], font=('PingFang SC',9,'bold'),
+                         bg=cell_bg, fg='#888888' if locked else TEXT)
+                name_lbl.pack()
+                price_text = f'🔒Lv{item["lv"]}' if locked else f'⭐{item["price"]}'
+                price_fg   = '#aaaaaa' if locked else BTN_BUY
+                tk.Label(fr, text=price_text, font=('PingFang SC',8),
+                         bg=cell_bg, fg=price_fg).pack()
+                if cnt > 0 and not locked:
+                    tk.Label(fr, text=f'已拥有×{cnt}', font=('PingFang SC',8,'bold'),
+                             bg=cell_bg, fg='#3a7a30').pack()
                 def on_click(it=item):
                     state['sel'] = it['id']; refresh(); upd_detail(it)
                 for w in fr.winfo_children(): w.bind('<Button-1>', lambda e,it=item: on_click(it))
@@ -2378,6 +2708,8 @@ class HomeWorld:
             if state['sel']:
                 it = next((x for x in FURNITURE_ITEMS if x['id']==state['sel']), None)
                 if it: upd_detail(it)
+
+        refresh(); win.focus_force()
 
         refresh(); win.focus_force()
 
@@ -2460,6 +2792,7 @@ class HomeWorld:
         win.title('🗺️ 中国旅行地图')
         win.geometry('720x600+60+40')
         win.resizable(False, False)
+        win.attributes('-topmost', True)
         win.lift(); win.focus_force()
         win.configure(bg='#eef4fb')
         self._travel_win = win
@@ -2611,6 +2944,7 @@ class HomeWorld:
         win.title('🐾 宠物档案')
         win.geometry('360x520+300+80')
         win.resizable(False,False)
+        win.attributes('-topmost', True)
         win.lift()
         win.focus_force()
         win.configure(bg='#e8f4f8')
@@ -2730,9 +3064,9 @@ class HomeWorld:
 
     # ── 照料系统 ────────────────────────────────────────────────────────
     def feed(self):
-        """喂食：有背包食物就直接开背包Tab，没有就开商店购买Tab"""
-        has_food = any(self.bag.get(it['id'],0)>0 for it in SHOP_ITEMS if it['cat'] in ('food','snack'))
-        self.open_shop(start_tab='bag' if has_food else 'shop')
+        """喂食 —— 直接打开背包"""
+        self.open_bag()
+
 
     def _do_feed_direct(self):
         """旧的直接喂食逻辑（保留供内部调用）"""
@@ -2745,10 +3079,23 @@ class HomeWorld:
 
     def bathe(self):
         if self.cleanliness>=98:
-            self.say('今天已经洗过了~很干净的！',60); return
-        self.cleanliness=min(100,self.cleanliness+40)
-        self.mood=min(100,self.mood+10)
-        self.say(random.choice(['🛁 洗干净了！好舒服~','香香的~☁️','冲澡真爽！','泡澡太幸福了~']),80)
+            self.say('已经很干净了，不用洗咦！',60); return
+        # 找背包里有没浴球
+        bath_cats = [it for it in SHOP_ITEMS if it.get('cat')=='bath']
+        owned = [(it, self.bag.get(it['id'],0)) for it in bath_cats if self.bag.get(it['id'],0)>0]
+        if not owned:
+            self.say('没浴球啊！去小卖部买一个吧～🛁',80)
+            self.open_shop(); return
+        # 自动选最好的那个浴球
+        it, cnt = max(owned, key=lambda x: x[0]['clean'])
+        self.bag[it['id']] = cnt - 1
+        clean_add = it.get('clean', 30)
+        mood_add  = it.get('mood', 10)
+        health_add= it.get('health', 5)
+        self.cleanliness = min(100, self.cleanliness + clean_add)
+        self.mood  = min(100, self.mood   + mood_add)
+        self.health= min(100, self.health + health_add)
+        self.say(random.choice([f'🛁 用{it["name"]}洗澡！喗喗的~',f'香香的！{it["name"]}好赞！',f'洗得超干净～用了{it["name"]}！']),80)
         self.bathe_count += 1; self.add_score(3); self.add_exp(8); self._save()
 
     def play_with(self):
@@ -2800,3 +3147,5 @@ class HomeWorld:
 
 if __name__=='__main__':
     HomeWorld()
+
+

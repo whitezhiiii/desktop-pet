@@ -2,7 +2,7 @@
 
 一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍、旅行，还能在家具店买家具装扮小家园！
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v10-orange)
+![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v11-orange)
 
 ## 🤖 OpenClaw Skill
 
@@ -28,13 +28,20 @@ openclaw skill install desktop-pet.skill
 ### 🍔 小卖部（50 种食物）
 - 覆盖 Ghostpixxells 像素食物包全部 50 种：面包/汉堡/寿司/披萨/牛排/草莓蛋糕……
 - 食物按等级 Lv.1–10 解锁，高等级食物效果更强
+- 支持批量购买（×1/×5/×10/×20 快捷按键）
 - 购买后进背包，随时喂给宠物
 
-### 🛋️ 家具店（44 件家具）
-- 来自 Modern Interiors Free 32×32 精灵表，切割出 44 件家具
-- 分类：厨房 / 客厅 / 卧室 / 浴室 / 娱乐 / 书房 / 装饰 / 宠物
-- 购买后可在家园中自由**拖拽摆放**，右键取消，重启保存
-- 家具有心情加成（钢琴+15，电视+12，床+10……）
+### 🛋️ 家具店（30 件家具）
+- 手工精切像素家具，清晰可辨认
+- 分类：客厅 / 书房 / 卧室 / 装饰
+- 购买后入**家具仓库**，支持摆放 / 收回 / 出售（六折）
+- 家具在家园中可**自由拖拽移动**，位置自动保存
+- 已摆放的家具在仓库中显示灰色，点击可收回
+
+### 🛁 浴球系统
+- 5 种浴球（小浴球 ⭐50 — 宇宙浴球 ⭐5000），按等级解锁
+- 洗澡需消耗背包里的浴球，没有浴球会提示去买
+- 洗过才能加积分，洁净度满了不加分
 
 ### 🗺️ 旅行系统
 - 真实 GeoJSON 中国地图（35省），点击省份出发
@@ -46,12 +53,11 @@ openclaw skill install desktop-pet.skill
 - 每 25 秒弹一条闲话，持续 8 秒
 - **联网微博热搜**：每 30 分钟后台抓取，30% 概率插入热点话题
 - 整点报时 / 低属性警告 / 旅行倒计时
-- **不打断输入法**：气泡窗口全程不抢焦点，用 alpha 透明度控制显隐
+- **气泡永远浮在最上面**，不打断输入法、不抢焦点
 
 ### 🌦️ 天气 & 光影
 - 自动获取当地天气（wttr.in），室外显示雨雪粒子
 - 四时段光影：早晨 / 正午 / 傍晚 / 夜晚，户外显示太阳位置
-- 家园右上角可手动切换天气效果
 
 ### 🏆 成就系统
 - 多种隐藏成就（初次喂食 / 初次钓鱼 / 旅行达人 / 积分里程碑……）
@@ -80,8 +86,9 @@ TK_SILENCE_DEPRECATION=1 /opt/homebrew/bin/python3.11 desktop_pet.py
 | 移动 | ← → ↑ ↓ / WASD |
 | 场景切换 | E（在门口/楼梯/地毯附近） |
 | 进入家园 | 双击小人 / 右键 → 🏡 进入家园 |
-| 右键菜单 | 喂食 / 洗澡 / 玩耍 / 旅行 / 小卖部 / 家具店 / 档案 |
-| 摆放家具 | 家具店点"前往摆放" → 在家园点击位置 |
+| 右键菜单 | 喂食 / 洗澡 / 玩耍 / 旅行 / 小卖部 / 家具店 / 背包&仓库 / 档案 |
+| 摆放家具 | 仓库点"摆放"→ 在家园点击位置 |
+| 拖动家具 | 家园内直接拖着家具移动 |
 | 取消摆放 | 家园内右键 |
 
 ## 🗺️ 场景路线
@@ -104,7 +111,8 @@ desktop-pet/
 │   ├── exterior_bg.png     # 户外背景
 │   ├── forest_bg.png       # 森林背景
 │   ├── food/               # 50 种像素食物（Ghostpixxells）
-│   ├── furniture/          # 44 件家具（Modern Interiors Free）
+│   ├── furniture/          # 30 件家具（手工精切）
+│   ├── furniture_preview/  # 家具店预览图缓存
 │   ├── FOXSPRITESHEET.gif  # 7种角色动画 GIF
 │   └── ...
 └── README.md
@@ -114,7 +122,7 @@ desktop-pet/
 
 - **角色动画**：[GhostPixxells](https://ghostpixxells.itch.io/) 及 itch.io 其他免费像素角色包
 - **食物图标**：[GhostPixxells Pixel Food](https://ghostpixxells.itch.io/pixelfood)（102 种，使用其中 50 种）
-- **家具精灵表**：[Modern Interiors Free](https://limezu.itch.io/moderninteriors)（32×32，使用 44 件）
+- **家具图片**：手工自切像素家具
 - **背景地图**：[CraftPix Top-Down Interior](https://craftpix.net/) 免费像素素材
 - **省份地图**：[阿里云 DataV GeoAtlas](https://geo.datav.aliyun.com/)
 
@@ -136,7 +144,8 @@ desktop-pet/
 
 | 版本 | 主要更新 |
 |------|---------|
-| **v10** | 🛋️ 家具店系统（44件）、🍔 小卖部扩展至50种食物、💬 气泡联网热搜、🔧 气泡不抢输入法焦点 |
+| **v11** | 🏠 家具仓库（摆放/收回/出售六折）、🛏️ 家具拖动移位、🛁 浴球系统×5种、📦 批量购买、📱 右键菜单加背包入口 |
+| v10 | 🛋️ 家具店系统（44件）、🍔 小卖部扩展至50种食物、💬 气泡联网热搜、🔧 气泡不抢输入法焦点 |
 | v9 | 🗺️ 真实 GeoJSON 旅行地图、✈️ 旅行动画、🫧 独立气泡浮层 |
 | v8 | 🌦️ 天气联动、🌙 昼夜系统、📊 经验等级 |
 | v7 | 🎮 7种可选角色、🏆 成就系统 |
