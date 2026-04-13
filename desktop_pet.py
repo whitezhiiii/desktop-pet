@@ -2550,8 +2550,8 @@ class HomeWorld:
 
         refresh(); win.focus_force()
 
-    def open_bag(self):
-        """背包(食物)+ 家具仓库 -- Tab 切换"""
+    def open_bag(self, start_tab='food'):
+        """背包(食物/浴球/特产) + 家具仓库 -- Tab 切换"""
         if hasattr(self,'_bag_win') and self._bag_win and self._bag_win.winfo_exists():
             self._bag_win.lift(); return
         from PIL import Image as _PI, ImageTk as _IT
@@ -2571,7 +2571,7 @@ class HomeWorld:
 
         MID='#c8883a'; PANEL='#ffe8b0'; DARK='#7a4a10'; LIGHT='#fff5dc'
         SEL='#ffe066'; BTN_OK='#3a9a30'; BTN_DIS='#aaaaaa'; TEXT='#3a1a00'
-        state = {'tab':'food', 'sel':None, 'imgs':{}}
+        state = {'tab': start_tab, 'sel':None, 'imgs':{}}
 
         def _img_cache(fp, size):
             k = (fp, size)
@@ -2587,12 +2587,18 @@ class HomeWorld:
         # ── Tab 栏 ──
         tab_bar = tk.Frame(win, bg=MID, height=40); tab_bar.pack(fill='x'); tab_bar.pack_propagate(False)
         tk.Label(tab_bar, text='🎒  背包 & 🏠 仓库', font=('PingFang SC',13,'bold'), bg=MID, fg='#fff5dc').pack(side='left', padx=12, pady=6)
-        t_food = tk.Button(tab_bar, text='🍔 食物背包', font=('PingFang SC',10,'bold'),
-                           bg='#ffe066', fg=DARK, relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
+        t_souvenir = tk.Button(tab_bar, text='📮 特产', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
         t_furn = tk.Button(tab_bar, text='🏠 家具仓库', font=('PingFang SC',10,'bold'),
                            bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
-        t_food.pack(side='right', padx=4, pady=5)
-        t_furn.pack(side='right', padx=4, pady=5)
+        t_bath = tk.Button(tab_bar, text='🛁 浴球', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
+        t_food = tk.Button(tab_bar, text='🍔 食物背包', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
+        t_souvenir.pack(side='right', padx=2, pady=5)
+        t_furn.pack(side='right', padx=2, pady=5)
+        t_bath.pack(side='right', padx=2, pady=5)
+        t_food.pack(side='right', padx=2, pady=5)
 
         # ── 主体区 ──
         body = tk.Frame(win, bg='#f5e8c8'); body.pack(fill='both', expand=True)
@@ -2703,86 +2709,182 @@ class HomeWorld:
             b3.config(text=f'💰 出售 ⭐{sell_price}', bg='#aa3333' if bag_cnt>0 else BTN_DIS,
                       state='normal' if bag_cnt>0 else 'disabled', command=do_sell)
 
-        # ════ 网格刷新 ════
+        # ════ 网格渲染函数 ════
+        def _render_food_grid():
+            pool=[it for it in SHOP_ITEMS if it.get('cat') in ('food','snack') and self.bag.get(it['id'],0)>0]
+            if not pool:
+                tk.Label(gf,text='食物背包空空如也~\n去小卖部买点吧',
+                         font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                return
+            COLS=3
+            for i,item in enumerate(pool):
+                r,c=divmod(i,COLS)
+                issel = item['id']==state['sel']
+                cbg = SEL if issel else LIGHT
+                fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
+                fr.grid(row=r,column=c,padx=5,pady=5)
+                fp=_os2.path.join(FOOD_DIR,item['file'])
+                img=_img_cache(fp,64)
+                if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
+                tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=TEXT).pack()
+                tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',font=('PingFang SC',10,'bold'),bg=cbg,fg='#3a7a30').pack()
+                def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_food_detail(it)
+                for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
+                fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+
+        def _render_furn_grid():
+            all_ids = set(k for k,v in self.furniture_bag.items() if v>0)
+            all_ids |= set(p['id'] for p in self.placed_furniture)
+            pool = [it for it in FURNITURE_ITEMS if it['id'] in all_ids]
+            if not pool:
+                tk.Label(gf,text='仓库空空如也~\n去家具店买点吧',
+                         font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                return
+            COLS=3
+            for i,item in enumerate(pool):
+                r,c=divmod(i,COLS)
+                issel = item['id']==state['sel']
+                bag_c=self.furniture_bag.get(item['id'],0)
+                placed_c=sum(1 for p in self.placed_furniture if p['id']==item['id'])
+                if issel:
+                    cbg = SEL
+                elif bag_c == 0 and placed_c > 0:
+                    cbg = '#d8d0c0'
+                else:
+                    cbg = LIGHT
+                fg_name = '#888877' if (bag_c==0 and placed_c>0 and not issel) else TEXT
+                fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
+                fr.grid(row=r,column=c,padx=5,pady=5)
+                prev_fp=_os2.path.join(PREV_DIR,item.get('preview',''))
+                if not _os2.path.exists(prev_fp): prev_fp=_os2.path.join(FURN_DIR,item['file'])
+                img=_img_cache(prev_fp,72)
+                if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
+                tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=fg_name).pack()
+                status_txt = f'已摆×{placed_c}' if bag_c==0 else f'背包×{bag_c}  已摆×{placed_c}'
+                tk.Label(fr,text=status_txt,font=('PingFang SC',9),bg=cbg,fg='#777766' if bag_c==0 else '#556688').pack()
+                def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_furn_detail(it)
+                for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
+                fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+
+        def switch_tab(tab):
+            state['tab']=tab; state['sel']=None; reset_right()
+            for tb,tid in [(t_food,'food'),(t_bath,'bath'),(t_souvenir,'souvenir'),(t_furn,'furn')]:
+                tb.config(bg='#ffe066' if tab==tid else MID,
+                          fg=DARK      if tab==tid else '#fff5dc')
+            refresh_grid()
+
         def refresh_grid():
             for w in gf.winfo_children(): w.destroy()
             if state['tab'] == 'food':
-                pool=[it for it in SHOP_ITEMS if self.bag.get(it['id'],0)>0]
-                if not pool:
-                    tk.Label(gf,text='食物背包空空如也~\n去小卖部买点吧',
-                             font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
-                    gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all')); return
-                COLS=3
-                for i,item in enumerate(pool):
-                    r,c=divmod(i,COLS)
-                    issel = item['id']==state['sel']
-                    cbg = SEL if issel else LIGHT
-                    fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
-                    fr.grid(row=r,column=c,padx=5,pady=5)
-                    fp=_os2.path.join(FOOD_DIR,item['file'])
-                    img=_img_cache(fp,64)
-                    if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
-                    tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=TEXT).pack()
-                    tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',font=('PingFang SC',10,'bold'),bg=cbg,fg='#3a7a30').pack()
-                    def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_food_detail(it)
-                    for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
-                    fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+                _render_food_grid()
+            elif state['tab'] == 'bath':
+                _render_bath_grid()
+            elif state['tab'] == 'souvenir':
+                _render_souvenir_grid()
             else:
-                all_ids = set(k for k,v in self.furniture_bag.items() if v>0)
-                all_ids |= set(p['id'] for p in self.placed_furniture)
-                pool = [it for it in FURNITURE_ITEMS if it['id'] in all_ids]
-                if not pool:
-                    tk.Label(gf,text='仓库空空如也~\n去家具店买点吧',
-                             font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
-                    gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all')); return
-                COLS=3
-                for i,item in enumerate(pool):
-                    r,c=divmod(i,COLS)
-                    issel = item['id']==state['sel']
-                    bag_c=self.furniture_bag.get(item['id'],0)
-                    placed_c=sum(1 for p in self.placed_furniture if p['id']==item['id'])
-                    # 已摆放且背包为0:灰色;选中:黄色;其他:正常
-                    if issel:
-                        cbg = SEL
-                    elif bag_c == 0 and placed_c > 0:
-                        cbg = '#d8d0c0'  # 灰色--已全部摆出
-                    else:
-                        cbg = LIGHT
-                    fg_name = '#888877' if (bag_c==0 and placed_c>0 and not issel) else TEXT
-                    fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
-                    fr.grid(row=r,column=c,padx=5,pady=5)
-                    prev_fp=_os2.path.join(PREV_DIR,item.get('preview',''))
-                    if not _os2.path.exists(prev_fp): prev_fp=_os2.path.join(FURN_DIR,item['file'])
-                    img=_img_cache(prev_fp,72)
-                    if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
-                    tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=fg_name).pack()
-                    status_txt = f'已摆×{placed_c}' if bag_c==0 else f'背包×{bag_c}  已摆×{placed_c}'
-                    tk.Label(fr,text=status_txt,font=('PingFang SC',9),bg=cbg,fg='#777766' if bag_c==0 else '#556688').pack()
-                    def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_furn_detail(it)
-                    for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
-                    fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+                _render_furn_grid()
             gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
             gcv.bind('<MouseWheel>',_on_scroll)
             if state['sel']:
                 if state['tab']=='food':
                     it=next((x for x in SHOP_ITEMS if x['id']==state['sel']),None)
                     if it: show_food_detail(it)
-                else:
+                elif state['tab']=='bath':
+                    it=next((x for x in SHOP_ITEMS if x['id']==state['sel']),None)
+                    if it: show_bath_detail(it)
+                elif state['tab']=='furn':
                     it=next((x for x in FURNITURE_ITEMS if x['id']==state['sel']),None)
                     if it: show_furn_detail(it)
 
-        def switch_tab(tab):
-            state['tab']=tab; state['sel']=None; reset_right()
-            if tab=='food':
-                t_food.config(bg='#ffe066',fg=DARK); t_furn.config(bg=MID,fg='#fff5dc')
-            else:
-                t_furn.config(bg='#ffe066',fg=DARK); t_food.config(bg=MID,fg='#fff5dc')
-            refresh_grid()
+        # ==== 浴球 Tab ====
+        def show_bath_detail(item):
+            fp = _os2.path.join(FOOD_DIR, item.get('file',''))
+            img = _img_cache(fp, 64) if _os2.path.exists(fp) else None
+            if img: di.config(image=img); di._img=img
+            dn.config(text=item['name']); dd.config(text=item['desc'])
+            fx=[]
+            if item.get('clean',0)>0: fx.append(f'洁净+{item["clean"]}')
+            if item.get('mood',0)>0:  fx.append(f'心情+{item["mood"]}')
+            if item.get('health',0)>0:fx.append(f'健康+{item["health"]}')
+            de.config(text='  '.join(fx))
+            cnt = self.bag.get(item['id'],0)
+            dct.config(text=f'剩余 ×{cnt}')
+            def do_bathe(it=item):
+                c = self.bag.get(it['id'],0)
+                if c<=0: ml.config(text='没有了!'); return
+                if self.cleanliness>=98: ml.config(text='已经很干净了~'); return
+                self.bag[it['id']]=c-1
+                self.cleanliness=min(100,self.cleanliness+it.get('clean',30))
+                self.mood=min(100,self.mood+it.get('mood',10))
+                self.health=min(100,self.health+it.get('health',5))
+                self.bathe_count+=1; self.add_score(3); self.add_exp(8); self._save()
+                import random as _r
+                self.say(_r.choice([f'🛁 用{it["name"]}洗澡!喗喗的~',f'香香的!{it["name"]}好赞!',f'洗得超干净~用了{it["name"]}!']),80)
+                ml.config(text=f'✅ 剩余×{self.bag[it["id"]]}')
+                dct.config(text=f'剩余 ×{self.bag[it["id"]]}')
+                b1.config(state='normal' if self.bag[it['id']]>0 else 'disabled',
+                          bg=BTN_OK if self.bag[it['id']]>0 else BTN_DIS)
+                refresh_grid()
+            b1.config(text='🛁 洗澡', bg=BTN_OK if cnt>0 else BTN_DIS,
+                      state='normal' if cnt>0 else 'disabled', command=do_bathe)
+            b2.config(text='', state='disabled', bg='#888')
+            b3.config(text='', state='disabled', bg='#888')
+
+        def _render_bath_grid():
+            pool=[it for it in SHOP_ITEMS if it.get('cat')=='bath' and self.bag.get(it['id'],0)>0]
+            if not pool:
+                tk.Label(gf,text='浴球已用完~\n去小卖部买一个吧🛁',
+                         font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                tk.Button(gf,text='🛒 去小卖部购买',font=('PingFang SC',11),
+                          bg='#c8883a',fg='white',relief='flat',cursor='hand2',
+                          command=lambda:(win.destroy(),self.open_shop())).pack(pady=8)
+                return
+            COLS=3
+            for i,item in enumerate(pool):
+                r,c=divmod(i,COLS)
+                issel=item['id']==state['sel']
+                cbg=SEL if issel else LIGHT
+                fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
+                fr.grid(row=r,column=c,padx=5,pady=5)
+                fp=_os2.path.join(FOOD_DIR,item.get('file',''))
+                img=_img_cache(fp,64) if _os2.path.exists(fp) else None
+                if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
+                tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=TEXT).pack()
+                tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',font=('PingFang SC',10,'bold'),bg=cbg,fg='#3a7a30').pack()
+                def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_bath_detail(it)
+                for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
+                fr.bind('<Button-1>',lambda e,it=item:_sel(it))
+
+        # ==== 特产&明信片 Tab ====
+        def _render_souvenir_grid():
+            items = [(k.replace('souvenir_',''), v) for k,v in self.bag.items()
+                     if k.startswith('souvenir_') and v>0]
+            if not items:
+                tk.Label(gf,text='还没有旅行特产~\n去旅行地图出发吧!',
+                         font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                return
+            for i,(dest, cnt) in enumerate(sorted(items)):
+                souv = PROV_SOUVENIRS.get(dest, DEFAULT_SOUVENIR)
+                bg_c = souv.get('color','#888888')
+                scenes = PROV_POSTCARD.get(dest, DEFAULT_POSTCARD)
+                fr = tk.Frame(gf, bg=LIGHT, bd=2, relief='groove', cursor='hand2')
+                fr.pack(fill='x', padx=6, pady=4)
+                lf = tk.Frame(fr, bg=bg_c, width=120); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
+                tk.Label(lf, text=dest, font=('PingFang SC',14,'bold'), bg=bg_c, fg='white').pack(pady=(8,2))
+                tk.Label(lf, text=souv['item'], font=('PingFang SC',11), bg=bg_c, fg='#ffe8cc').pack()
+                tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',12,'bold'), bg=bg_c, fg='#ccffcc').pack(pady=(2,8))
+                rf = tk.Frame(fr, bg='#fffef0'); rf.pack(side='left', fill='both', expand=True, padx=4, pady=4)
+                for j, scene in enumerate(scenes[:4]):
+                    rr, cc = divmod(j, 2)
+                    tk.Label(rf, text=scene, font=('PingFang SC',10), bg='#fffef0',
+                             fg='#333333', anchor='w', width=14).grid(row=rr, column=cc, padx=2, pady=1, sticky='w')
 
         t_food.config(command=lambda:switch_tab('food'))
+        t_bath.config(command=lambda:switch_tab('bath'))
+        t_souvenir.config(command=lambda:switch_tab('souvenir'))
         t_furn.config(command=lambda:switch_tab('furn'))
 
-        refresh_grid()
+        switch_tab(start_tab)
         win.focus_force()
 
 
@@ -3348,23 +3450,8 @@ class HomeWorld:
     def bathe(self):
         if self.cleanliness>=98:
             self.say('已经很干净了,不用洗咦!',60); return
-        # 找背包里有没浴球
-        bath_cats = [it for it in SHOP_ITEMS if it.get('cat')=='bath']
-        owned = [(it, self.bag.get(it['id'],0)) for it in bath_cats if self.bag.get(it['id'],0)>0]
-        if not owned:
-            self.say('没浴球啊!去小卖部买一个吧~🛁',80)
-            self.open_shop(); return
-        # 自动选最好的那个浴球
-        it, cnt = max(owned, key=lambda x: x[0]['clean'])
-        self.bag[it['id']] = cnt - 1
-        clean_add = it.get('clean', 30)
-        mood_add  = it.get('mood', 10)
-        health_add= it.get('health', 5)
-        self.cleanliness = min(100, self.cleanliness + clean_add)
-        self.mood  = min(100, self.mood   + mood_add)
-        self.health= min(100, self.health + health_add)
-        self.say(random.choice([f'🛁 用{it["name"]}洗澡!喗喗的~',f'香香的!{it["name"]}好赞!',f'洗得超干净~用了{it["name"]}!']),80)
-        self.bathe_count += 1; self.add_score(3); self.add_exp(8); self._save()
+        # 直接打开背包浴球界面
+        self.open_bag(start_tab='bath')
 
     def play_with(self):
         self.mood=min(100,self.mood+30)
