@@ -1,5 +1,7 @@
 # 🏡 龙虾的小家园 — Desktop Pet
 
+![preview](docs/preview.gif)
+
 一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍、旅行，还能在家具店买家具装扮小家园！
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v11-orange)
