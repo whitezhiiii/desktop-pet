@@ -4,7 +4,7 @@
 
 一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍、旅行，还能在家具店买家具装扮小家园！
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v11-orange)
+![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v15-orange)
 
 ## 🤖 OpenClaw Skill
 
@@ -143,6 +143,25 @@ desktop-pet/
 | 🐦 白鸟 | `bird_white` | 优雅、温和 |
 
 ## 📝 版本历史
+
+### v15（2026-04-13）
+- 🎁 **特产系统**：35省各5种特产，旅行回来随机抽取，背包独立「🎁 特产」Tab
+- 📮 **明信片系统**：35省各5张明信片，旅行回来随机抽取，背包独立「📮 明信片」Tab
+- 💌 旅行完成后弹出彩色明信片弹窗，同时展示特产和明信片
+- 💰 重复的特产/明信片可出售（各⭐20），最后一件保留作收藏
+
+### v14（2026-04-13）
+- 🛁 **洗澡改为跳转浴球背包**：点洗澡直接打开背包浴球Tab，自选浴球效果更直观
+- 📦 背包扩展至5个Tab：🍔食物 / 🛁浴球 / 🎁特产 / 📮明信片 / 🏠家具仓库
+
+### v13（2026-04-13）
+- ✈️ 旅行完成后随机获得该省特产，放入背包
+- 📮 弹出彩色明信片弹窗，含地区配色和emoji风景插画
+
+### v12（2026-04-13）
+- 🎓 **新手引导系统**：首次启动弹出欢迎弹窗，可选角色+填写主人名字
+- 👆 4步高亮引导：依次引导右键菜单→属性面板→双击进家园→完成
+- 📖 右键菜单加入「📖 新手引导」入口，随时重看
 
 ### v11（2026-04-10）
 - 🏠 **家具仓库**：背包新增「🏠 家具仓库」Tab，已购家具一目了然
