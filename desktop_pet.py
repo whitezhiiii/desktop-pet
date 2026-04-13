@@ -484,6 +484,7 @@ class HomeWorld:
         self.sick=False        # 生病状态
         self.stat_warn_cd=0    # 属性警告冷却
 
+        self._is_first_run = not os.path.exists(SAVE_FILE)
         self._load()
         self._read_owner_from_config()
         self._finish_setup()
@@ -534,6 +535,8 @@ class HomeWorld:
         threading.Thread(target=self._bg,daemon=True).start()
         self.schedule()
         self.tick()
+        if self._is_first_run:
+            self.root.after(600, self._tutorial_welcome)
         self.root.mainloop()
 
     # ── 存档 ─────────────────────────────────────────────────────────
@@ -809,7 +812,7 @@ class HomeWorld:
         if self.news_pool and random.random() < 0.30:
             news = random.choice(self.news_pool)
             prefix = random.choice(['🔥 热搜：','📢 大家都在聊：','👀 今日话题：','🌐 热点来了：'])
-            self.say(f'{prefix}\n{news[:16]}', 90)
+            self.say(f'{prefix}\n{news[:16]}', 100)
         else:
             self.say(random.choice(pool),100)
 
@@ -2099,9 +2102,111 @@ class HomeWorld:
             threading.Thread(target=self._wx,daemon=True).start() if not self.w_temp else None
         ))
         m.add_separator()
+        m.add_command(label='📖 新手引导',command=lambda: self._tutorial_step(1))
         m.add_command(label='❌ 关闭',command=self.root.destroy)
         try: m.tk_popup(e.x_root,e.y_root)
         finally: m.grab_release()
+
+    # ── 新手引导 ─────────────────────────────────────────────────────
+    def _tutorial_welcome(self):
+        """首次启动欢迎弹窗：选角色 + 设置主人名字"""
+        win = tk.Toplevel(self.root)
+        win.title('欢迎！')
+        win.geometry('400x520')
+        win.resizable(False, False)
+        win.configure(bg='#1a0a2e')
+        win.attributes('-topmost', True)
+        # 居中
+        sw = win.winfo_screenwidth(); sh = win.winfo_screenheight()
+        win.geometry(f'400x520+{(sw-400)//2}+{(sh-520)//2}')
+        win.protocol('WM_DELETE_WINDOW', lambda: None)  # 禁止直接关闭
+
+        tk.Label(win, text='🏡 欢迎来到小家园！', font=('PingFang SC', 18, 'bold'),
+                 bg='#1a0a2e', fg='#ffffff').pack(pady=(24, 4))
+        tk.Label(win, text='先选个角色，再告诉我怎么叫你～',
+                 font=('PingFang SC', 11), bg='#1a0a2e', fg='#c8a8ff').pack(pady=(0, 16))
+
+        # 角色选择
+        char_var = tk.StringVar(value=self.char_id)
+        char_frame = tk.Frame(win, bg='#1a0a2e')
+        char_frame.pack(fill='x', padx=32)
+        tk.Label(char_frame, text='选择角色：', font=('PingFang SC', 11, 'bold'),
+                 bg='#1a0a2e', fg='#ffffff').pack(anchor='w', pady=(0, 6))
+        for cid, cinfo in CHARACTERS.items():
+            tk.Radiobutton(char_frame, text=cinfo['name'], variable=char_var, value=cid,
+                           font=('PingFang SC', 11), bg='#1a0a2e', fg='#e0d0ff',
+                           selectcolor='#3a1a5e', activebackground='#1a0a2e',
+                           activeforeground='#ffffff').pack(anchor='w', padx=8)
+
+        # 名字输入
+        name_frame = tk.Frame(win, bg='#1a0a2e')
+        name_frame.pack(fill='x', padx=32, pady=(16, 0))
+        tk.Label(name_frame, text='你的名字（我怎么叫你）：',
+                 font=('PingFang SC', 11, 'bold'), bg='#1a0a2e', fg='#ffffff').pack(anchor='w')
+        name_var = tk.StringVar(value=self.address_word if self.address_word != '主人' else '')
+        tk.Entry(name_frame, textvariable=name_var, font=('PingFang SC', 12),
+                 bg='#2a1a4e', fg='#ffffff', insertbackground='white',
+                 relief='flat', bd=6, width=20).pack(anchor='w', pady=(6, 0))
+
+        def on_start():
+            self.char_id = char_var.get()
+            name = name_var.get().strip()
+            if name:
+                self.address_word = name
+            self._mini_setup()
+            win.destroy()
+            self.root.after(800, lambda: self._tutorial_step(1))
+
+        tk.Button(win, text='开始养宠物！🐾', command=on_start,
+                  font=('PingFang SC', 13, 'bold'), bg='#7c3aed', fg='#ffffff',
+                  relief='flat', padx=24, pady=10, cursor='hand2',
+                  activebackground='#9d5cf0', activeforeground='#ffffff').pack(pady=24)
+
+    def _tutorial_step(self, step):
+        """在迷你模式上显示分步引导高亮"""
+        self.cv.delete('tut')
+        if step > 4:
+            return
+
+        # 半透明遮罩
+        self.cv.create_rectangle(0, 0, W, H, fill='#000000', stipple='gray50', tags='tut')
+
+        # 各步高亮区域 & 气泡文字
+        highlights = {
+            1: (240, 60, W-2, H-2,  '👉 右键我可以喂食、洗澡\n    玩耍、逛商店～'),
+            2: (2,   210, W-2, H-2, '💛 这里是我的状态面板\n    记得关心我哦！'),
+            3: (self.cx-60, self.gnd-130, self.cx+60, self.gnd,
+                '✨ 双击我进入家园\n   有商店、旅行、家具～'),
+        }
+        if step in highlights:
+            x1, y1, x2, y2, bubble_text = highlights[step]
+            self.cv.create_rectangle(x1, y1, x2, y2,
+                outline='#ffdd00', width=3, dash=(6, 4), tags='tut')
+        else:
+            bubble_text = '🎉 准备好了！\n开始养我吧 (〃\'▽\'〃)'
+
+        # 气泡背景
+        bx, by = 20, 20
+        self.cv.create_rectangle(bx, by, bx+260, by+58,
+            fill='#1a0a2e', outline='#7c3aed', width=2, tags='tut')
+        self.cv.create_text(bx+130, by+29, text=bubble_text,
+            fill='#ffffff', font=('PingFang SC', 11), justify='center', tags='tut')
+
+        # 步骤指示
+        self.cv.create_text(W-10, 10, text=f'{step}/4',
+            fill='#c8a8ff', font=('PingFang SC', 10), anchor='ne', tags='tut')
+
+        # 按钮
+        btn_text = '下一步 →' if step < 4 else '开始探索！🐾'
+        def on_next(s=step):
+            self.cv.delete('tut')
+            if s < 4:
+                self._tutorial_step(s + 1)
+        btn = tk.Button(self.root, text=btn_text, command=on_next,
+                        font=('PingFang SC', 11, 'bold'), bg='#7c3aed', fg='white',
+                        relief='flat', padx=12, pady=4, cursor='hand2',
+                        activebackground='#9d5cf0', activeforeground='white')
+        self.cv.create_window(W//2, H-24, window=btn, tags='tut')
 
     def _set_weather(self,mode):
         self.weather_mode=mode
