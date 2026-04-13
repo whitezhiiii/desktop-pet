@@ -1415,16 +1415,25 @@ class HomeWorld:
                 if n>=5:  self.unlock('travel5')
                 if n>=15: self.unlock('travel15')
                 if n>=34: self.unlock('travel35')
-                # 发放特产到背包
-                souv = PROV_SOUVENIRS.get(dest, DEFAULT_SOUVENIR)
-                souv_key = f'souvenir_{dest}'
+                # 随机抽取特产（0-4号）
+                import random as _rv
+                souv_list = PROV_SOUVENIRS.get(dest, DEFAULT_SOUVENIR_LIST)
+                souv_idx = _rv.randint(0, len(souv_list)-1)
+                souv_name, souv_desc = souv_list[souv_idx]
+                souv_key = f'souvenir_{dest}_{souv_idx}'
                 self.bag[souv_key] = self.bag.get(souv_key, 0) + 1
+                # 随机抽取明信片（0-4号）
+                card_list = PROV_POSTCARDS.get(dest, DEFAULT_POSTCARD_LIST)
+                card_idx = _rv.randint(0, len(card_list)-1)
+                card_name, card_desc = card_list[card_idx]
+                card_key = f'postcard_{dest}_{card_idx}'
+                self.bag[card_key] = self.bag.get(card_key, 0) + 1
                 self._save()
-                self.say(f'🎉 到{dest}啦！\n带回了{souv["item"]}～', 120)
-                self.bubble = f'🎉 到{dest}啦！带回了{souv["item"]}～'
+                self.say(f'🎉 到{dest}啦！\n带回了{souv_name}和一张明信片～', 120)
+                self.bubble = f'🎉 到{dest}啦！带回了{souv_name}～'
                 self.btimer = 120
                 # 弹出明信片
-                self.root.after(1500, lambda d=dest, s=souv: self._show_postcard(d, s))
+                self.root.after(1500, lambda d=dest, sn=souv_name, sd=souv_desc, cn=card_name, cd=card_desc: self._show_postcard(d, sn, sd, cn, cd))
             elif self.frame%62==0:  # ~5秒刷新
                 dest = self.travel_state.get('dest','?')
                 min_l = rem//60; sec_l = rem%60
@@ -2274,63 +2283,56 @@ class HomeWorld:
         self.cv.create_window(W//2, H-24, window=btn, tags='tut')
 
     # ── 明信片弹窗 ─────────────────────────────────────────────────────
-    def _show_postcard(self, dest, souv):
-        """旅行结束后弹出明信片"""
+    def _show_postcard(self, dest, souv_name, souv_desc, card_name, card_desc):
+        """旅行结束后弹出明信片弹窗（特产+明信片分开显示）"""
+        import random as _rp
+        # 随机一个主题色
+        colors = ['#c8102e','#2e6bb0','#2e8b57','#8b4513','#6b2fa0','#c8680e','#1a5c8b']
+        bg_color = _rp.choice(colors)
+
         win = tk.Toplevel(self.root)
-        win.title(f'📬 来自{dest}的明信片')
-        win.geometry('360x420')
+        win.title(f'📮 来自{dest}的明信片')
+        win.geometry('380x460')
         win.resizable(False, False)
         win.attributes('-topmost', True)
         win.lift()
-        bg_color = souv.get('color', '#336699')
         win.configure(bg=bg_color)
 
-        # 顶部标题
-        tk.Label(win, text=f'📬 来自 {dest} 的明信片',
-                 font=('PingFang SC', 15, 'bold'),
-                 bg=bg_color, fg='#ffffff').pack(pady=(20, 4))
+        addr = getattr(self, 'address_word', '主人')
+        char_name = CHARACTERS.get(self.char_id, {}).get('name', '小宠物')
 
-        # 明信片插画区（emoji拼成风景）
-        scenes = PROV_POSTCARD.get(dest, DEFAULT_POSTCARD)
+        tk.Label(win, text=f'📮 来自 {dest} 的明信片',
+                 font=('PingFang SC', 15, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(18,4))
+
+        # 明信片区（单张，带描述）
         card_frame = tk.Frame(win, bg='#fffef0', relief='ridge', bd=3)
-        card_frame.pack(padx=24, pady=8, fill='x')
-        # 2x2网格展示
-        for i, scene in enumerate(scenes[:4]):
-            r, c = divmod(i, 2)
-            tk.Label(card_frame, text=scene,
-                     font=('PingFang SC', 12),
-                     bg='#fffef0', fg='#333333',
-                     width=16, anchor='w').grid(row=r, column=c, padx=8, pady=6, sticky='w')
+        card_frame.pack(padx=20, pady=6, fill='x')
+        tk.Label(card_frame, text=card_name, font=('PingFang SC', 16),
+                 bg='#fffef0', fg='#222222').pack(pady=(10,2))
+        tk.Label(card_frame, text=card_desc, font=('PingFang SC', 10),
+                 bg='#fffef0', fg='#555555').pack(pady=(0,6))
+        tk.Label(card_frame, text='📮 已入背包「明信片」', font=('PingFang SC', 9),
+                 bg='#fffef0', fg='#3a7a30').pack(pady=(0,8))
 
-        # 分隔线
-        tk.Frame(win, height=1, bg='#ffffff').pack(fill='x', padx=24, pady=4)
+        tk.Frame(win, height=1, bg='#ffffff').pack(fill='x', padx=20, pady=4)
 
         # 特产区
-        souv_frame = tk.Frame(win, bg=bg_color)
-        souv_frame.pack(padx=24, fill='x')
-        tk.Label(souv_frame, text=f'🎁 带回特产：{souv["item"]}',
-                 font=('PingFang SC', 13, 'bold'),
-                 bg=bg_color, fg='#ffffff').pack(anchor='w')
-        tk.Label(souv_frame, text=souv['desc'],
-                 font=('PingFang SC', 11),
-                 bg=bg_color, fg='#ffe8cc').pack(anchor='w', pady=(2, 0))
-        tk.Label(souv_frame, text='→ 已放入背包',
-                 font=('PingFang SC', 10),
+        sf = tk.Frame(win, bg=bg_color); sf.pack(padx=20, fill='x')
+        tk.Label(sf, text=f'🎁 带回特产：{souv_name}',
+                 font=('PingFang SC', 13, 'bold'), bg=bg_color, fg='#ffffff').pack(anchor='w')
+        tk.Label(sf, text=souv_desc, font=('PingFang SC', 11),
+                 bg=bg_color, fg='#ffe8cc').pack(anchor='w', pady=(2,0))
+        tk.Label(sf, text='→ 已入背包「特产」', font=('PingFang SC', 10),
                  bg=bg_color, fg='#ccffcc').pack(anchor='w')
 
-        # 小字条顶部
-        addr = getattr(self, 'address_word', '主人')
-        char_name = CHARACTERS.get(self.char_id, {}).get('name', '小宺物')
-        tk.Label(win,
-                 text=f'{char_name} 寄自 {dest}\n尝尝特产，你一定喜欢～ {addr}',
+        tk.Label(win, text=f'{char_name} 寄自 {dest}～ {addr}',
                  font=('PingFang SC', 10), bg=bg_color, fg='#ffe8cc',
-                 justify='center').pack(pady=(8, 0))
+                 justify='center').pack(pady=(10,0))
 
-        # 关闭按钮
         tk.Button(win, text='收好啦 💕', command=win.destroy,
                   font=('PingFang SC', 12, 'bold'), bg='#ffffff',
                   fg=bg_color, relief='flat', padx=20, pady=6,
-                  cursor='hand2').pack(pady=14)
+                  cursor='hand2').pack(pady=12)
 
     def _set_weather(self,mode):
         self.weather_mode=mode
@@ -2587,18 +2589,21 @@ class HomeWorld:
         # ── Tab 栏 ──
         tab_bar = tk.Frame(win, bg=MID, height=40); tab_bar.pack(fill='x'); tab_bar.pack_propagate(False)
         tk.Label(tab_bar, text='🎒  背包 & 🏠 仓库', font=('PingFang SC',13,'bold'), bg=MID, fg='#fff5dc').pack(side='left', padx=12, pady=6)
-        t_souvenir = tk.Button(tab_bar, text='📮 特产', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
-        t_furn = tk.Button(tab_bar, text='🏠 家具仓库', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
+        t_postcard = tk.Button(tab_bar, text='📮 明信片', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
+        t_souvenir = tk.Button(tab_bar, text='🎁 特产', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
+        t_furn = tk.Button(tab_bar, text='🏠 仓库', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
         t_bath = tk.Button(tab_bar, text='🛁 浴球', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
-        t_food = tk.Button(tab_bar, text='🍔 食物背包', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=10, pady=4, cursor='hand2')
-        t_souvenir.pack(side='right', padx=2, pady=5)
-        t_furn.pack(side='right', padx=2, pady=5)
-        t_bath.pack(side='right', padx=2, pady=5)
-        t_food.pack(side='right', padx=2, pady=5)
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
+        t_food = tk.Button(tab_bar, text='🍔 食物', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
+        t_postcard.pack(side='right', padx=1, pady=5)
+        t_souvenir.pack(side='right', padx=1, pady=5)
+        t_furn.pack(side='right', padx=1, pady=5)
+        t_bath.pack(side='right', padx=1, pady=5)
+        t_food.pack(side='right', padx=1, pady=5)
 
         # ── 主体区 ──
         body = tk.Frame(win, bg='#f5e8c8'); body.pack(fill='both', expand=True)
@@ -2768,7 +2773,7 @@ class HomeWorld:
 
         def switch_tab(tab):
             state['tab']=tab; state['sel']=None; reset_right()
-            for tb,tid in [(t_food,'food'),(t_bath,'bath'),(t_souvenir,'souvenir'),(t_furn,'furn')]:
+            for tb,tid in [(t_food,'food'),(t_bath,'bath'),(t_souvenir,'souvenir'),(t_postcard,'postcard'),(t_furn,'furn')]:
                 tb.config(bg='#ffe066' if tab==tid else MID,
                           fg=DARK      if tab==tid else '#fff5dc')
             refresh_grid()
@@ -2781,6 +2786,8 @@ class HomeWorld:
                 _render_bath_grid()
             elif state['tab'] == 'souvenir':
                 _render_souvenir_grid()
+            elif state['tab'] == 'postcard':
+                _render_postcard_grid()
             else:
                 _render_furn_grid()
             gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
@@ -2856,32 +2863,102 @@ class HomeWorld:
                 fr.bind('<Button-1>',lambda e,it=item:_sel(it))
 
         # ==== 特产&明信片 Tab ====
+        SOUVENIR_SELL_PRICE = 20
+        POSTCARD_SELL_PRICE = 20
+
         def _render_souvenir_grid():
-            items = [(k.replace('souvenir_',''), v) for k,v in self.bag.items()
-                     if k.startswith('souvenir_') and v>0]
+            """特产Tab：souvenir_{省}_{idx} 格式"""
+            items = {}
+            for k, v in self.bag.items():
+                if k.startswith('souvenir_') and v > 0:
+                    parts = k.split('_', 2)
+                    if len(parts) == 3:
+                        dest, idx = parts[1], int(parts[2])
+                        souv_list = PROV_SOUVENIRS.get(dest, DEFAULT_SOUVENIR_LIST)
+                        if idx < len(souv_list):
+                            sname, sdesc = souv_list[idx]
+                            items[k] = (dest, sname, sdesc, v)
             if not items:
-                tk.Label(gf,text='还没有旅行特产~\n去旅行地图出发吧!',
+                tk.Label(gf,text='还没有特产～\n去旅行地图出发吧！',
                          font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
                 return
-            for i,(dest, cnt) in enumerate(sorted(items)):
-                souv = PROV_SOUVENIRS.get(dest, DEFAULT_SOUVENIR)
-                bg_c = souv.get('color','#888888')
-                scenes = PROV_POSTCARD.get(dest, DEFAULT_POSTCARD)
-                fr = tk.Frame(gf, bg=LIGHT, bd=2, relief='groove', cursor='hand2')
+            import random as _rs
+            colors = ['#c8102e','#2e6bb0','#2e8b57','#8b4513','#6b2fa0','#c8680e']
+            for k,(dest,sname,sdesc,cnt) in sorted(items.items()):
+                bg_c = colors[hash(dest)%len(colors)]
+                fr = tk.Frame(gf, bg=LIGHT, bd=2, relief='groove')
                 fr.pack(fill='x', padx=6, pady=4)
-                lf = tk.Frame(fr, bg=bg_c, width=120); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
-                tk.Label(lf, text=dest, font=('PingFang SC',14,'bold'), bg=bg_c, fg='white').pack(pady=(8,2))
-                tk.Label(lf, text=souv['item'], font=('PingFang SC',11), bg=bg_c, fg='#ffe8cc').pack()
-                tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',12,'bold'), bg=bg_c, fg='#ccffcc').pack(pady=(2,8))
-                rf = tk.Frame(fr, bg='#fffef0'); rf.pack(side='left', fill='both', expand=True, padx=4, pady=4)
-                for j, scene in enumerate(scenes[:4]):
-                    rr, cc = divmod(j, 2)
-                    tk.Label(rf, text=scene, font=('PingFang SC',10), bg='#fffef0',
-                             fg='#333333', anchor='w', width=14).grid(row=rr, column=cc, padx=2, pady=1, sticky='w')
+                # 左色块
+                lf = tk.Frame(fr, bg=bg_c, width=110); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
+                tk.Label(lf, text=dest, font=('PingFang SC',13,'bold'), bg=bg_c, fg='white').pack(pady=(8,2))
+                cnt_lbl = tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',12,'bold'), bg=bg_c, fg='#ccffcc')
+                cnt_lbl.pack(pady=(0,4))
+                sell_state = 'normal' if cnt > 1 else 'disabled'
+                sell_bg_c = '#aa3333' if cnt > 1 else '#888'
+                def do_sell_s(bk=k, bl=cnt_lbl):
+                    if self.bag.get(bk,0) <= 1: return
+                    self.bag[bk] -= 1; self.score += SOUVENIR_SELL_PRICE; self._save()
+                    self.say(f'💰 出售特产+⭐{SOUVENIR_SELL_PRICE}！', 60)
+                    refresh_grid()
+                tk.Button(lf, text=f'售 ⭐{SOUVENIR_SELL_PRICE}', font=('PingFang SC',9),
+                          bg=sell_bg_c, fg='white', relief='flat', cursor='hand2' if cnt>1 else 'arrow',
+                          state=sell_state, command=do_sell_s).pack(padx=6, pady=(0,8), fill='x')
+                # 右侧内容
+                rf = tk.Frame(fr, bg='#fff8ee'); rf.pack(side='left', fill='both', expand=True, padx=8, pady=8)
+                tk.Label(rf, text=sname, font=('PingFang SC',13,'bold'), bg='#fff8ee', fg='#3a1a00').pack(anchor='w')
+                tk.Label(rf, text=sdesc, font=('PingFang SC',10), bg='#fff8ee', fg='#666655', wraplength=200).pack(anchor='w', pady=(2,0))
+
+        def _render_postcard_grid():
+            """明信片Tab：postcard_{省}_{idx} 格式"""
+            items = {}
+            for k, v in self.bag.items():
+                if k.startswith('postcard_') and v > 0:
+                    parts = k.split('_', 2)
+                    if len(parts) == 3:
+                        dest, idx = parts[1], int(parts[2])
+                        card_list = PROV_POSTCARDS.get(dest, DEFAULT_POSTCARD_LIST)
+                        if idx < len(card_list):
+                            cname, cdesc = card_list[idx]
+                            items[k] = (dest, cname, cdesc, v)
+            if not items:
+                tk.Label(gf,text='还没有明信片～\n旅行回来会带一张哦！',
+                         font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                return
+            colors = ['#1a5c8b','#2e8b57','#6b2fa0','#8b4513','#c8102e','#c8680e']
+            for k,(dest,cname,cdesc,cnt) in sorted(items.items()):
+                bg_c = colors[hash(dest+cname)%len(colors)]
+                fr = tk.Frame(gf, bg='#fffef0', bd=2, relief='groove')
+                fr.pack(fill='x', padx=6, pady=4)
+                # 邮票风左色块
+                lf = tk.Frame(fr, bg=bg_c, width=90); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
+                tk.Label(lf, text='📮', font=('PingFang SC',20), bg=bg_c).pack(pady=(8,0))
+                tk.Label(lf, text=dest, font=('PingFang SC',11,'bold'), bg=bg_c, fg='white').pack()
+                cnt_lbl2 = tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',11,'bold'), bg=bg_c, fg='#ccffcc')
+                cnt_lbl2.pack(pady=(2,4))
+                sell_state2 = 'normal' if cnt > 1 else 'disabled'
+                sell_bg2 = '#aa3333' if cnt > 1 else '#888'
+                def do_sell_p(bk=k):
+                    if self.bag.get(bk,0) <= 1: return
+                    self.bag[bk] -= 1; self.score += POSTCARD_SELL_PRICE; self._save()
+                    self.say(f'💰 出售明信片+⭐{POSTCARD_SELL_PRICE}！', 60)
+                    refresh_grid()
+                tk.Button(lf, text=f'售 ⭐{POSTCARD_SELL_PRICE}', font=('PingFang SC',9),
+                          bg=sell_bg2, fg='white', relief='flat', cursor='hand2' if cnt>1 else 'arrow',
+                          state=sell_state2, command=do_sell_p).pack(padx=4, pady=(0,8), fill='x')
+                # 右侧
+                rf = tk.Frame(fr, bg='#fffef0'); rf.pack(side='left', fill='both', expand=True, padx=8, pady=8)
+                tk.Label(rf, text=cname, font=('PingFang SC',13,'bold'), bg='#fffef0', fg='#1a3a5c').pack(anchor='w')
+                tk.Label(rf, text=cdesc, font=('PingFang SC',10), bg='#fffef0', fg='#445566', wraplength=200).pack(anchor='w', pady=(2,0))
+
+        def _render_souvenir_grid_refresh():
+            for w in gf.winfo_children(): w.destroy()
+            _render_souvenir_grid()
+            gf.update_idletasks(); gcv.configure(scrollregion=gcv.bbox('all'))
 
         t_food.config(command=lambda:switch_tab('food'))
         t_bath.config(command=lambda:switch_tab('bath'))
         t_souvenir.config(command=lambda:switch_tab('souvenir'))
+        t_postcard.config(command=lambda:switch_tab('postcard'))
         t_furn.config(command=lambda:switch_tab('furn'))
 
         switch_tab(start_tab)
