@@ -1432,8 +1432,9 @@ class HomeWorld:
                 self.say(f'🎉 到{dest}啦！\n带回了{souv_name}和一张明信片～', 120)
                 self.bubble = f'🎉 到{dest}啦！带回了{souv_name}～'
                 self.btimer = 120
-                # 弹出明信片
-                self.root.after(1500, lambda d=dest, sn=souv_name, sd=souv_desc, cn=card_name, cd=card_desc: self._show_postcard(d, sn, sd, cn, cd))
+                # 先弹特产窗口，1.5秒后弹明信片窗口
+                self.root.after(1500, lambda d=dest, sn=souv_name, sd=souv_desc: self._show_souvenir(d, sn, sd))
+                self.root.after(3200, lambda d=dest, cn=card_name, cd=card_desc: self._show_postcard(d, cn, cd))
             elif self.frame%62==0:  # ~5秒刷新
                 dest = self.travel_state.get('dest','?')
                 min_l = rem//60; sec_l = rem%60
@@ -2282,17 +2283,53 @@ class HomeWorld:
                         activebackground='#9d5cf0', activeforeground='white')
         self.cv.create_window(W//2, H-24, window=btn, tags='tut')
 
+    # ── 特产弹窗 ─────────────────────────────────────────────────────
+    def _show_souvenir(self, dest, souv_name, souv_desc):
+        """旅行结束后弹出特产弹窗"""
+        import random as _rps
+        souv_colors = ['#c8102e','#c8680e','#8b4513','#2e8b57','#6b2fa0','#c8880e']
+        bg_color = _rps.choice(souv_colors)
+
+        win = tk.Toplevel(self.root)
+        win.title(f'🎁 {dest}特产')
+        win.geometry('340x280+80+120')
+        win.resizable(False, False)
+        win.attributes('-topmost', True)
+        win.lift()
+        win.configure(bg=bg_color)
+
+        char_name = CHARACTERS.get(self.char_id, {}).get('name', '小宠物')
+
+        tk.Label(win, text=f'🎁 {dest} 特产',
+                 font=('PingFang SC', 16, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(20,6))
+
+        card_frame = tk.Frame(win, bg='#fff8ee', relief='ridge', bd=3)
+        card_frame.pack(padx=24, pady=4, fill='x')
+        tk.Label(card_frame, text=souv_name, font=('PingFang SC', 18, 'bold'),
+                 bg='#fff8ee', fg='#3a1a00').pack(pady=(12,2))
+        tk.Label(card_frame, text=souv_desc, font=('PingFang SC', 11),
+                 bg='#fff8ee', fg='#665544', wraplength=260, justify='center').pack(pady=(0,8))
+
+        tk.Label(win, text='→ 已入背包「特产」', font=('PingFang SC', 10),
+                 bg=bg_color, fg='#ccffcc').pack(pady=(4,0))
+        tk.Label(win, text=f'{char_name} 从 {dest} 带回来的～',
+                 font=('PingFang SC', 9), bg=bg_color, fg='#ffe8cc').pack(pady=(2,0))
+
+        tk.Button(win, text='好好收着 🎁', command=win.destroy,
+                  font=('PingFang SC', 12, 'bold'), bg='#ffffff',
+                  fg=bg_color, relief='flat', padx=20, pady=6,
+                  cursor='hand2').pack(pady=10)
+
     # ── 明信片弹窗 ─────────────────────────────────────────────────────
-    def _show_postcard(self, dest, souv_name, souv_desc, card_name, card_desc):
-        """旅行结束后弹出明信片弹窗（特产+明信片分开显示）"""
+    def _show_postcard(self, dest, card_name, card_desc):
+        """旅行结束后弹出明信片弹窗"""
         import random as _rp
-        # 随机一个主题色
-        colors = ['#c8102e','#2e6bb0','#2e8b57','#8b4513','#6b2fa0','#c8680e','#1a5c8b']
-        bg_color = _rp.choice(colors)
+        card_colors = ['#1a5c8b','#2e6bb0','#2e8b57','#6b2fa0','#1a6b5c','#2e4a8b']
+        bg_color = _rp.choice(card_colors)
 
         win = tk.Toplevel(self.root)
         win.title(f'📮 来自{dest}的明信片')
-        win.geometry('380x460')
+        win.geometry('360x300+160+180')
         win.resizable(False, False)
         win.attributes('-topmost', True)
         win.lift()
@@ -2302,37 +2339,24 @@ class HomeWorld:
         char_name = CHARACTERS.get(self.char_id, {}).get('name', '小宠物')
 
         tk.Label(win, text=f'📮 来自 {dest} 的明信片',
-                 font=('PingFang SC', 15, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(18,4))
+                 font=('PingFang SC', 15, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(20,6))
 
-        # 明信片区（单张，带描述）
         card_frame = tk.Frame(win, bg='#fffef0', relief='ridge', bd=3)
-        card_frame.pack(padx=20, pady=6, fill='x')
-        tk.Label(card_frame, text=card_name, font=('PingFang SC', 16),
-                 bg='#fffef0', fg='#222222').pack(pady=(10,2))
+        card_frame.pack(padx=24, pady=4, fill='x')
+        tk.Label(card_frame, text=card_name, font=('PingFang SC', 17),
+                 bg='#fffef0', fg='#1a3a5c').pack(pady=(12,2))
         tk.Label(card_frame, text=card_desc, font=('PingFang SC', 10),
-                 bg='#fffef0', fg='#555555').pack(pady=(0,6))
-        tk.Label(card_frame, text='📮 已入背包「明信片」', font=('PingFang SC', 9),
-                 bg='#fffef0', fg='#3a7a30').pack(pady=(0,8))
+                 bg='#fffef0', fg='#445566', wraplength=280, justify='center').pack(pady=(0,8))
 
-        tk.Frame(win, height=1, bg='#ffffff').pack(fill='x', padx=20, pady=4)
-
-        # 特产区
-        sf = tk.Frame(win, bg=bg_color); sf.pack(padx=20, fill='x')
-        tk.Label(sf, text=f'🎁 带回特产：{souv_name}',
-                 font=('PingFang SC', 13, 'bold'), bg=bg_color, fg='#ffffff').pack(anchor='w')
-        tk.Label(sf, text=souv_desc, font=('PingFang SC', 11),
-                 bg=bg_color, fg='#ffe8cc').pack(anchor='w', pady=(2,0))
-        tk.Label(sf, text='→ 已入背包「特产」', font=('PingFang SC', 10),
-                 bg=bg_color, fg='#ccffcc').pack(anchor='w')
-
-        tk.Label(win, text=f'{char_name} 寄自 {dest}～ {addr}',
-                 font=('PingFang SC', 10), bg=bg_color, fg='#ffe8cc',
-                 justify='center').pack(pady=(10,0))
+        tk.Label(win, text='📮 已入背包「明信片」', font=('PingFang SC', 10),
+                 bg=bg_color, fg='#ccffcc').pack(pady=(4,0))
+        tk.Label(win, text=f'{char_name} 寄自 {dest}～ {addr}收',
+                 font=('PingFang SC', 9), bg=bg_color, fg='#ffe8cc').pack(pady=(2,0))
 
         tk.Button(win, text='收好啦 💕', command=win.destroy,
                   font=('PingFang SC', 12, 'bold'), bg='#ffffff',
                   fg=bg_color, relief='flat', padx=20, pady=6,
-                  cursor='hand2').pack(pady=12)
+                  cursor='hand2').pack(pady=10)
 
     def _set_weather(self,mode):
         self.weather_mode=mode
