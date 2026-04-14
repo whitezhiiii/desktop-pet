@@ -4,7 +4,7 @@
 
 一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍、旅行，还能在家具店买家具装扮小家园！
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v15-orange)
+![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v16-orange)
 
 ## 🤖 OpenClaw Skill
 
@@ -143,6 +143,11 @@ desktop-pet/
 | 🐦 白鸟 | `bird_white` | 优雅、温和 |
 
 ## 📝 版本历史
+
+### v16（2026-04-14）
+- 🎁 特产弹窗与 📮 明信片弹窗**完全分离**，旅行回来先蹦特产、再蹦明信片（间隔约 1.7 秒）
+- 两个窗口颜色主题不同（特产暖色/明信片冷色），位置错开不重叠
+- 背包「🎁 特产」和「📮 明信片」Tab 各自独立，互不干扰
 
 ### v15（2026-04-13）
 - 🎁 **特产系统**：35省各5种特产，旅行回来随机抽取，背包独立「🎁 特产」Tab
