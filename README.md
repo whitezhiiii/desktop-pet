@@ -4,7 +4,7 @@
 
 一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍、旅行，还能在家具店买家具装扮小家园！
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v16-orange)
+![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v19-orange)
 
 ## 🤖 OpenClaw Skill
 
@@ -143,6 +143,18 @@ desktop-pet/
 | 🐦 白鸟 | `bird_white` | 优雅、温和 |
 
 ## 📝 版本历史
+
+### v19（2026-04-15）
+- 🎣 **钓鱼小游戏**：右键菜单新增「去钓鱼」，完整抛竿→等待→上钩→扬竿状态机，5秒不扬竿鱼跑了
+- 🐟 10种鱼（普通/稀有/史诗/传说4档）+ 神秘宝箱，来自 Kenney Fish Pack（CC0）
+- 🎒 背包新增「🎣 鱼篓」Tab，按稀有度显示彩色图片，可按价出售（⭐5/20/50/80）
+- 📦 背包 Tab 改为两行布局，彻底解决 Tab 挤不下问题
+
+### v18（2026-04-15）
+- 🎁 **特产图片化**：34省特产用 Apple Emoji 渲染成真实 PNG 图标（120×120），弹窗和背包均显示图片
+- 📮 **明信片图片化**：34省生成卡片风格 PNG（200×140，含省份配色+地标+中文字）
+- 🔧 修复旅行到达卡住 bug（数据格式不匹配导致 NameError，tick 崩溃）
+- 📊 特产/明信片数据重构为列表格式，每省3种可随机抽取
 
 ### v16（2026-04-14）
 - 🎁 特产弹窗与 📮 明信片弹窗**完全分离**，旅行回来先蹦特产、再蹦明信片（间隔约 1.7 秒）

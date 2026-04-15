@@ -268,63 +268,246 @@ FISH_RESULTS=[
     ('🐙 小章鱼','章鱼!你怎么在这里!',None),
 ]
 
+# ── 钓鱼系统鱼类数据 ─────────────────────────────────────────────────────────
+# 格式: (显示名, 文件名前缀, 稀有度, 积分, EXP, 描述)
+FISH_TYPES = [
+    # 常见鱼 (60%)
+    ('小鲫鱼',   'fish_grey',       'common',    8,  10, '最常见的小鱼,朴实无华~'),
+    ('小草鱼',   'fish_green',      'common',    8,  10, '游得挺快的绿色小家伙!'),
+    ('河豚',     'fish_brown',      'common',    6,   8, '圆滚滚的河豚，气鼓鼓超可爱!🐡'),
+    # 稀有鱼 (30%)
+    ('红鲤鱼',   'fish_red',        'rare',     20,  25, '红色吉祥鲤鱼,好兆头!🎏'),
+    ('橙色锦鲤', 'fish_orange',     'rare',     25,  30, '华丽的锦鲤,财运来啦!'),
+    ('粉色神仙', 'fish_pink',       'rare',     30,  35, '梦幻粉鱼,超级稀有!'),
+    ('蓝色金枪', 'fish_blue',       'rare',     28,  30, '深蓝大鱼,力气不小!'),
+    # 超稀有 (9%)
+    ('灰长龙',   'fish_grey_long_a','epic',     60,  60, '传说中的银龙鱼!'),
+    ('幽灵鱼',   'fish_grey_long_b','epic',     80,  80, '几乎透明...难道是幽灵?!'),
+    # 垃圾/彩蛋 (1%)
+    ('神秘宝箱', None,              'treasure', 100, 50, '宝箱?!今天运气爆炸!!'),
+]
+# 掉率权重
+FISH_WEIGHTS = [20, 20, 20, 12, 12, 6, 6, 2, 1, 1]
+FISH_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'fish')
+
+
 # ── 各省特产数据 ──────────────────────────────────────────────────────────────
+# 格式: 省份 -> [(名称, 描述), ...]
 PROV_SOUVENIRS = {
-    '北京':  {'item':'🦆 北京烤鸭',    'desc':'皮脆肉嫩,香飘四溢!',       'color':'#c8102e'},
-    '上海':  {'item':'🦀 大闸蟹',      'desc':'膏肥肉鲜,鲜掉眉毛!',       'color':'#e8a020'},
-    '广东':  {'item':'🫖 工夫茶',      'desc':'细细品味,回甘悠长~',       'color':'#2e8b57'},
-    '四川':  {'item':'🌶️ 麻辣火锅底料', 'desc':'又麻又辣,爽爆了!',         'color':'#cc3300'},
-    '云南':  {'item':'🍵 普洱茶',      'desc':'陈香醇厚,越存越香~',       'color':'#5b3a1e'},
-    '新疆':  {'item':'🍇 吐鲁番葡萄',  'desc':'甜到心里去了!',             'color':'#6b2fa0'},
-    '西藏':  {'item':'🧈 酥油茶',      'desc':'高原特饮,暖心暖胃~',       'color':'#d4a020'},
-    '内蒙古':{'item':'🥩 风干牛肉干',  'desc':'韧劲十足,越嚼越香!',       'color':'#8b4513'},
-    '黑龙江':{'item':'🫐 东北蓝莓',    'desc':'酸甜可口,野生味道!',       'color':'#4169e1'},
-    '吉林':  {'item':'🌽 长白山人参',  'desc':'滋补佳品,元气满满!',       'color':'#228b22'},
-    '辽宁':  {'item':'🍎 大连苹果',    'desc':'脆甜多汁,维C满满!',       'color':'#ff6347'},
-    '山东':  {'item':'🥜 烟台花生',    'desc':'香脆可口,停不下来!',       'color':'#daa520'},
-    '江苏':  {'item':'🍰 南京鸭血粉丝', 'desc':'鲜美入味,秦淮风味~',      'color':'#dc143c'},
-    '浙江':  {'item':'🍵 西湖龙井',    'desc':'清香扑鼻,口齿留香!',       'color':'#32cd32'},
-    '安徽':  {'item':'🫖 黄山毛峰',    'desc':'云雾中采摘,清新淡雅~',     'color':'#228b22'},
-    '福建':  {'item':'🍵 武夷岩茶',    'desc':'岩韵悠长,回味无穷!',       'color':'#8b4513'},
-    '江西':  {'item':'🍚 庐山云雾米',  'desc':'粒粒饱满,软糯清甜~',       'color':'#f5deb3'},
-    '湖南':  {'item':'🌶️ 剁椒鱼头',   'desc':'红彤彤的,辣得过瘾!',       'color':'#ff4500'},
-    '湖北':  {'item':'🦆 武昌鱼',      'desc':'才饮长江水,又食武昌鱼!',   'color':'#4682b4'},
-    '河南':  {'item':'🥠 少林寺芝麻糊', 'desc':'香浓丝滑,功夫秘方!',      'color':'#8b0000'},
-    '河北':  {'item':'🍐 雪花梨',      'desc':'清甜多汁,白如雪花!',       'color':'#fffaf0'},
-    '山西':  {'item':'🍜 刀削面',      'desc':'筋道爽滑,山西一绝!',       'color':'#deb887'},
-    '陕西':  {'item':'🫓 肉夹馍',      'desc':'外酥里嫩,满口留香!',       'color':'#d2691e'},
-    '甘肃':  {'item':'🍜 兰州拉面',    'desc':'一清二白三红四绿,绝了!',   'color':'#cd853f'},
-    '青海':  {'item':'🧀 牦牛酸奶',    'desc':'浓郁醇厚,高原味道!',       'color':'#fffacd'},
-    '宁夏':  {'item':'🐑 滩羊肉',      'desc':'鲜嫩无膻,入口即化!',       'color':'#f5f5dc'},
-    '海南':  {'item':'🥥 椰子',        'desc':'清甜椰汁,椰香四溢!',       'color':'#228b22'},
-    '广西':  {'item':'🍋 百香果',      'desc':'酸甜热情,南国风味!',       'color':'#ffd700'},
-    '贵州':  {'item':'🥃 茅台酒',      'desc':'国酒飘香,一滴都不剩!',     'color':'#8b0000'},
-    '重庆':  {'item':'🌶️ 重庆小面',   'desc':'麻辣鲜香,巴适得板!',       'color':'#ff6347'},
-    '天津':  {'item':'🥟 狗不理包子',  'desc':'皮薄馅多,津门必吃!',       'color':'#ffe4b5'},
-    '香港':  {'item':'🧁 港式蛋挞',    'desc':'酥皮奶香,正宗港味!',       'color':'#ffd700'},
-    '澳门':  {'item':'🥮 葡式蛋挞',    'desc':'焦糖表面,葡式风情~',       'color':'#daa520'},
-    '台湾':  {'item':'🧋 珍珠奶茶',    'desc':'发源地的味道,Q弹软糯!',    'color':'#d2691e'},
-    '海南':  {'item':'🥥 椰子',        'desc':'清甜椰汁,椰香四溢!',       'color':'#228b22'},
+    '北京':  [('🦆 北京烤鸭',    '皮脆肉嫩,香飘四溢!'),
+              ('🍺 燕京啤酒',    '国民老牌,清爽解渴~'),
+              ('🥮 稻香村点心',  '老北京传统糕点,甜而不腻!')],
+    '上海':  [('🦀 大闸蟹',      '膏肥肉鲜,鲜掉眉毛!'),
+              ('🥐 鲜肉月饼',    '酥皮流汁,沪上必吃!'),
+              ('☕ 海派咖啡',    '洋气摩登,魔都味道~')],
+    '广东':  [('🫖 工夫茶',      '细细品味,回甘悠长~'),
+              ('🥟 虾饺皇',      '晶莹剔透,粤式精华!'),
+              ('🌺 广式月饼',    '莲蓉蛋黄,经典永流传~')],
+    '四川':  [('🌶️ 麻辣火锅底料','又麻又辣,爽爆了!'),
+              ('🍢 串串香',      '千滋百味,成都街头一绝!'),
+              ('🐼 熊猫玩偶',    '软乎乎的,国宝同款~')],
+    '云南':  [('🍵 普洱茶',      '陈香醇厚,越存越香~'),
+              ('🌸 鲜花饼',      '玫瑰芳香,云南特色!'),
+              ('🍄 松茸干片',    '山珍之王,珍贵极了!')],
+    '新疆':  [('🍇 吐鲁番葡萄',  '甜到心里去了!'),
+              ('🥜 库尔勒香梨',  '汁多味甜,天山馈赠~'),
+              ('🐑 羊肉串',      '炭火飘香,西域风情!')],
+    '西藏':  [('🧈 酥油茶',      '高原特饮,暖心暖胃~'),
+              ('💎 天珠',         '藏族圣物,辟邪吉祥~'),
+              ('🌾 青稞糌粑',    '高原主食,绵绵醇香!')],
+    '内蒙古':[('🥩 风干牛肉干',  '韧劲十足,越嚼越香!'),
+              ('🥛 奶豆腐',      '醇香浓郁,草原味道!'),
+              ('🐑 羊绒围巾',    '细软暖和,内蒙古特产~')],
+    '黑龙江':[('🫐 东北蓝莓',    '酸甜可口,野生味道!'),
+              ('🌲 红松籽',      '粒粒饱满,林区珍品!'),
+              ('🐟 鳇鱼子酱',    '黑色黄金,珍稀极品!')],
+    '吉林':  [('🌿 长白山人参',  '滋补佳品,元气满满!'),
+              ('🍄 鹿茸片',      '滋补上品,长白山宝!'),
+              ('🌽 鲜玉米',      '甜糯多汁,东北一绝~')],
+    '辽宁':  [('🍎 大连苹果',    '脆甜多汁,维C满满!'),
+              ('🦐 海鲜大礼包',  '辽东湾鲜货,海味十足!'),
+              ('🥟 老边饺子',    '皮薄馅大,沈阳老字号~')],
+    '山东':  [('🥜 烟台花生',    '香脆可口,停不下来!'),
+              ('🍺 青岛啤酒',    '国民啤酒,麦香扑鼻!'),
+              ('🥟 速冻水饺',    '皮薄馅鲜,山东味道~')],
+    '江苏':  [('🍜 南京盐水鸭',  '皮白肉嫩,金陵名菜!'),
+              ('🎋 宜兴紫砂壶',  '茶人挚爱,传世珍品!'),
+              ('🌸 苏州丝绸',    '柔滑细腻,姑苏风情~')],
+    '浙江':  [('🍵 西湖龙井',    '清香扑鼻,口齿留香!'),
+              ('🥢 绍兴黄酒',    '醇厚悠长,江南佳酿~'),
+              ('🎋 天目山竹笋',  '鲜嫩清脆,春日馈赠!')],
+    '安徽':  [('🫖 黄山毛峰',    '云雾中采摘,清新淡雅~'),
+              ('🥜 徽州臭鳜鱼',  '臭名远扬,香绝天下!'),
+              ('📜 徽墨',         '文房四宝,千年传承~')],
+    '福建':  [('🍵 武夷岩茶',    '岩韵悠长,回味无穷!'),
+              ('🥟 沙县小吃礼包','国民小吃,遍布全国~'),
+              ('🌊 闽南海蛎',    '肥美多汁,海鲜至鲜!')],
+    '江西':  [('🍚 庐山云雾米',  '粒粒饱满,软糯清甜~'),
+              ('🏺 景德镇瓷器',  '千年瓷都,国宝级工艺!'),
+              ('🌶️ 南昌辣条',    '童年记忆,停不下来~')],
+    '湖南':  [('🌶️ 剁椒鱼头',   '红彤彤的,辣得过瘾!'),
+              ('🥃 湘西腊肉',    '柴火熏制,山野气息~'),
+              ('🌿 安化黑茶',    '越存越香,降脂好茶!')],
+    '湖北':  [('🦆 武昌鱼',      '才饮长江水,又食武昌鱼!'),
+              ('🍮 热干面',      '芝麻酱拌匀,武汉早餐王!'),
+              ('🥜 洪湖莲子',    '白嫩饱满,荷花馈赠~')],
+    '河南':  [('🥠 少林寺芝麻糊','香浓丝滑,功夫秘方!'),
+              ('🍜 烩面',        '汤浓面劲,中原一绝!'),
+              ('🥕 温县铁棍山药','滋补佳品,怀庆府特产~')],
+    '河北':  [('🍐 雪花梨',      '清甜多汁,白如雪花!'),
+              ('🧆 驴肉火烧',    '天上龙肉,地下驴肉!'),
+              ('🌿 承德山楂',    '酸甜爽口,塞外风味~')],
+    '山西':  [('🍜 刀削面',      '筋道爽滑,山西一绝!'),
+              ('🍶 汾酒',        '清香国酒,杏花村酿~'),
+              ('🍯 老陈醋',      '酸香醇厚,调味之王!')],
+    '陕西':  [('🫓 肉夹馍',      '外酥里嫩,满口留香!'),
+              ('🍜 裤带面',      '宽如裤带,筋韧弹牙!'),
+              ('🌰 临潼石榴',    '粒粒晶莹,甜酸可口~')],
+    '甘肃':  [('🍜 兰州拉面',    '一清二白三红四绿,绝了!'),
+              ('🍯 枸杞',        '红色珍珠,滋补养生~'),
+              ('🧅 临洮洋芋',    '土豆界天花板,粉糯香甜!')],
+    '青海':  [('🧀 牦牛酸奶',    '浓郁醇厚,高原味道!'),
+              ('🥛 牦牛奶粉',    '高蛋白高营养,草原馈赠!'),
+              ('🌿 冬虫夏草',    '草原奇珍,珍贵无比~')],
+    '宁夏':  [('🐑 滩羊肉',      '鲜嫩无膻,入口即化!'),
+              ('🫐 枸杞',        '宁夏红宝,滋补第一品!'),
+              ('🌾 硒砂瓜',      '戈壁滩上长的西瓜,甜！')],
+    '海南':  [('🥥 椰子',        '清甜椰汁,椰香四溢!'),
+              ('☕ 兴隆咖啡',    '热带风情,香浓醇厚~'),
+              ('🦞 文昌鸡',      '皮滑肉嫩,南国第一鸡!')],
+    '广西':  [('🍋 百香果',      '酸甜热情,南国风味!'),
+              ('🍈 砂糖橘',      '甜入心脾,广西第一橘!'),
+              ('🎋 螺蛳粉原料包','臭名远扬,香飘万里~')],
+    '贵州':  [('🥃 茅台酒',      '国酒飘香,一滴都不剩!'),
+              ('🌶️ 老干妈',      '辣椒女王,世界征服者!'),
+              ('🍵 都匀毛尖',    '贵州名茶,翠绿清香~')],
+    '重庆':  [('🌶️ 重庆小面',   '麻辣鲜香,巴适得板!'),
+              ('🫙 涪陵榨菜',    '脆香下饭,全国人民都爱!'),
+              ('🍢 磁器口麻花',  '酥脆香甜,古镇老味道~')],
+    '天津':  [('🥟 狗不理包子',  '皮薄馅多,津门必吃!'),
+              ('🍬 大麻花',      '香酥酥的,天津特色小吃!'),
+              ('🥮 耳朵眼炸糕',  '金黄酥脆,津门三绝之一~')],
+    '香港':  [('🧁 港式蛋挞',    '酥皮奶香,正宗港味!'),
+              ('🧋 丝袜奶茶',    '香滑浓郁,港式第一饮!'),
+              ('🍜 云吞面',      '弹牙鲜虾,港式精华~')],
+    '澳门':  [('🥮 葡式蛋挞',    '焦糖表面,葡式风情~'),
+              ('🍭 杏仁饼',      '酥香松软,澳门手信王!'),
+              ('🥩 猪扒包',      '外酥里嫩,澳门经典味~')],
+    '台湾':  [('🧋 珍珠奶茶',    '发源地的味道,Q弹软糯!'),
+              ('🍍 凤梨酥',      '酥皮凤梨馅,台湾必带伴手礼!'),
+              ('🌭 台湾香肠',    '甜咸交织,夜市一绝~')],
 }
 # 默认特产(省份未收录时)
-DEFAULT_SOUVENIR = {'item':'🎁 当地特产', 'desc':'神秘伴手礼,打开看看~', 'color':'#888888'}
+DEFAULT_SOUVENIR_LIST = [('🎁 当地特产', '神秘伴手礼,打开看看~')]
 
-# 各省明信片插画(用emoji拼成风景画)
-PROV_POSTCARD = {
-    '北京':  ['🏯 天安门广场', '🦁 故宫红墙', '🏔️ 长城巍峨', '🎆 夜色繁华'],
-    '上海':  ['🌃 东方明珠', '🌉 外滩夜景', '🍜 弄堂小吃', '✨ 魔都霓虹'],
-    '广东':  ['🌺 木棉花开', '🦐 早茶点心', '🏙️ 珠江新城', '🌊 南海波涛'],
-    '四川':  ['🐼 大熊猫', '🌶️ 成都辣椒', '🏔️ 峨眉金顶', '🎋 竹林幽径'],
-    '云南':  ['🌸 洱海花海', '🏔️ 玉龙雪山', '🌈 彩云之南', '🦚 孔雀起舞'],
-    '新疆':  ['🍇 葡萄架下', '🐪 丝路驼铃', '🕌 清真寺顶', '🌅 天山日落'],
-    '西藏':  ['🏔️ 珠穆朗玛', '🛕 布达拉宫', '🙏 转经筒转', '🦅 雄鹰翱翔'],
-    '内蒙古':['🐎 草原骏马', '⛺ 蒙古包里', '🌌 星空璀璨', '🌾 金色草原'],
-    '黑龙江':['❄️ 冰雪大世界', '🎿 滑雪飞驰', '🌲 林海雪原', '🏮 哈尔滨冰灯'],
-    '海南':  ['🌴 椰林海风', '🏖️ 三亚阳光', '🐠 珊瑚礁鱼', '🌊 碧海蓝天'],
-    '桂林':  ['🏞️ 漓江山水', '🎣 渔火夜色', '🐟 清澈江水', '🌿 竹筏漂流'],
-    '杭州':  ['🌿 西湖烟雨', '⛵ 断桥相会', '🍵 龙井茶香', '🌺 苏堤春晓'],
+# 各省明信片插画
+# 格式: 省份 -> [(标题, 描述), ...]
+PROV_POSTCARDS = {
+    '北京':  [('🏯 天安门广场',  '巍峨红墙,历史的厚重'),
+              ('🏔️ 万里长城',    '不到长城非好汉!'),
+              ('🎆 京城夜色',    '霓虹璀璨,盛世繁华~')],
+    '上海':  [('🌃 东方明珠',    '浦江明珠,魔都地标!'),
+              ('🌉 外滩夜景',    '万国建筑,灯火璀璨~'),
+              ('🏙️ 陆家嘴',      '摩天楼林立,金融之心!')],
+    '广东':  [('🌺 木棉花开',    '英雄花盛放,南粤春天'),
+              ('🏙️ 珠江新城',    '羊城新貌,南方都会~'),
+              ('🌊 南海波涛',    '碧海连天,椰风阵阵!')],
+    '四川':  [('🐼 大熊猫',      '圆滚滚的国宝,治愈系!'),
+              ('🏔️ 峨眉金顶',    '云海翻腾,金殿生辉~'),
+              ('🎋 竹林幽径',    '翠竹成荫,清风徐来~')],
+    '云南':  [('🌸 洱海花海',    '苍山洱海,人间仙境!'),
+              ('🏔️ 玉龙雪山',    '终年积雪,神圣壮观~'),
+              ('🦚 孔雀起舞',    '彩云之南,孔雀开屏!')],
+    '新疆':  [('🍇 葡萄沟',      '万顷葡萄,甜蜜天堂!'),
+              ('🐪 丝路驼铃',    '古道西风,一带一路~'),
+              ('🌅 天山日落',    '落日余晖,天山如画!')],
+    '西藏':  [('🏔️ 珠穆朗玛',   '世界屋脊,顶天立地!'),
+              ('🛕 布达拉宫',    '雪域圣殿,千年守望~'),
+              ('🦅 雄鹰翱翔',    '天空辽阔,鹰击长空!')],
+    '内蒙古':[('🐎 草原骏马',    '策马奔腾,自由豪迈!'),
+              ('⛺ 蒙古包',      '毡房温暖,草原之家~'),
+              ('🌌 星空璀璨',    '万里无云,星汉灿烂!')],
+    '黑龙江':[('❄️ 冰雪大世界', '冰雕玉砌,童话世界!'),
+              ('🌲 林海雪原',    '白雪皑皑,林海茫茫~'),
+              ('🏮 哈尔滨冰灯',  '冰灯如昼,俄式风情!')],
+    '吉林':  [('🌊 雾凇岛',      '琼枝玉树,北国奇观!'),
+              ('🌲 长白山',      '天池碧波,仙境秘境~'),
+              ('⛷️ 滑雪场',      '白雪飞驰,激情滑雪!')],
+    '辽宁':  [('🌊 大连海滨',    '碧海金沙,北方夏威夷!'),
+              ('🏯 沈阳故宫',    '清朝发祥,皇家气派~'),
+              ('🌃 大连夜景',    '海港城市,灯火辉煌!')],
+    '山东':  [('⛵ 青岛帆影',    '红瓦绿树,碧海蓝天!'),
+              ('🌊 蓬莱仙阁',    '海市蜃楼,人间仙境~'),
+              ('🏔️ 泰山日出',    '五岳之首,旭日东升!')],
+    '江苏':  [('🏮 秦淮灯火',    '十里秦淮,灯火阑珊!'),
+              ('⛵ 太湖烟波',    '烟波浩渺,鱼米水乡~'),
+              ('🌸 扬州春色',    '烟花三月,扬州繁盛!')],
+    '浙江':  [('🌿 西湖烟雨',    '西湖美景,断桥相会!'),
+              ('🌊 千岛湖',      '碧波千顷,岛屿星布~'),
+              ('🏯 乌镇古镇',    '枕水人家,江南古韵!')],
+    '安徽':  [('🏔️ 黄山云海',   '奇松怪石,云海翻腾!'),
+              ('🌊 新安江',      '最美乡村,山水画卷~'),
+              ('🏯 宏村',         '皖南古村,水墨徽州!')],
+    '福建':  [('🌊 鼓浪屿',      '钢琴之岛,文艺圣地!'),
+              ('🏯 土楼',         '世界遗产,客家围楼~'),
+              ('🌅 霞浦海滩',    '金色滩涂,摄影天堂!')],
+    '江西':  [('🏞️ 庐山云雾',   '不识庐山真面目~'),
+              ('🌊 鄱阳湖',      '候鸟天堂,万鸟翔集!'),
+              ('🏯 滕王阁',      '落霞孤鹜,秋水长天~')],
+    '湖南':  [('🏔️ 张家界',     '悬浮山峰,阿凡达原型!'),
+              ('🌊 东洞庭湖',    '烟波浩渺,渔舟唱晚~'),
+              ('🏯 岳阳楼',      '先天下之忧而忧!')],
+    '湖北':  [('🌉 武汉长江桥',  '万里长江第一桥!'),
+              ('🏯 黄鹤楼',      '故人西辞黄鹤楼~'),
+              ('🌸 武大樱花',    '樱花烂漫,最美校园!')],
+    '河南':  [('🏯 少林寺',      '武林圣地,禅武合一!'),
+              ('🏺 龙门石窟',    '千佛凿岩,世界遗产~'),
+              ('🌸 洛阳牡丹',    '国色天香,花开富贵!')],
+    '河北':  [('🏯 承德避暑山庄','皇家园林,天下第一庄!'),
+              ('🌊 北戴河',      '碧海金沙,夏日胜地~'),
+              ('🏔️ 太行山',      '巍峨太行,华北屋脊!')],
+    '山西':  [('🏯 平遥古城',    '明清古城,穿越时光!'),
+              ('🕍 悬空寺',      '悬崖绝壁,鬼斧神工~'),
+              ('🏔️ 五台山',      '佛教圣地,云雾缭绕!')],
+    '陕西':  [('🏺 兵马俑',      '秦始皇军团,震撼人心!'),
+              ('🕌 大雁塔',      '盛唐遗迹,古都地标~'),
+              ('🌙 西安古城墙',  '千年古都,夜色如画!')],
+    '甘肃':  [('🐪 敦煌莫高窟',  '丝路明珠,壁画宝库!'),
+              ('🌅 月牙泉',      '沙漠绿洲,月牙奇景~'),
+              ('🏔️ 祁连山雪景',  '雪山草甸,人间仙境!')],
+    '青海':  [('🌊 青海湖',      '高原明珠,湛蓝无边!'),
+              ('🏔️ 年保玉则',    '仙女湖畔,净土秘境~'),
+              ('🌸 油菜花海',    '金色花毯,壮美高原!')],
+    '宁夏':  [('🏜️ 沙坡头',     '大漠孤烟,黄河落日!'),
+              ('🕌 清真寺',      '伊斯兰文化,宁夏独特~'),
+              ('🌊 黄河石林',    '黄河奇景,西北壮观!')],
+    '海南':  [('🌴 三亚椰林',    '椰风海韵,天涯海角!'),
+              ('🐠 珊瑚礁鱼',    '碧海蓝天,海底花园~'),
+              ('🌅 天涯海角',    '浪漫圣地,海天一线!')],
+    '广西':  [('🏞️ 桂林山水',   '桂林山水甲天下!'),
+              ('🎣 漓江渔火',    '江上夜渔,悠然自得~'),
+              ('🌿 德天瀑布',    '国际大瀑布,气势磅礴!')],
+    '贵州':  [('🌊 黄果树瀑布',  '银瀑飞泻,雷鸣震天!'),
+              ('🏯 西江千户苗寨','苗族圣地,千家灯火~'),
+              ('🌈 梯田彩虹',    '多彩贵州,层层梯田!')],
+    '重庆':  [('🌉 夜景长江索道','山城夜景,赛博朋克!'),
+              ('🏙️ 洪崖洞',      '悬崖楼群,千与千寻~'),
+              ('🚠 轻轨穿楼',    '魔幻现实,重庆专属!')],
+    '天津':  [('🌊 海河夜色',    '海河两岸,灯火通明!'),
+              ('🏯 鼓楼古街',    '津门老街,烟火气十足~'),
+              ('🎭 天津曲艺',    '相声发源地,哈哈大笑!')],
+    '香港':  [('🌆 维多利亚港',  '东方之珠,夜色迷人!'),
+              ('🏙️ 旺角夜市',    '人声鼎沸,港式烟火~'),
+              ('🌉 青马大桥',    '壮观吊桥,港岛地标!')],
+    '澳门':  [('🏛️ 大三巴牌坊', '葡式遗迹,澳门象征!'),
+              ('🎰 威尼斯人',    '东方赌城,金碧辉煌~'),
+              ('🌊 路氹城',      '填海新区,崭新澳门!')],
+    '台湾':  [('🌺 阿里山日出',  '云海翻腾,日出壮观!'),
+              ('🏖️ 垦丁海滩',    '碧海蓝天,南台湾明珠~'),
+              ('🌃 台北101',     '台湾地标,夜色璀璨!')],
 }
-DEFAULT_POSTCARD = ['🌏 远方风景', '✈️ 旅途愉快', '🌟 平安归来', '💌 寄上思念']
+DEFAULT_POSTCARD_LIST = [('🌏 远方风景', '旅途愉快,平安归来~')]
+
 
 ACHIEVEMENTS=[
     {'id':'first_fish','name':'🎣 初次垂钓','desc':'第一次钓到东西','done':False},
@@ -342,7 +525,9 @@ ACHIEVEMENTS=[
 ]
 
 # ── 商店食物数据 ────────────────────────────────────────────────────────────
-FOOD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'food')
+FOOD_DIR     = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'food')
+SOUVENIR_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'souvenir')
+POSTCARD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'postcard')
 
 SHOP_ITEMS = [
     {'id':'bread',      'name':'面包',    'file':'07_bread.png',      'price':10,  'lv':1, 'hunger':20, 'mood':5,  'health':0,  'cat':'food',  'desc':'香脆面包,简单又美味'},
@@ -2152,6 +2337,7 @@ class HomeWorld:
         m.add_command(label='💬 找我说话',command=self._chat_dialog)
         m.add_command(label='🐾 宠物档案',command=self.open_profile)
         m.add_command(label='🗺️ 旅行地图',command=self.open_travel)
+        m.add_command(label='🎣 去钓鱼',command=self.open_fishing)
         m.add_command(label='🎒 背包 & 仓库',command=self.open_bag)
         m.add_command(label='🛒 小卖部',command=self.open_shop)
         m.add_command(label='🛋️ 家具店',command=self.open_furniture_shop)
@@ -2287,12 +2473,13 @@ class HomeWorld:
     def _show_souvenir(self, dest, souv_name, souv_desc):
         """旅行结束后弹出特产弹窗"""
         import random as _rps
+        from PIL import Image as _PI, ImageTk as _IT
         souv_colors = ['#c8102e','#c8680e','#8b4513','#2e8b57','#6b2fa0','#c8880e']
         bg_color = _rps.choice(souv_colors)
 
         win = tk.Toplevel(self.root)
         win.title(f'🎁 {dest}特产')
-        win.geometry('340x280+80+120')
+        win.geometry('340x320+80+120')
         win.resizable(False, False)
         win.attributes('-topmost', True)
         win.lift()
@@ -2301,14 +2488,27 @@ class HomeWorld:
         char_name = CHARACTERS.get(self.char_id, {}).get('name', '小宠物')
 
         tk.Label(win, text=f'🎁 {dest} 特产',
-                 font=('PingFang SC', 16, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(20,6))
+                 font=('PingFang SC', 16, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(16,4))
 
         card_frame = tk.Frame(win, bg='#fff8ee', relief='ridge', bd=3)
         card_frame.pack(padx=24, pady=4, fill='x')
-        tk.Label(card_frame, text=souv_name, font=('PingFang SC', 18, 'bold'),
-                 bg='#fff8ee', fg='#3a1a00').pack(pady=(12,2))
+
+        # 特产图片
+        img_path = os.path.join(SOUVENIR_DIR, f'{dest}.png')
+        if os.path.exists(img_path):
+            try:
+                pil_img = _PI.open(img_path).convert('RGBA').resize((96, 96), _PI.LANCZOS)
+                tk_img = _IT.PhotoImage(pil_img)
+                img_lbl = tk.Label(card_frame, image=tk_img, bg='#fff8ee')
+                img_lbl.image = tk_img  # 防止 GC
+                img_lbl.pack(pady=(10, 2))
+            except Exception:
+                pass
+
+        tk.Label(card_frame, text=souv_name, font=('PingFang SC', 16, 'bold'),
+                 bg='#fff8ee', fg='#3a1a00').pack(pady=(4,2))
         tk.Label(card_frame, text=souv_desc, font=('PingFang SC', 11),
-                 bg='#fff8ee', fg='#665544', wraplength=260, justify='center').pack(pady=(0,8))
+                 bg='#fff8ee', fg='#665544', wraplength=260, justify='center').pack(pady=(0,10))
 
         tk.Label(win, text='→ 已入背包「特产」', font=('PingFang SC', 10),
                  bg=bg_color, fg='#ccffcc').pack(pady=(4,0))
@@ -2324,12 +2524,13 @@ class HomeWorld:
     def _show_postcard(self, dest, card_name, card_desc):
         """旅行结束后弹出明信片弹窗"""
         import random as _rp
+        from PIL import Image as _PI, ImageTk as _IT
         card_colors = ['#1a5c8b','#2e6bb0','#2e8b57','#6b2fa0','#1a6b5c','#2e4a8b']
         bg_color = _rp.choice(card_colors)
 
         win = tk.Toplevel(self.root)
         win.title(f'📮 来自{dest}的明信片')
-        win.geometry('360x300+160+180')
+        win.geometry('380x360+160+180')
         win.resizable(False, False)
         win.attributes('-topmost', True)
         win.lift()
@@ -2339,14 +2540,27 @@ class HomeWorld:
         char_name = CHARACTERS.get(self.char_id, {}).get('name', '小宠物')
 
         tk.Label(win, text=f'📮 来自 {dest} 的明信片',
-                 font=('PingFang SC', 15, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(20,6))
+                 font=('PingFang SC', 15, 'bold'), bg=bg_color, fg='#ffffff').pack(pady=(16,4))
 
         card_frame = tk.Frame(win, bg='#fffef0', relief='ridge', bd=3)
         card_frame.pack(padx=24, pady=4, fill='x')
-        tk.Label(card_frame, text=card_name, font=('PingFang SC', 17),
-                 bg='#fffef0', fg='#1a3a5c').pack(pady=(12,2))
+
+        # 明信片图片
+        img_path = os.path.join(POSTCARD_DIR, f'{dest}.png')
+        if os.path.exists(img_path):
+            try:
+                pil_img = _PI.open(img_path).convert('RGBA').resize((200, 140), _PI.LANCZOS)
+                tk_img = _IT.PhotoImage(pil_img)
+                img_lbl = tk.Label(card_frame, image=tk_img, bg='#fffef0')
+                img_lbl.image = tk_img
+                img_lbl.pack(pady=(10, 4))
+            except Exception:
+                pass
+
+        tk.Label(card_frame, text=card_name, font=('PingFang SC', 15),
+                 bg='#fffef0', fg='#1a3a5c').pack(pady=(4,2))
         tk.Label(card_frame, text=card_desc, font=('PingFang SC', 10),
-                 bg='#fffef0', fg='#445566', wraplength=280, justify='center').pack(pady=(0,8))
+                 bg='#fffef0', fg='#445566', wraplength=300, justify='center').pack(pady=(0,10))
 
         tk.Label(win, text='📮 已入背包「明信片」', font=('PingFang SC', 10),
                  bg=bg_color, fg='#ccffcc').pack(pady=(4,0))
@@ -2611,23 +2825,32 @@ class HomeWorld:
             state['imgs'][k] = p; return p
 
         # ── Tab 栏 ──
-        tab_bar = tk.Frame(win, bg=MID, height=40); tab_bar.pack(fill='x'); tab_bar.pack_propagate(False)
-        tk.Label(tab_bar, text='🎒  背包 & 🏠 仓库', font=('PingFang SC',13,'bold'), bg=MID, fg='#fff5dc').pack(side='left', padx=12, pady=6)
-        t_postcard = tk.Button(tab_bar, text='📮 明信片', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
-        t_souvenir = tk.Button(tab_bar, text='🎁 特产', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
-        t_furn = tk.Button(tab_bar, text='🏠 仓库', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
-        t_bath = tk.Button(tab_bar, text='🛁 浴球', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
-        t_food = tk.Button(tab_bar, text='🍔 食物', font=('PingFang SC',10,'bold'),
-                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=4, cursor='hand2')
-        t_postcard.pack(side='right', padx=1, pady=5)
-        t_souvenir.pack(side='right', padx=1, pady=5)
-        t_furn.pack(side='right', padx=1, pady=5)
-        t_bath.pack(side='right', padx=1, pady=5)
-        t_food.pack(side='right', padx=1, pady=5)
+        # Tab区分两行
+        tab_bar = tk.Frame(win, bg=MID); tab_bar.pack(fill='x')
+        # 第一行：标题 + 食物/浴球/鱼筼
+        row1 = tk.Frame(tab_bar, bg=MID); row1.pack(fill='x')
+        tk.Label(row1, text='🎒 背包', font=('PingFang SC',12,'bold'), bg=MID, fg='#fff5dc').pack(side='left', padx=10, pady=4)
+        t_food = tk.Button(row1, text='🍔 食物', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_bath = tk.Button(row1, text='🛁 浴球', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_fish = tk.Button(row1, text='🎣 鱼筼', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_food.pack(side='right', padx=2, pady=3)
+        t_bath.pack(side='right', padx=2, pady=3)
+        t_fish.pack(side='right', padx=2, pady=3)
+        # 第二行：仓库标题 + 仓库/特产/明信片
+        row2 = tk.Frame(tab_bar, bg='#5a3a1a'); row2.pack(fill='x')
+        tk.Label(row2, text='🏠 仓库', font=('PingFang SC',12,'bold'), bg='#5a3a1a', fg='#ffe8aa').pack(side='left', padx=10, pady=4)
+        t_furn = tk.Button(row2, text='🛋️ 家具', font=('PingFang SC',10,'bold'),
+                           bg='#5a3a1a', fg='#ffe8aa', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_souvenir = tk.Button(row2, text='🎁 特产', font=('PingFang SC',10,'bold'),
+                           bg='#5a3a1a', fg='#ffe8aa', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_postcard = tk.Button(row2, text='📮 明信片', font=('PingFang SC',10,'bold'),
+                           bg='#5a3a1a', fg='#ffe8aa', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_furn.pack(side='right', padx=2, pady=3)
+        t_souvenir.pack(side='right', padx=2, pady=3)
+        t_postcard.pack(side='right', padx=2, pady=3)
 
         # ── 主体区 ──
         body = tk.Frame(win, bg='#f5e8c8'); body.pack(fill='both', expand=True)
@@ -2797,9 +3020,13 @@ class HomeWorld:
 
         def switch_tab(tab):
             state['tab']=tab; state['sel']=None; reset_right()
-            for tb,tid in [(t_food,'food'),(t_bath,'bath'),(t_souvenir,'souvenir'),(t_postcard,'postcard'),(t_furn,'furn')]:
-                tb.config(bg='#ffe066' if tab==tid else MID,
-                          fg=DARK      if tab==tid else '#fff5dc')
+            for tb,tid,ac,ic in [
+                (t_food,'food',MID,'#5a3a1a'),(t_bath,'bath',MID,'#5a3a1a'),(t_fish,'fish',MID,'#5a3a1a'),
+                (t_furn,'furn','#5a3a1a',MID),(t_souvenir,'souvenir','#5a3a1a',MID),(t_postcard,'postcard','#5a3a1a',MID)
+            ]:
+                active = (tab==tid)
+                tb.config(bg='#ffe066' if active else ac,
+                          fg=DARK      if active else ('#fff5dc' if ac==MID else '#ffe8aa'))
             refresh_grid()
 
         def refresh_grid():
@@ -2808,6 +3035,8 @@ class HomeWorld:
                 _render_food_grid()
             elif state['tab'] == 'bath':
                 _render_bath_grid()
+            elif state['tab'] == 'fish':
+                _render_fish_grid()
             elif state['tab'] == 'souvenir':
                 _render_souvenir_grid()
             elif state['tab'] == 'postcard':
@@ -2889,6 +3118,80 @@ class HomeWorld:
         # ==== 特产&明信片 Tab ====
         SOUVENIR_SELL_PRICE = 20
         POSTCARD_SELL_PRICE = 20
+        FISH_SELL_PRICES = {'common': 5, 'rare': 20, 'epic': 50, 'treasure': 80}
+
+        def _render_fish_grid():
+            """鱼篓Tab：fish_{prefix} 格式"""
+            from PIL import Image as _PI, ImageTk as _IT
+            fish_items = {}
+            for k, v in self.bag.items():
+                if k.startswith('fish_') and v > 0:
+                    fish_items[k] = v
+            if not fish_items:
+                tk.Label(gf, text='鱼篓空空～\n去右键「钓鱼」抛竿吧！',
+                         font=('PingFang SC',12), bg=LIGHT, fg='#aaaaaa', justify='center').pack(pady=40)
+                return
+
+            fish_info = {f'fish_{ft[1]}': ft for ft in FISH_TYPES if ft[1]}
+            fish_info['fish_treasure'] = ('神秘宝箱', None, 'treasure', 100, 50, '稀世珍宝!')
+
+            rarity_colors = {'common':'#4a7a4a','rare':'#4a4a9a','epic':'#7a2a9a','treasure':'#9a7a00'}
+            rarity_names  = {'common':'普通','rare':'稀有','epic':'史诗','treasure':'传说'}
+
+            _fimgs = {}
+            def get_fimg(prefix, sz=60):
+                if prefix in _fimgs: return _fimgs[prefix]
+                p = os.path.join(FISH_DIR, f'{prefix}.png')
+                if os.path.exists(p):
+                    try:
+                        t = _IT.PhotoImage(_PI.open(p).convert('RGBA').resize((sz,sz),_PI.LANCZOS))
+                        _fimgs[prefix] = t; return t
+                    except: pass
+                return None
+
+            for bk, cnt in sorted(fish_items.items()):
+                prefix = bk[5:]  # 去掉 'fish_'
+                info = fish_info.get(bk, ('未知鱼', None, 'common', 0, 0, ''))
+                fname, fprefix, rarity, sv, ev, desc = info
+                bg_c = rarity_colors.get(rarity, '#4a4a4a')
+                sell_price = FISH_SELL_PRICES.get(rarity, 5)
+
+                fr = tk.Frame(gf, bg=LIGHT, bd=2, relief='groove')
+                fr.pack(fill='x', padx=6, pady=4)
+
+                # 左侧图片+颜色块
+                lf = tk.Frame(fr, bg=bg_c, width=100); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
+                img_tk = get_fimg(fprefix) if fprefix else None
+                if img_tk:
+                    il = tk.Label(lf, image=img_tk, bg=bg_c); il.image = img_tk; il.pack(pady=(6,0))
+                else:
+                    tk.Label(lf, text='📦', font=('Apple Color Emoji',28), bg=bg_c).pack(pady=(10,0))
+                tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',12,'bold'), bg=bg_c, fg='#ccffcc').pack(pady=(2,2))
+                sell_st = 'normal' if cnt > 0 else 'disabled'
+                sell_bg = '#aa3333' if cnt > 0 else '#888'
+                def do_sell_f(bk=bk, sp=sell_price, fn=fname):
+                    if self.bag.get(bk, 0) <= 0: return
+                    self.bag[bk] -= 1
+                    if self.bag[bk] == 0: del self.bag[bk]
+                    self.score += sp; self._save()
+                    self.say(f'💰 出售{fn}+⭐{sp}！', 60)
+                    refresh_grid()
+                tk.Button(lf, text=f'售 ⭐{sell_price}', font=('PingFang SC',9),
+                          bg=sell_bg, fg='white', relief='flat',
+                          state=sell_st, cursor='hand2',
+                          command=do_sell_f).pack(padx=6, pady=(0,8), fill='x')
+
+                # 右侧信息
+                rf = tk.Frame(fr, bg='#f0f8ff'); rf.pack(side='left', fill='both', expand=True, padx=8, pady=8)
+                rlbl = rarity_names.get(rarity,'普通')
+                tk.Label(rf, text=f'[{rlbl}]', font=('PingFang SC',10), bg='#f0f8ff',
+                         fg=bg_c).pack(anchor='w')
+                tk.Label(rf, text=fname, font=('PingFang SC',14,'bold'), bg='#f0f8ff',
+                         fg='#1a3a5c').pack(anchor='w')
+                tk.Label(rf, text=desc, font=('PingFang SC',10), bg='#f0f8ff',
+                         fg='#445566', wraplength=200).pack(anchor='w', pady=(2,0))
+                tk.Label(rf, text=f'价值 ⭐{sv}  经验 +{ev}', font=('PingFang SC',9),
+                         bg='#f0f8ff', fg='#888888').pack(anchor='w', pady=(4,0))
 
         def _render_souvenir_grid():
             """特产Tab：souvenir_{省}_{idx} 格式"""
@@ -2906,15 +3209,28 @@ class HomeWorld:
                 tk.Label(gf,text='还没有特产～\n去旅行地图出发吧！',
                          font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
                 return
+            from PIL import Image as _PI, ImageTk as _IT
             import random as _rs
             colors = ['#c8102e','#2e6bb0','#2e8b57','#8b4513','#6b2fa0','#c8680e']
             for k,(dest,sname,sdesc,cnt) in sorted(items.items()):
                 bg_c = colors[hash(dest)%len(colors)]
                 fr = tk.Frame(gf, bg=LIGHT, bd=2, relief='groove')
                 fr.pack(fill='x', padx=6, pady=4)
-                # 左色块
+                # 左色块（含特产图片）
                 lf = tk.Frame(fr, bg=bg_c, width=110); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
-                tk.Label(lf, text=dest, font=('PingFang SC',13,'bold'), bg=bg_c, fg='white').pack(pady=(8,2))
+                # 特产图片
+                img_path = os.path.join(SOUVENIR_DIR, f'{dest}.png')
+                if os.path.exists(img_path):
+                    try:
+                        pil_img = _PI.open(img_path).convert('RGBA').resize((64, 64), _PI.LANCZOS)
+                        tk_img = _IT.PhotoImage(pil_img)
+                        il = tk.Label(lf, image=tk_img, bg=bg_c)
+                        il.image = tk_img
+                        il.pack(pady=(6,0))
+                    except Exception:
+                        tk.Label(lf, text=dest, font=('PingFang SC',13,'bold'), bg=bg_c, fg='white').pack(pady=(8,2))
+                else:
+                    tk.Label(lf, text=dest, font=('PingFang SC',13,'bold'), bg=bg_c, fg='white').pack(pady=(8,2))
                 cnt_lbl = tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',12,'bold'), bg=bg_c, fg='#ccffcc')
                 cnt_lbl.pack(pady=(0,4))
                 sell_state = 'normal' if cnt > 1 else 'disabled'
@@ -2929,6 +3245,7 @@ class HomeWorld:
                           state=sell_state, command=do_sell_s).pack(padx=6, pady=(0,8), fill='x')
                 # 右侧内容
                 rf = tk.Frame(fr, bg='#fff8ee'); rf.pack(side='left', fill='both', expand=True, padx=8, pady=8)
+                tk.Label(rf, text=dest, font=('PingFang SC',11,'bold'), bg='#fff8ee', fg='#888866').pack(anchor='w')
                 tk.Label(rf, text=sname, font=('PingFang SC',13,'bold'), bg='#fff8ee', fg='#3a1a00').pack(anchor='w')
                 tk.Label(rf, text=sdesc, font=('PingFang SC',10), bg='#fff8ee', fg='#666655', wraplength=200).pack(anchor='w', pady=(2,0))
 
@@ -2948,17 +3265,30 @@ class HomeWorld:
                 tk.Label(gf,text='还没有明信片～\n旅行回来会带一张哦！',
                          font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
                 return
+            from PIL import Image as _PI, ImageTk as _IT
             colors = ['#1a5c8b','#2e8b57','#6b2fa0','#8b4513','#c8102e','#c8680e']
             for k,(dest,cname,cdesc,cnt) in sorted(items.items()):
                 bg_c = colors[hash(dest+cname)%len(colors)]
                 fr = tk.Frame(gf, bg='#fffef0', bd=2, relief='groove')
                 fr.pack(fill='x', padx=6, pady=4)
-                # 邮票风左色块
-                lf = tk.Frame(fr, bg=bg_c, width=90); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
-                tk.Label(lf, text='📮', font=('PingFang SC',20), bg=bg_c).pack(pady=(8,0))
-                tk.Label(lf, text=dest, font=('PingFang SC',11,'bold'), bg=bg_c, fg='white').pack()
-                cnt_lbl2 = tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',11,'bold'), bg=bg_c, fg='#ccffcc')
-                cnt_lbl2.pack(pady=(2,4))
+                # 明信片图片左列
+                lf = tk.Frame(fr, bg='#fffef0', width=110); lf.pack(side='left', fill='y'); lf.pack_propagate(False)
+                img_path = os.path.join(POSTCARD_DIR, f'{dest}.png')
+                if os.path.exists(img_path):
+                    try:
+                        pil_img = _PI.open(img_path).convert('RGBA').resize((100, 70), _PI.LANCZOS)
+                        tk_img = _IT.PhotoImage(pil_img)
+                        il = tk.Label(lf, image=tk_img, bg='#fffef0')
+                        il.image = tk_img
+                        il.pack(pady=(6,2), padx=4)
+                    except Exception:
+                        tk.Label(lf, text='📮', font=('PingFang SC',20), bg=bg_c).pack(pady=(8,0))
+                        tk.Label(lf, text=dest, font=('PingFang SC',11,'bold'), bg=bg_c, fg='white').pack()
+                else:
+                    tk.Label(lf, text='📮', font=('PingFang SC',20), bg=bg_c).pack(pady=(8,0))
+                    tk.Label(lf, text=dest, font=('PingFang SC',11,'bold'), bg=bg_c, fg='white').pack()
+                cnt_lbl2 = tk.Label(lf, text=f'×{cnt}', font=('PingFang SC',11,'bold'), bg='#fffef0', fg='#445566')
+                cnt_lbl2.pack(pady=(0,4))
                 sell_state2 = 'normal' if cnt > 1 else 'disabled'
                 sell_bg2 = '#aa3333' if cnt > 1 else '#888'
                 def do_sell_p(bk=k):
@@ -2968,9 +3298,10 @@ class HomeWorld:
                     refresh_grid()
                 tk.Button(lf, text=f'售 ⭐{POSTCARD_SELL_PRICE}', font=('PingFang SC',9),
                           bg=sell_bg2, fg='white', relief='flat', cursor='hand2' if cnt>1 else 'arrow',
-                          state=sell_state2, command=do_sell_p).pack(padx=4, pady=(0,8), fill='x')
+                          state=sell_state2, command=do_sell_p).pack(padx=4, pady=(0,6), fill='x')
                 # 右侧
                 rf = tk.Frame(fr, bg='#fffef0'); rf.pack(side='left', fill='both', expand=True, padx=8, pady=8)
+                tk.Label(rf, text=f'📮 {dest}', font=('PingFang SC',11,'bold'), bg='#fffef0', fg='#445566').pack(anchor='w')
                 tk.Label(rf, text=cname, font=('PingFang SC',13,'bold'), bg='#fffef0', fg='#1a3a5c').pack(anchor='w')
                 tk.Label(rf, text=cdesc, font=('PingFang SC',10), bg='#fffef0', fg='#445566', wraplength=200).pack(anchor='w', pady=(2,0))
 
@@ -2981,6 +3312,7 @@ class HomeWorld:
 
         t_food.config(command=lambda:switch_tab('food'))
         t_bath.config(command=lambda:switch_tab('bath'))
+        t_fish.config(command=lambda:switch_tab('fish'))
         t_souvenir.config(command=lambda:switch_tab('souvenir'))
         t_postcard.config(command=lambda:switch_tab('postcard'))
         t_furn.config(command=lambda:switch_tab('furn'))
@@ -3403,6 +3735,188 @@ class HomeWorld:
 
         draw_map()
         win.focus_force()
+
+
+    # ── 钓鱼系统 ──────────────────────────────────────────────────────────────
+    def open_fishing(self):
+        """钓鱼小游戏主窗口"""
+        import random as _rf
+        from PIL import Image as _PI, ImageTk as _IT
+
+        if hasattr(self, '_fish_win') and self._fish_win and self._fish_win.winfo_exists():
+            self._fish_win.lift(); return
+
+        COST = 30
+        W_F, H_F = 420, 500
+
+        win = tk.Toplevel(self.root)
+        self._fish_win = win
+        win.title('🎣 幸运钓鱼')
+        win.geometry(f'{W_F}x{H_F}+200+80')
+        win.resizable(False, False)
+        win.attributes('-topmost', True)
+        win.configure(bg='#1a3a5c')
+
+        tk.Label(win, text='🎣 幸运钓鱼', font=('PingFang SC', 18, 'bold'),
+                 bg='#1a3a5c', fg='#ffd700').pack(pady=(14, 2))
+        cost_lbl = tk.Label(win, text=f'消耗 ⭐{COST} 积分 | 当前: ⭐{self.score}',
+                            font=('PingFang SC', 10), bg='#1a3a5c', fg='#aaccff')
+        cost_lbl.pack(pady=(0, 6))
+
+        # 水面场景
+        scene_cv = tk.Canvas(win, width=W_F-20, height=180,
+                             bg='#1a6090', highlightthickness=1,
+                             highlightbackground='#2a7aaa')
+        scene_cv.pack(padx=10, pady=4)
+
+        def draw_scene(fish_tk=None, state='idle', fish_name=''):
+            scene_cv.delete('all')
+            scene_cv.create_rectangle(0, 80, W_F, 180, fill='#0d4a6e', outline='')
+            scene_cv.create_rectangle(0, 0, W_F, 80, fill='#1a6090', outline='')
+            for i in range(0, W_F, 40):
+                scene_cv.create_arc(i, 72, i+40, 88, start=0, extent=180,
+                                    fill='#2a7aaa', outline='#3a8abb', width=1)
+            for wx in [40, 100, 200, 320, 370]:
+                h = _rf.randint(30, 55)
+                scene_cv.create_rectangle(wx, 180-h, wx+6, 180, fill='#1a7a3a', outline='')
+                scene_cv.create_oval(wx-4, 180-h-10, wx+10, 180-h+6, fill='#2a9a4a', outline='')
+            for bx, by in [(60,140),(150,120),(280,150),(360,130)]:
+                scene_cv.create_oval(bx, by, bx+6, by+6, fill='', outline='#5599bb', width=1)
+
+            if state == 'waiting':
+                scene_cv.create_line(195, 5, 205, 82, fill='#ccaa66', width=2)
+                scene_cv.create_oval(201, 78, 209, 86, fill='#ff4444', outline='#cc0000')
+                scene_cv.create_text(200, 40, text='• • •', font=('PingFang SC', 12), fill='#aaccff')
+            elif state == 'bite':
+                scene_cv.create_line(195, 5, 205, 82, fill='#ccaa66', width=2)
+                scene_cv.create_oval(201, 78, 209, 86, fill='#ffffff', outline='#cc0000')
+                scene_cv.create_text(130, 48, text='!! 上钩了 !!',
+                                     font=('PingFang SC', 16, 'bold'), fill='#ffff00')
+            elif state == 'catch' and fish_tk:
+                scene_cv.create_line(195, 5, 200, 82, fill='#ccaa66', width=2)
+                scene_cv.create_image(200, 132, image=fish_tk)
+                scene_cv.create_text(200, 170, text=fish_name,
+                                     font=('PingFang SC', 12, 'bold'), fill='#ffd700')
+            elif state == 'trash':
+                scene_cv.create_line(195, 5, 200, 82, fill='#ccaa66', width=2)
+                scene_cv.create_text(200, 118, text='👢', font=('Apple Color Emoji', 40))
+                scene_cv.create_text(200, 166, text='垃圾...', font=('PingFang SC', 12), fill='#aaaaaa')
+            elif state == 'treasure':
+                scene_cv.create_line(195, 5, 200, 82, fill='#ccaa66', width=2)
+                scene_cv.create_text(200, 118, text='📦', font=('Apple Color Emoji', 40))
+                scene_cv.create_text(200, 166, text='神秘宝箱!!', font=('PingFang SC', 13, 'bold'), fill='#ffd700')
+
+        draw_scene(state='idle')
+
+        status_var = tk.StringVar(value='点击「抛竿」开始钓鱼～')
+        tk.Label(win, textvariable=status_var, font=('PingFang SC', 12),
+                 bg='#1a3a5c', fg='#e0f0ff', wraplength=380).pack(pady=6)
+
+        btn_f = tk.Frame(win, bg='#1a3a5c')
+        btn_f.pack(pady=4)
+        cast_btn = tk.Button(btn_f, text='🎯 抛竿', font=('PingFang SC', 14, 'bold'),
+                             bg='#2a7a4a', fg='white', relief='flat',
+                             padx=20, pady=8, cursor='hand2')
+        cast_btn.pack(side='left', padx=8)
+        pull_btn = tk.Button(btn_f, text='🤯 扬竿!', font=('PingFang SC', 14, 'bold'),
+                             bg='#8b0000', fg='white', relief='flat',
+                             padx=20, pady=8, cursor='hand2', state='disabled')
+        pull_btn.pack(side='left', padx=8)
+
+        tk.Label(win, text='─── 近期战利品 ───', font=('PingFang SC', 10),
+                 bg='#1a3a5c', fg='#6688aa').pack(pady=(8, 2))
+        catch_cv = tk.Canvas(win, bg='#0d2a42', highlightthickness=0, height=80)
+        catch_cv.pack(fill='x', padx=10, pady=(0, 8))
+
+        _imgs = {}
+        def get_img(prefix, sz=56):
+            if prefix in _imgs: return _imgs[prefix]
+            p = os.path.join(FISH_DIR, f'{prefix}.png')
+            if os.path.exists(p):
+                try:
+                    t = _IT.PhotoImage(_PI.open(p).convert('RGBA').resize((sz,sz),_PI.LANCZOS))
+                    _imgs[prefix] = t; return t
+                except: pass
+            return None
+
+        recent = []
+
+        def refresh_bar():
+            catch_cv.delete('all')
+            if not recent:
+                catch_cv.create_text(200, 40, text='还没有战利品～', font=('PingFang SC',10), fill='#446688')
+                return
+            x = 16
+            for nm, img in recent[-5:]:
+                if img: catch_cv.create_image(x+28, 38, image=img)
+                else: catch_cv.create_text(x+28, 36, text='📦', font=('Apple Color Emoji',26))
+                catch_cv.create_text(x+28, 66, text=nm[:4], font=('PingFang SC',9), fill='#aaccff')
+                x += 76
+        refresh_bar()
+
+        _s = {'phase':'idle', 'aid':None, 'ftk':None, 'biting':False}
+
+        def do_cast():
+            if self.score < COST:
+                status_var.set(f'积分不足！需要 ⭐{COST}，当前只有 ⭐{self.score}'); return
+            self.score -= COST
+            cost_lbl.config(text=f'消耗 ⭐{COST} 积分 | 当前: ⭐{self.score}')
+            cast_btn.config(state='disabled')
+            pull_btn.config(state='disabled', bg='#8b0000')
+            _s['phase'] = 'waiting'
+            draw_scene(state='waiting')
+            status_var.set('🎣 鱼竿已抛出，等待上钩中...')
+            _s['aid'] = win.after(_rf.randint(3000, 9000), trigger_bite)
+
+        def trigger_bite():
+            _s['phase'] = 'bite'; _s['biting'] = True
+            draw_scene(state='bite')
+            status_var.set('⚠️ 鱼咬钩了！快点点「扬竿」！！')
+            pull_btn.config(state='normal', bg='#cc3300')
+            _s['aid'] = win.after(5000, fish_escape)
+
+        def fish_escape():
+            if not _s['biting']: return
+            _s['biting'] = False; _s['phase'] = 'idle'
+            draw_scene(state='idle')
+            status_var.set('😢 鱼跑了！下次手快点嗦～')
+            pull_btn.config(state='disabled', bg='#8b0000')
+            cast_btn.config(state='normal')
+
+        def do_pull():
+            if not _s['biting']: return
+            if _s['aid']: win.after_cancel(_s['aid'])
+            _s['biting'] = False
+            pull_btn.config(state='disabled', bg='#8b0000')
+
+            fish = _rf.choices(FISH_TYPES, weights=FISH_WEIGHTS, k=1)[0]
+            fname, fprefix, rarity, sv, ev, desc = fish
+            self.add_score(sv); self.add_exp(ev)
+            cost_lbl.config(text=f'消耗 ⭐{COST} 积分 | 当前: ⭐{self.score}')
+
+            bk = f'fish_{fprefix or "treasure"}'
+            self.bag[bk] = self.bag.get(bk, 0) + 1
+            self._save(); self.unlock('first_fish')
+
+            remoji = {'common':'⭐','rare':'💎','epic':'👑','treasure':'🎉'}[rarity]
+            if fprefix:
+                ftk = get_img(fprefix)
+                _s['ftk'] = ftk
+                draw_scene(fish_tk=ftk, state='catch', fish_name=fname)
+                status_var.set(f'{remoji} 钓到了「{fname}」！+⭐{sv} 分 +{ev} EXP  {desc}')
+                recent.append((fname, ftk))
+            else:
+                draw_scene(state='treasure')
+                status_var.set(f'🎉 神秘宝箱！大奖！+⭐{sv} 分 +{ev} EXP')
+                recent.append(('宝箱', None))
+
+            self.say(f'🎣 钓到{fname}！+⭐{sv}', 80)
+            refresh_bar()
+            _s['phase'] = 'idle'
+            win.after(2000, lambda: cast_btn.config(state='normal'))
+
+        cast_btn.config(command=do_cast)
+        pull_btn.config(command=do_pull)
 
     # ── 宠物档案 ───────────────────────────────────────────────────
     def open_profile(self):
