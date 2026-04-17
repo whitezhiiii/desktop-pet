@@ -6,7 +6,7 @@
 
 一个像素风桌面宠物，用 Python + Tkinter 打造。小宠物住在你的桌面上，可以喂食、洗澡、玩耍、旅行，还能在家具店买家具装扮小家园！
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v19-orange)
+![Python](https://img.shields.io/badge/Python-3.11+-blue) ![Platform](https://img.shields.io/badge/Platform-macOS-lightgrey) ![License](https://img.shields.io/badge/License-MIT-green) ![Version](https://img.shields.io/badge/Version-v20-orange)
 
 ## 🤖 OpenClaw Skill
 
@@ -145,6 +145,14 @@ desktop-pet/
 | 🐦 白鸟 | `bird_white` | 优雅、温和 |
 
 ## 📝 版本历史
+
+### v20（2026-04-17）
+- 🏆 **成就系统重做**：12→30个成就，覆盖喂食/对话/戳戳/洗澡/钓鱼稀有度/积分里程碑/家具/明信片/时间段全维度
+- 🎨 成就界面重做：黑金配色，分类卡片展示，进度条显示解锁比例
+- 💊 **药品系统**：小卖部新增「药品」分类，4种药（普通药片⭐500 / 效能药剂⭐2000 / 奇迹药水⭐8000 / 神级仙丹⭐30000）
+- 💊 背包新增「药品」Tab，右键「喂药」直接跳转，喂药/喂食后自动消除昏厥
+- 💤 **昏厥系统**：健康归零持续约10分钟触发昏厥，宠物倒地💤红色闪烁，互动全锁，喂食/喂药复活
+- 😭 **撒娇气泡升级**：低属性按严重程度分3档，极度状态有专属崩溃台词
 
 ### v19（2026-04-15）
 - 🎣 **钓鱼小游戏**：右键菜单新增「去钓鱼」，完整抛竿→等待→上钩→扬竿状态机，5秒不扬竿鱼跑了
