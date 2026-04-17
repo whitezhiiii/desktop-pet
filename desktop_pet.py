@@ -510,18 +510,46 @@ DEFAULT_POSTCARD_LIST = [('🌏 远方风景', '旅途愉快,平安归来~')]
 
 
 ACHIEVEMENTS=[
-    {'id':'first_fish','name':'🎣 初次垂钓','desc':'第一次钓到东西','done':False},
-    {'id':'harvest','name':'🥕 丰收喜悦','desc':'第一次收菜','done':False},
-    {'id':'cook','name':'🍳 大厨出道','desc':'第一次做饭','done':False},
-    {'id':'poke10','name':'👆 戳戳达人','desc':'戳了我10次','done':False},
-    {'id':'score100','name':'💎 百分达人','desc':'积分达到100','done':False},
-    {'id':'night_owl','name':'🦉 夜猫子','desc':'23点后还在','done':False},
-    {'id':'level5','name':'⭐ 成长达人','desc':'宠物升到5级','done':False},
-    {'id':'level10','name':'💫 满级传说','desc':'宠物升到满级10级','done':False},
-    {'id':'shop10','name':'🛒 购物达人','desc':'购买10次食物','done':False},
-    {'id':'travel5','name':'🚀 起飞了','desc':'到访5个省份','done':False},
-    {'id':'travel15','name':'🗺️ 天涯海角','desc':'到访15个省份','done':False},
-    {'id':'travel35','name':'🏆 足迹遂天下','desc':'走遍35个省市区','done':False},
+    # ── 喂食 ──
+    {'id':'first_feed',   'name':'🍞 第一口饭',     'desc':'第一次喂食',              'done':False},
+    {'id':'feed10',       'name':'🍱 小饭桶',        'desc':'累计喂食10次',            'done':False},
+    {'id':'feed50',       'name':'🍽️ 大厨荣耀',     'desc':'累计喂食50次',            'done':False},
+    {'id':'feed_steak',   'name':'🥩 奢华晚餐',      'desc':'喂了牛排（顶级享受）',    'done':False},
+    # ── 对话 ──
+    {'id':'first_chat',   'name':'💬 倾诉心声',      'desc':'第一次和我说话',          'done':False},
+    {'id':'chat10',       'name':'🗣️ 话痨伙伴',     'desc':'累计对话10次',            'done':False},
+    {'id':'chat50',       'name':'❤️ 知心好友',      'desc':'累计对话50次',            'done':False},
+    # ── 戳戳 ──
+    {'id':'poke10',       'name':'👆 戳戳达人',      'desc':'戳了我10次',              'done':False},
+    {'id':'poke50',       'name':'😤 戳烦了吧',      'desc':'戳了我50次',              'done':False},
+    # ── 洗澡 ──
+    {'id':'first_bath',   'name':'🛁 第一次洗澡',    'desc':'第一次洗澡',              'done':False},
+    {'id':'bath10',       'name':'🫧 爱干净',         'desc':'累计洗澡10次',            'done':False},
+    {'id':'bath_cosmic',  'name':'🌌 宇宙级清洁',    'desc':'用过宇宙浴球',            'done':False},
+    # ── 钓鱼 ──
+    {'id':'first_fish',   'name':'🎣 初次垂钓',      'desc':'第一次钓到鱼',            'done':False},
+    {'id':'fish10',       'name':'🐟 钓鱼爱好者',    'desc':'累计钓鱼10次',            'done':False},
+    {'id':'fish_epic',    'name':'👑 史诗渔夫',       'desc':'钓到史诗级鱼',            'done':False},
+    {'id':'fish_legend',  'name':'🎉 神秘宝箱',      'desc':'钓到神秘宝箱',            'done':False},
+    # ── 积分 ──
+    {'id':'score100',     'name':'💎 百分达人',       'desc':'积分达到100',             'done':False},
+    {'id':'score1000',    'name':'💰 千分富翁',       'desc':'积分达到1000',            'done':False},
+    {'id':'score5000',    'name':'👑 积分土豪',       'desc':'积分达到5000',            'done':False},
+    # ── 等级 ──
+    {'id':'level5',       'name':'⭐ 成长达人',       'desc':'宠物升到5级',             'done':False},
+    {'id':'level10',      'name':'💫 满级传说',       'desc':'宠物升到满级10级',        'done':False},
+    # ── 购物 ──
+    {'id':'shop10',       'name':'🛒 购物达人',       'desc':'累计购买10次',            'done':False},
+    {'id':'furniture5',   'name':'🛋️ 小窝装扮师',   'desc':'购买5件家具',             'done':False},
+    {'id':'furniture15',  'name':'🏠 室内设计师',    'desc':'购买15件家具',            'done':False},
+    # ── 旅行 ──
+    {'id':'travel5',      'name':'🚀 起飞了',         'desc':'到访5个省份',             'done':False},
+    {'id':'travel15',     'name':'🗺️ 天涯海角',      'desc':'到访15个省份',            'done':False},
+    {'id':'travel35',     'name':'🏆 足迹遍天下',    'desc':'走遍35个省市区',          'done':False},
+    {'id':'postcard10',   'name':'📮 明信片收藏家',  'desc':'收集10张明信片',          'done':False},
+    # ── 时间 ──
+    {'id':'night_owl',    'name':'🦉 夜猫子',         'desc':'23点后还陪着主人',        'done':False},
+    {'id':'early_bird',   'name':'🌅 早鸟',           'desc':'早上7点前就在',           'done':False},
 ]
 
 # ── 商店食物数据 ────────────────────────────────────────────────────────────
@@ -587,6 +615,11 @@ SHOP_ITEMS = [
     {'id':'bathball_l',  'name':'玫瑰浴球', 'file':'bathball_l.png',     'price':500,  'lv':5, 'hunger':0, 'mood':25, 'health':15, 'cat':'bath',  'clean':60, 'desc':'玫瑰精油浴球,奢华享受'},
     {'id':'bathball_xl', 'name':'黄金浴球', 'file':'bathball_xl.png',    'price':2000, 'lv':8, 'hunger':0, 'mood':50, 'health':30, 'cat':'bath',  'clean':100,'desc':'传说级黄金浴球,洗完满血复活'},
     {'id':'bathball_ex', 'name':'宇宙浴球', 'file':'bathball_ex.png',    'price':5000, 'lv':10,'hunger':0, 'mood':100,'health':50, 'cat':'bath',  'clean':100,'desc':'宇宙无敌浴球,主人专属!'},
+    # ── 药品系列 ──
+    {'id':'med_basic',   'name':'💊 普通药片',  'file':'_med_basic',   'price':500,   'lv':1, 'hunger':0, 'mood':5,   'health':25, 'cat':'medicine', 'cure':True,  'desc':'基础药片,健康+25,病态有效'},
+    {'id':'med_good',    'name':'✨ 效能药剂',  'file':'_med_good',    'price':2000,  'lv':3, 'hunger':0, 'mood':10,  'health':50, 'cat':'medicine', 'cure':True,  'desc':'强效药剂,健康+50,快速恢复'},
+    {'id':'med_super',   'name':'💎 奇迹药水',  'file':'_med_super',   'price':8000,  'lv':6, 'hunger':0, 'mood':20,  'health':80, 'cat':'medicine', 'cure':True,  'desc':'奇迹药水,健康+80,兵蒙如贵音'},
+    {'id':'med_divine',  'name':'🌟 神级仙丹',  'file':'_med_divine',  'price':30000, 'lv':8, 'hunger':0, 'mood':50,  'health':100,'cat':'medicine', 'cure':True,  'desc':'满血复活!100%健康恢复,无上神规'},
 ]
 
 
@@ -683,6 +716,9 @@ class HomeWorld:
         self.feed_count = 0
         self.play_count = 0
         self.bathe_count = 0
+        self.chat_count = 0
+        self.fish_count = 0
+        self.furniture_buy_count = 0
         self.ai_history = []
         self.ai_thinking = False
 
@@ -725,6 +761,8 @@ class HomeWorld:
         self.cleanliness=80.0  # 清洁度 0-100(100=干净)
         self.health=100.0      # 健康值 0-100(100=健康)
         self.sick=False        # 生病状态
+        self.fainted=False     # 昏厥状态
+        self.faint_cd=0        # 健康归零持续计数(达到阈值触发昏厥)
         self.stat_warn_cd=0    # 属性警告冷却
 
         self._is_first_run = not os.path.exists(SAVE_FILE)
@@ -796,6 +834,8 @@ class HomeWorld:
             self.cleanliness=float(d.get('cleanliness',80))
             self.health=float(d.get('health',100))
             self.sick=bool(d.get('sick',False))
+            self.fainted=bool(d.get('fainted',False))
+            self.faint_cd=int(d.get('faint_cd',0))
             self.char_id=d.get('char_id', DEFAULT_CHAR)
             self.owner_name=d.get('owner_name', '')
             self.address_word=d.get('address_word', '主人')
@@ -804,6 +844,9 @@ class HomeWorld:
             self.feed_count = int(d.get('feed_count', 0))
             self.play_count = int(d.get('play_count', 0))
             self.bathe_count = int(d.get('bathe_count', 0))
+            self.chat_count = int(d.get('chat_count', 0))
+            self.fish_count = int(d.get('fish_count', 0))
+            self.furniture_buy_count = int(d.get('furniture_buy_count', 0))
             self.bag = d.get('bag', {})
             self.furniture_bag = d.get('furniture_bag', {})
             self.placed_furniture = d.get('placed_furniture', [])
@@ -831,6 +874,8 @@ class HomeWorld:
                     'hunger':self.hunger,'mood':self.mood,
                     'cleanliness':self.cleanliness,'health':self.health,
                     'sick':self.sick,
+                    'fainted':self.fainted,
+                    'faint_cd':self.faint_cd,
                     'char_id':self.char_id,
                     'owner_name':self.owner_name,
                     'address_word':self.address_word,
@@ -839,6 +884,9 @@ class HomeWorld:
                     'feed_count':self.feed_count,
                     'play_count':self.play_count,
                     'bathe_count':self.bathe_count,
+                    'chat_count':self.chat_count,
+                    'fish_count':self.fish_count,
+                    'furniture_buy_count':self.furniture_buy_count,
                     'bag':self.bag,
                     'birth_ts':self.birth_ts,
                     'travel_visited':self.travel_visited,
@@ -917,7 +965,9 @@ class HomeWorld:
 
     def add_score(self,n):
         self.score+=n; self._save()
-        if self.score>=100: self.unlock('score100')
+        if self.score>=100:  self.unlock('score100')
+        if self.score>=1000: self.unlock('score1000')
+        if self.score>=5000: self.unlock('score5000')
 
     def add_exp(self, n):
         """增加经验值,满足升级条件时自动升级"""
@@ -1019,6 +1069,10 @@ class HomeWorld:
             msg = msg_var.get().strip()
             if msg:
                 win.destroy()
+                self.chat_count += 1
+                self.unlock('first_chat')
+                if self.chat_count >= 10: self.unlock('chat10')
+                if self.chat_count >= 50: self.unlock('chat50')
                 self.ai_chat(msg)
         btn_frame = tk.Frame(win)
         btn_frame.pack()
@@ -1115,6 +1169,7 @@ class HomeWorld:
             self.last_hour=h
             self.say(QUOTES_HOUR[h],120)
             if h>=23: self.unlock('night_owl')
+            if h<=6:  self.unlock('early_bird')
 
     # ── 摸鱼检测 ─────────────────────────────────────────────────────
     def check_idle(self):
@@ -1254,10 +1309,35 @@ class HomeWorld:
         cv.create_rectangle(sx3,gnd,sx3+BP*5,gnd+BP,fill='#1a3a1a',outline='')
 
         # 角色
-        bob=round(math.sin(self.frame*0.08))*CP
-        spr=self.sprite
-        if self.angry_level>2: spr='angry'
-        draw_sprite(self.cv,self.cx,gnd+bob,spr,self.flip)
+        if self.fainted:
+            # 昏厥状态：横躬 + 闪烁红色警示
+            pulse = abs(math.sin(self.frame * 0.05))  # 0~1闪烁
+            # 身体横着画出来
+            fy = gnd - CP*2
+            # 头
+            cv.create_rectangle(self.cx-BP*8,fy-CP,self.cx-BP*6,fy+CP,fill='#f0b060',outline='')
+            # 身体
+            cv.create_rectangle(self.cx-BP*6,fy-CP,self.cx,fy+CP,fill='#4466aa',outline='')
+            # 腿
+            cv.create_rectangle(self.cx,fy-CP,self.cx+BP*4,fy+CP,fill='#224488',outline='')
+            # 闪烁的 X_X 眼睛
+            ex = self.cx-BP*7
+            cv.create_text(ex,fy,text='💀',font=('Apple Color Emoji',10))
+            # 天上飘着的 … 或 ✨
+            stars=['✨','💫','⭐']
+            for i,s in enumerate(stars):
+                sx_s=self.cx-16+i*14
+                sy_s=gnd-CP*5+int(math.sin(self.frame*0.08+i)*6)
+                cv.create_text(sx_s,sy_s,text=s,font=('Apple Color Emoji',8))
+            # 红色警告闪烁
+            if pulse>0.5:
+                cv.create_text(self.cx,gnd-CP*8,text='💤 昏厥中...',
+                               font=('PingFang SC',10,'bold'),fill='#ff4444')
+        else:
+            bob=round(math.sin(self.frame*0.08))*CP
+            spr=self.sprite
+            if self.angry_level>2: spr='angry'
+            draw_sprite(self.cv,self.cx,gnd+bob,spr,self.flip)
 
         # 生气火花
         if self.angry_level>2:
@@ -1348,8 +1428,20 @@ class HomeWorld:
         if self._mini_frames_r:
             fi = (self.frame // 5) % len(self._mini_frames_r)
             _img = (self._mini_frames_r if self.flip else self._mini_frames_l)[fi]
-            cv.create_oval(cx-52, gnd-106, cx+52, gnd-2, fill='#fffaf0', outline='#e0c8a0', width=1)
+            if self.fainted:
+                # 昏厥：肃景变红 + 角色变灰
+                cv.create_oval(cx-52, gnd-106, cx+52, gnd-2, fill='#3a0000', outline='#ff4444', width=2)
+            else:
+                cv.create_oval(cx-52, gnd-106, cx+52, gnd-2, fill='#fffaf0', outline='#e0c8a0', width=1)
             cv.create_image(cx, gnd-2, anchor='s', image=_img)
+            # 昏厥覆盖层：半透明红色蒙层 + 图标
+            if self.fainted:
+                pulse = abs(math.sin(self.frame * 0.08))
+                cv.create_oval(cx-52, gnd-106, cx+52, gnd-2,
+                               fill='', outline='#ff2222', width=3 if pulse>0.5 else 1)
+                cv.create_text(cx, gnd-60, text='💤', font=('Apple Color Emoji', 22))
+                if pulse > 0.5:
+                    cv.create_text(cx, gnd-108, text='定睛!', font=('PingFang SC', 10, 'bold'), fill='#ff4444')
             # 双重防GC
             if not hasattr(cv, '_cur_imgs'): cv._cur_imgs = {}
             cv._cur_imgs['mini'] = _img
@@ -1540,6 +1632,9 @@ class HomeWorld:
     # ── Tick ─────────────────────────────────────────────────────────
     def tick(self):
         self.frame+=1
+        # 如果包含昏厥状态，第一帧自动弹出提示
+        if self.fainted and self.frame==30:
+            self.root.after(0, self._show_faint_popup)
         for cl in self.clouds:
             cl['x']+=cl['s']
             if cl['x']>W//BP*BP+cl['w']*BP+10: cl['x']=-cl['w']*BP-10
@@ -1614,6 +1709,8 @@ class HomeWorld:
                 card_key = f'postcard_{dest}_{card_idx}'
                 self.bag[card_key] = self.bag.get(card_key, 0) + 1
                 self._save()
+                postcard_total = sum(1 for k,v in self.bag.items() if k.startswith('postcard_') and v>0)
+                if postcard_total >= 10: self.unlock('postcard10')
                 self.say(f'🎉 到{dest}啦！\n带回了{souv_name}和一张明信片～', 120)
                 self.bubble = f'🎉 到{dest}啦！带回了{souv_name}～'
                 self.btimer = 120
@@ -1641,15 +1738,39 @@ class HomeWorld:
                 if self.sick and self.health>75:
                     self.sick=False
                     self.say('感觉好多了!😊',100)
-            # 低属性警告(冷却节流)
+            # 昏厥触发：健康度为0且持续一段时间
+            if not self.fainted:
+                if self.health<=0:
+                    self.faint_cd+=1
+                    if self.faint_cd>=8:  # 连续8次衰减周期（约10分钟）触发
+                        self.fainted=True; self.faint_cd=0
+                        self.sick=True; self._save()
+                        self.root.after(0, self._show_faint_popup)
+                else:
+                    self.faint_cd=0
+            # 低属性警告 — 分层撒娇语料
             low=[]
-            if self.hunger<25: low.append('好饿...主人快喂我!🍔')
-            if self.mood<25: low.append('好闷哦...陪我玩嘛🎮')
-            if self.cleanliness<25: low.append('想洗澡了...好脏🛁')
-            if self.health<30: low.append('身体不舒服...🤒')
+            if self.hunger<10:
+                low+=random.choices(['😭 我要饿死了！主人快快快快喂我！','肚子太饿了...就快平躺我了...','如果再不吃东西，我会变成小骷髅头的💀','饱食→→→我！！！'],k=1)
+            elif self.hunger<25:
+                low+=random.choices(['🍔 好饿...主人快喂我！','胃胃抢了，幸好主人在...','主人！！有没有吃的！🥺','如果我是一只拼猫现在已经在视频里平躺了...'],k=1)
+            elif self.hunger<40:
+                low+=random.choices(['有点饿呢...可以吃点什么吗？','我在考虑点外卖...🤔'],k=1)
+            if self.mood<10:
+                low+=random.choices(['😭 孤独极了！主人你在哪里！','我要哭了！谁都不理我！😭','主人你已经三天不陈迹我了！','心情归零了...要不要陪我玩一下🥺'],k=1)
+            elif self.mood<25:
+                low+=random.choices(['😢 好闷啊...陪我玩嗑！','我有点不开心，主人按按我吧','如果我是一只5岁小孩我现在已经在地上打滚了'],k=1)
+            if self.cleanliness<10:
+                low+=random.choices(['🚶 我臭死了！主人快帮我洗澡！','连我自己都闻不下去了...洗澡洗澡🛁','我现在的状态就是"独特"的味道...'],k=1)
+            elif self.cleanliness<25:
+                low+=random.choices(['想洗澡了...好脏🛁','主人给我准备浴球就没小吃的哦'],k=1)
+            if self.health<15:
+                low+=random.choices(['🤕 我快不行了！主人我需要药！！','头好晕好晕的...药药药...','如果我明天没了，记得常来看看我'],k=1)
+            elif self.sick and self.health<30:
+                low+=random.choices(['🤒 头好沌...据说药很贵但是很有效','小声音：主人...我生病了啊🥺'],k=1)
             if low and self.stat_warn_cd==0:
-                self.say(random.choice(low),130)
-                self.stat_warn_cd=8
+                self.say(random.choice(low),150)
+                self.stat_warn_cd=6
             elif self.stat_warn_cd>0:
                 self.stat_warn_cd-=1
             # 每5分钟自动保存
@@ -2316,6 +2437,8 @@ class HomeWorld:
 
     def onrel(self,e):
         if not self.drag:
+            if self.fainted:
+                self._show_faint_popup(); return  # 昏厥时点击弹出救治弹窗
             self.poke_count+=1; self.add_score(1); self.add_exp(2)
             # 连续快速戳 → 生气
             now=time.time()
@@ -2325,6 +2448,7 @@ class HomeWorld:
                 self.angry_level=max(0,self.angry_level-1)
             self.last_poke=now
             if self.poke_count>=10: self.unlock('poke10')
+            if self.poke_count>=50: self.unlock('poke50')
             if self.angry_level>2:
                 self.say(random.choice(QUOTES_ANGRY),80)
                 self.act_timer=120
@@ -2334,6 +2458,17 @@ class HomeWorld:
 
     def onright(self,e):
         m=tk.Menu(self.root,tearoff=0)
+        # 昏厥时只显示救治菜单
+        if self.fainted:
+            m.add_command(label='🚨 宠物昏厥了!',state='disabled')
+            m.add_separator()
+            m.add_command(label='💊 吃药救命',command=lambda:self.open_bag(start_tab='medicine'))
+            m.add_command(label='🍔 喂食恢复',command=lambda:self.open_bag(start_tab='food'))
+            m.add_separator()
+            m.add_command(label='❌ 关闭',command=self.root.destroy)
+            try: m.tk_popup(e.x_root,e.y_root)
+            finally: m.grab_release()
+            return
         m.add_command(label='💬 找我说话',command=self._chat_dialog)
         m.add_command(label='🐾 宠物档案',command=self.open_profile)
         m.add_command(label='🗺️ 旅行地图',command=self.open_travel)
@@ -2596,15 +2731,117 @@ class HomeWorld:
             except: win.destroy()
         tk.Button(win,text='确定',command=confirm).pack(pady=5)
 
+    def _show_faint_popup(self):
+        """昏厥弹窗 — 非模态，可重复弹出"""
+        # 防止重复弹窗
+        if hasattr(self,'_faint_win') and self._faint_win and self._faint_win.winfo_exists():
+            self._faint_win.lift(); return
+        win=tk.Toplevel(self.root)
+        self._faint_win=win
+        win.title('🚨 昏厥了!')
+        win.geometry('320x230+100+80')
+        win.resizable(False,False)
+        win.attributes('-topmost',True)
+        win.configure(bg='#1a0000')
+        win.lift()
+        tk.Label(win,text='💤',font=('Apple Color Emoji',48),bg='#1a0000').pack(pady=(16,2))
+        tk.Label(win,text='昏厥了...',font=('PingFang SC',16,'bold'),bg='#1a0000',fg='#ff4444').pack()
+        tk.Label(win,text='健康归零太久，宠物昏厥了😢\n喂食物或吃药才能救活！',
+                 font=('PingFang SC',11),bg='#1a0000',fg='#ffaaaa',justify='center').pack(pady=6)
+        def do_rescue():
+            win.destroy()
+            self.open_bag(start_tab='medicine')
+        def do_feed():
+            win.destroy()
+            self.open_bag(start_tab='food')
+        bf=tk.Frame(win,bg='#1a0000'); bf.pack(pady=4)
+        tk.Button(bf,text='💊 吃药救命',font=('PingFang SC',11,'bold'),
+                  bg='#cc2222',fg='white',relief='flat',padx=12,pady=6,
+                  command=do_rescue).pack(side='left',padx=6)
+        tk.Button(bf,text='🍔 喂食恢复',font=('PingFang SC',11,'bold'),
+                  bg='#aa4400',fg='white',relief='flat',padx=12,pady=6,
+                  command=do_feed).pack(side='left',padx=6)
+        tk.Button(win,text='关闭（稍后处理）',font=('PingFang SC',9),
+                  bg='#333',fg='#aaa',relief='flat',pady=3,
+                  command=win.destroy).pack(pady=(4,0))
+
+    def _revive(self):
+        """复活逻辑 — 给药/喂食后调用"""
+        if self.fainted:
+            self.fainted=False; self.faint_cd=0
+            self.sick=False
+            self.health=max(self.health,30)  # 至少30%健康
+            self._save()
+            self.say(random.choice([
+                '😮 我...我还活着！谢谢主人😭',
+                '刚才我在天上看到了主人...我回来了',
+                '鸟科人生居然还有续篇！🥰',
+                '主人...下次多关心我呢...🥺',
+            ]),200)
+
     def _show_achievements(self):
+        win=tk.Toplevel(self.root); win.title('🏆 成就')
+        win.geometry('340x480'); win.resizable(False,True)
+        win.attributes('-topmost',True); win.lift()
+        BG='#1a1a2e'; CARD='#16213e'; GOLD='#f5c518'; GRAY='#555577'
+        DONE_FG='#f5c518'; TODO_FG='#8888aa'
+        win.configure(bg=BG)
+
         done=[a for a in self.achievements if a['done']]
-        todo=[a for a in self.achievements if not a['done']]
-        lines=['🏆 已解锁:']+[f"  {a['name']}" for a in done]+['','🔒 未解锁:']+[f"  {a['name']}  ({a['desc']})" for a in todo]
-        win=tk.Toplevel(self.root); win.title('成就'); win.lift()
-        win.geometry('260x'+str(30+len(lines)*18))
-        for l in lines:
-            tk.Label(win,text=l,anchor='w',font=('PingFang SC',9)).pack(fill='x',padx=8)
-        tk.Button(win,text='关闭',command=win.destroy).pack(pady=4)
+        total=len(self.achievements)
+        tk.Label(win,text=f'🏆 成就  {len(done)}/{total}',
+                 font=('PingFang SC',14,'bold'),bg=BG,fg=GOLD).pack(pady=(12,4))
+
+        # 进度条
+        pb_frame=tk.Frame(win,bg=BG); pb_frame.pack(fill='x',padx=20,pady=(0,8))
+        c=tk.Canvas(pb_frame,height=8,bg='#333355',highlightthickness=0)
+        c.pack(fill='x')
+        c.update_idletasks()
+        w=c.winfo_width() or 300
+        fill_w=int(w*len(done)/total)
+        c.create_rectangle(0,0,fill_w,8,fill=GOLD,outline='')
+
+        # 滚动区
+        frame_outer=tk.Frame(win,bg=BG); frame_outer.pack(fill='both',expand=True,padx=10)
+        canvas=tk.Canvas(frame_outer,bg=BG,highlightthickness=0)
+        sb=tk.Scrollbar(frame_outer,orient='vertical',command=canvas.yview)
+        canvas.configure(yscrollcommand=sb.set)
+        sb.pack(side='right',fill='y'); canvas.pack(side='left',fill='both',expand=True)
+        inner=tk.Frame(canvas,bg=BG); canvas.create_window((0,0),window=inner,anchor='nw')
+
+        # 分组
+        groups=[
+            ('🍔 喂食',['first_feed','feed10','feed50','feed_steak']),
+            ('💬 对话',['first_chat','chat10','chat50']),
+            ('👆 互动',['poke10','poke50']),
+            ('🛁 洗澡',['first_bath','bath10','bath_cosmic']),
+            ('🎣 钓鱼',['first_fish','fish10','fish_epic','fish_legend']),
+            ('💎 积分',['score100','score1000','score5000']),
+            ('⭐ 等级',['level5','level10']),
+            ('🛒 购物',['shop10','furniture5','furniture15']),
+            ('🗺️ 旅行',['travel5','travel15','travel35','postcard10']),
+            ('🕐 时间',['night_owl','early_bird']),
+        ]
+        ach_map={a['id']:a for a in self.achievements}
+        for gname,ids in groups:
+            gh=tk.Frame(inner,bg=BG); gh.pack(fill='x',pady=(6,2),padx=4)
+            tk.Label(gh,text=gname,font=('PingFang SC',10,'bold'),bg=BG,fg='#aaaacc').pack(anchor='w')
+            for aid in ids:
+                a=ach_map.get(aid); 
+                if not a: continue
+                row=tk.Frame(inner,bg=CARD,pady=4); row.pack(fill='x',padx=4,pady=1)
+                if a['done']:
+                    tk.Label(row,text=a['name'],font=('PingFang SC',10,'bold'),bg=CARD,fg=DONE_FG,width=16,anchor='w').pack(side='left',padx=8)
+                    tk.Label(row,text='✅',bg=CARD,fg=DONE_FG,font=('PingFang SC',10)).pack(side='right',padx=8)
+                else:
+                    tk.Label(row,text=a['name'],font=('PingFang SC',10),bg=CARD,fg=TODO_FG,width=16,anchor='w').pack(side='left',padx=8)
+                    tk.Label(row,text=a['desc'],font=('PingFang SC',9),bg=CARD,fg='#666688').pack(side='left')
+                    tk.Label(row,text='🔒',bg=CARD,fg=TODO_FG,font=('PingFang SC',10)).pack(side='right',padx=8)
+
+        inner.update_idletasks()
+        canvas.configure(scrollregion=canvas.bbox('all'))
+        canvas.bind_all('<MouseWheel>',lambda e:canvas.yview_scroll(-1 if e.delta>0 else 1,'units'))
+        tk.Button(win,text='关闭',command=win.destroy,bg='#333355',fg='white',relief='flat',width=10).pack(pady=8)
 
     # ── 商店系统 ──────────────────────────────────────────────────────
     def open_shop(self):
@@ -2627,6 +2864,19 @@ class HomeWorld:
         def load_img(fname,size=64):
             k=(fname,size)
             if k in state['imgs']: return state['imgs'][k]
+            # 药品用 emoji 动态渲染
+            _MED_EMOJI = {'_med_basic':'💊','_med_good':'✨','_med_super':'💎','_med_divine':'🌟'}
+            if fname in _MED_EMOJI:
+                try:
+                    img = _PI.new('RGBA',(size,size),(0,0,0,0))
+                    from PIL import ImageDraw, ImageFont as _IF
+                    draw = ImageDraw.Draw(img)
+                    try: fnt = _IF.truetype('/System/Library/Fonts/Apple Color Emoji.ttc', int(size*0.75))
+                    except: fnt = _IF.load_default()
+                    draw.text((size//2, size//2), _MED_EMOJI[fname], font=fnt, anchor='mm', embedded_color=True)
+                    p = _IT.PhotoImage(img)
+                except: p=None
+                state['imgs'][k]=p; return p
             fp=os.path.join(FOOD_DIR,fname)
             try: p=_IT.PhotoImage(_PI.open(fp).convert('RGBA').resize((size,size),_PI.NEAREST))
             except: p=None
@@ -2645,7 +2895,7 @@ class HomeWorld:
             state['cat']=c; state['sel']=None
             for k,b in cbtns.items(): b.config(bg=SEL if k==c else '#e8c880')
             refresh()
-        for cid,cl in [('food','🍚 主食'),('snack','🍬 零食'),('bath','🛁 浴球')]:
+        for cid,cl in [('food','🍚 主食'),('snack','🍬 零食'),('bath','🛁 浴球'),('medicine','💊 药品')]:
             b=tk.Button(cf,text=cl,font=('PingFang SC',10),bg=SEL if cid=='food' else '#e8c880',
                         fg=TEXT,relief='flat',bd=0,padx=14,pady=3,command=lambda c=cid:sw_cat(c))
             b.pack(side='left'); cbtns[cid]=b
@@ -2730,9 +2980,11 @@ class HomeWorld:
             if img: di.config(image=img); di._img=img
             dn.config(text=item['name']); dd.config(text=item['desc'])
             fx=[]
-            if item['hunger']>0: fx.append(f'饱腹+{item["hunger"]}')
-            if item['mood']>0: fx.append(f'心情+{item["mood"]}')
-            if item['health']!=0: fx.append(f'健康{item["health"]:+d}')
+            if item.get('hunger',0)>0: fx.append(f'饱腹+{item["hunger"]}')
+            if item.get('mood',0)>0: fx.append(f'心情+{item["mood"]}')
+            if item.get('health',0)!=0: fx.append(f'健康{item["health"]:+d}')
+            if item.get('clean',0)>0: fx.append(f'洁净+{item["clean"]}')
+            if item.get('cure'): fx.append('消除病态')
             de.config(text='  '.join(fx))
             dp.config(text=f'⭐ {item["price"]}/个')
             dlv.config(text=f'需要 Lv.{item["lv"]}'+(' 🔒' if item["lv"]>self.level else ' ✅'))
@@ -2816,6 +3068,21 @@ class HomeWorld:
         def _img_cache(fp, size):
             k = (fp, size)
             if k in state['imgs']: return state['imgs'][k]
+            # 药品 emoji 渲染
+            _MED_EMOJI = {'_med_basic':'💊','_med_good':'✨','_med_super':'💎','_med_divine':'🌟'}
+            _basename = os.path.basename(fp) if os.path.sep in fp else fp
+            if _basename in _MED_EMOJI or fp in _MED_EMOJI:
+                _ek = fp if fp in _MED_EMOJI else _basename
+                try:
+                    img = _PI.new('RGBA',(size,size),(0,0,0,0))
+                    from PIL import ImageDraw, ImageFont as _IF2
+                    draw = ImageDraw.Draw(img)
+                    try: fnt = _IF2.truetype('/System/Library/Fonts/Apple Color Emoji.ttc', int(size*0.75))
+                    except: fnt = _IF2.load_default()
+                    draw.text((size//2, size//2), _MED_EMOJI[_ek], font=fnt, anchor='mm', embedded_color=True)
+                    p = _IT.PhotoImage(img)
+                except: p = None
+                state['imgs'][k] = p; return p
             try:
                 raw = _PI.open(fp).convert('RGBA')
                 ow,oh = raw.size; s = min(size/ow, size/oh)
@@ -2836,9 +3103,12 @@ class HomeWorld:
                            bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
         t_fish = tk.Button(row1, text='🎣 鱼筼', font=('PingFang SC',10,'bold'),
                            bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
+        t_med  = tk.Button(row1, text='💊 药品', font=('PingFang SC',10,'bold'),
+                           bg=MID, fg='#fff5dc', relief='flat', bd=0, padx=8, pady=3, cursor='hand2')
         t_food.pack(side='right', padx=2, pady=3)
         t_bath.pack(side='right', padx=2, pady=3)
         t_fish.pack(side='right', padx=2, pady=3)
+        t_med.pack(side='right', padx=2, pady=3)
         # 第二行：仓库标题 + 仓库/特产/明信片
         row2 = tk.Frame(tab_bar, bg='#5a3a1a'); row2.pack(fill='x')
         tk.Label(row2, text='🏠 仓库', font=('PingFang SC',12,'bold'), bg='#5a3a1a', fg='#ffe8aa').pack(side='left', padx=10, pady=4)
@@ -2907,6 +3177,11 @@ class HomeWorld:
                 self.health=min(100,max(0,self.health+it['health']))
                 if self.sick and self.health>=75: self.sick=False
                 self.bag[it['id']]=c-1; self.feed_count+=1; self.add_exp(5); self._save()
+                self.unlock('first_feed')
+                if self.feed_count>=10: self.unlock('feed10')
+                if self.feed_count>=50: self.unlock('feed50')
+                if it['id']=='steak': self.unlock('feed_steak')
+                self._revive()  # 如果昏厥中，喂食可以复活
                 import random as _r
                 self.say(_r.choice([f'{it["name"]}好好吃!😋',f'啊~太香了!',f'谢谢主人!',f'最喜欢了!']),100)
                 ml.config(text=f'✅ 剩余×{self.bag[it["id"]]}')
@@ -3021,7 +3296,7 @@ class HomeWorld:
         def switch_tab(tab):
             state['tab']=tab; state['sel']=None; reset_right()
             for tb,tid,ac,ic in [
-                (t_food,'food',MID,'#5a3a1a'),(t_bath,'bath',MID,'#5a3a1a'),(t_fish,'fish',MID,'#5a3a1a'),
+                (t_food,'food',MID,'#5a3a1a'),(t_bath,'bath',MID,'#5a3a1a'),(t_fish,'fish',MID,'#5a3a1a'),(t_med,'medicine',MID,'#5a3a1a'),
                 (t_furn,'furn','#5a3a1a',MID),(t_souvenir,'souvenir','#5a3a1a',MID),(t_postcard,'postcard','#5a3a1a',MID)
             ]:
                 active = (tab==tid)
@@ -3037,6 +3312,8 @@ class HomeWorld:
                 _render_bath_grid()
             elif state['tab'] == 'fish':
                 _render_fish_grid()
+            elif state['tab'] == 'medicine':
+                _render_medicine_grid()
             elif state['tab'] == 'souvenir':
                 _render_souvenir_grid()
             elif state['tab'] == 'postcard':
@@ -3078,6 +3355,9 @@ class HomeWorld:
                 self.mood=min(100,self.mood+it.get('mood',10))
                 self.health=min(100,self.health+it.get('health',5))
                 self.bathe_count+=1; self.add_score(3); self.add_exp(8); self._save()
+                self.unlock('first_bath')
+                if self.bathe_count>=10: self.unlock('bath10')
+                if it['id']=='bathball_ex': self.unlock('bath_cosmic')
                 import random as _r
                 self.say(_r.choice([f'🛁 用{it["name"]}洗澡!喗喗的~',f'香香的!{it["name"]}好赞!',f'洗得超干净~用了{it["name"]}!']),80)
                 ml.config(text=f'✅ 剩余×{self.bag[it["id"]]}')
@@ -3119,6 +3399,66 @@ class HomeWorld:
         SOUVENIR_SELL_PRICE = 20
         POSTCARD_SELL_PRICE = 20
         FISH_SELL_PRICES = {'common': 5, 'rare': 20, 'epic': 50, 'treasure': 80}
+
+        # ==== 药品 Tab ====
+        def show_med_detail(item):
+            img = _img_cache(item.get('file',''), 64)
+            if img: di.config(image=img); di._img=img
+            dn.config(text=item['name']); dd.config(text=item['desc'])
+            fx=[]
+            if item.get('health',0)>0:  fx.append(f'健康+{item["health"]}')
+            if item.get('mood',0)>0:    fx.append(f'心情+{item["mood"]}')
+            if item.get('cure'): fx.append('消除病态')
+            de.config(text='  '.join(fx))
+            cnt = self.bag.get(item['id'],0)
+            dct.config(text=f'剩余 ×{cnt}')
+            def do_use_med(it=item):
+                c = self.bag.get(it['id'],0)
+                if c<=0: ml.config(text='没有药了!'); return
+                if not self.sick and self.health>=90:
+                    ml.config(text='身体很好~不用吃药'); return
+                self.bag[it['id']]=c-1
+                self.health=min(100,self.health+it.get('health',25))
+                if it.get('cure') and self.health>=75: self.sick=False
+                self.mood=min(100,self.mood+it.get('mood',0))
+                self._save()
+                self._revive()  # 吃药可以从昏厥中复活
+                import random as _r
+                self.say(_r.choice([f'💊 吃了{it["name"]},好多了~',f'苦苦的...{it["name"]}真难吃',f'健康回来啦!谢谢主人🥰']),100)
+                ml.config(text=f'✅ 已使用!剩余×{self.bag[it["id"]]}')
+                dct.config(text=f'剩余 ×{self.bag[it["id"]]}')
+                b1.config(state='normal' if self.bag[it['id']]>0 else 'disabled',
+                          bg=BTN_OK if self.bag[it['id']]>0 else BTN_DIS)
+                refresh_grid()
+            b1.config(text='💊 吃药', bg=BTN_OK if cnt>0 else BTN_DIS,
+                      state='normal' if cnt>0 else 'disabled', command=do_use_med)
+            b2.config(text='', state='disabled', bg='#888')
+            b3.config(text='', state='disabled', bg='#888')
+
+        def _render_medicine_grid():
+            pool=[it for it in SHOP_ITEMS if it.get('cat')=='medicine' and self.bag.get(it['id'],0)>0]
+            if not pool:
+                tk.Label(gf,text='药品已用完~\n定价超贵,读书人流泪😭',
+                         font=('PingFang SC',12),bg=LIGHT,fg='#aaaaaa',justify='center').pack(pady=40)
+                tk.Button(gf,text='🛒 去小卖部购买',font=('PingFang SC',11),
+                          bg='#c83a3a',fg='white',relief='flat',cursor='hand2',
+                          command=lambda:(win.destroy(),self.open_shop())).pack(pady=8)
+                return
+            COLS=2
+            for i,item in enumerate(pool):
+                r,c=divmod(i,COLS)
+                issel=item['id']==state['sel']
+                cbg=SEL if issel else LIGHT
+                fr=tk.Frame(gf,bg=cbg,bd=2,relief='ridge' if issel else 'flat',cursor='hand2')
+                fr.grid(row=r,column=c,padx=8,pady=8)
+                img=_img_cache(item.get('file',''),64)
+                if img: il=tk.Label(fr,image=img,bg=cbg); il.pack(); il._img=img
+                else: tk.Label(fr,text='💊',font=('PingFang SC',28),bg=cbg).pack()
+                tk.Label(fr,text=item['name'],font=('PingFang SC',10,'bold'),bg=cbg,fg=TEXT).pack()
+                tk.Label(fr,text=f'×{self.bag.get(item["id"],0)}',font=('PingFang SC',10,'bold'),bg=cbg,fg='#3a7a30').pack()
+                def _sel(it=item): state['sel']=it['id']; refresh_grid(); show_med_detail(it)
+                for w in fr.winfo_children(): w.bind('<Button-1>',lambda e,it=item:_sel(it))
+                fr.bind('<Button-1>',lambda e,it=item:_sel(it))
 
         def _render_fish_grid():
             """鱼篓Tab：fish_{prefix} 格式"""
@@ -3312,6 +3652,7 @@ class HomeWorld:
 
         t_food.config(command=lambda:switch_tab('food'))
         t_bath.config(command=lambda:switch_tab('bath'))
+        t_med.config(command=lambda:switch_tab('medicine'))
         t_fish.config(command=lambda:switch_tab('fish'))
         t_souvenir.config(command=lambda:switch_tab('souvenir'))
         t_postcard.config(command=lambda:switch_tab('postcard'))
@@ -3458,10 +3799,13 @@ class HomeWorld:
             if item['lv'] > self.level: ml.config(text=f"需要 Lv.{item['lv']}!"); return
             self.score -= item['price']
             self.furniture_bag[item['id']] = self.furniture_bag.get(item['id'],0) + 1
+            self.furniture_buy_count += 1
             self._save()
             self.say(f"买到{item['name']}了!🛋️", 70)
             ml.config(text=f"✅ 购买成功!背包 ×{self.furniture_bag[item['id']]}")
             score_lbl.config(text=f'⭐ {self.score}')
+            if self.furniture_buy_count >= 5:  self.unlock('furniture5')
+            if self.furniture_buy_count >= 15: self.unlock('furniture15')
             refresh()
 
         def do_place(item):
@@ -3896,7 +4240,12 @@ class HomeWorld:
 
             bk = f'fish_{fprefix or "treasure"}'
             self.bag[bk] = self.bag.get(bk, 0) + 1
-            self._save(); self.unlock('first_fish')
+            self.fish_count += 1
+            self._save()
+            self.unlock('first_fish')
+            if self.fish_count >= 10: self.unlock('fish10')
+            if rarity == 'epic': self.unlock('fish_epic')
+            if rarity == 'treasure': self.unlock('fish_legend')
 
             remoji = {'common':'⭐','rare':'💎','epic':'👑','treasure':'🎉'}[rarity]
             if fprefix:
@@ -4077,10 +4426,8 @@ class HomeWorld:
     def give_medicine(self):
         if not self.sick and self.health>=90:
             self.say('我很健康哦!不用吃药~',60); return
-        self.health=min(100,self.health+25)
-        if self.health>=75: self.sick=False
-        self.say(random.choice(['苦死了...但谢谢主人🤒','吃完药好多了~','身体慢慢好起来了']),80)
-        self.add_score(5); self.add_exp(6); self._save()
+        # 跳转背包药品 Tab
+        self.open_bag(start_tab='medicine')
 
     # ── 属性面板绘制 ────────────────────────────────────────────────────
     def _draw_stats(self):
